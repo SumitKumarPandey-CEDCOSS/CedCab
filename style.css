@@ -1,0 +1,30 @@
+.logo {
+    height: 100px;
+    width: 150px;
+}
+.btn1 {
+    background-color: #DDE71B;
+}
+.row img{
+    position: absolute;
+}
+#formcontent {
+    background-color: white;
+     border-radius: 10px;
+}
+#formlogo span{
+    background-color:#DDE71B;
+}
+.custom-select {
+    text-decoration: none;
+}
+#sel1,#sel2,#sel3{
+    -webkit-appearance: none;
+}
+.color {
+    background-color: #08AFF7;
+}
+.cd {
+    height: auto;
+    display: flex;
+}
