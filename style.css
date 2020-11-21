@@ -24,6 +24,10 @@
 .color {
     background-color: #08AFF7;
 }
+.font i{
+    padding:5px 5px 10px 0;
+    font-size: 40px;
+}
 .cd {
     height: auto;
     display: flex;
