@@ -12,7 +12,6 @@ $(function () {
     });
     $('#text3').keyup(function () {
         this.value = this.value.replace(/[^0-9\.]/g, '');
-        // $("#errormsg").html("Number only").show().fadeOut("slow");
     });
 
     $("#btn1").click(function (e) {
@@ -21,20 +20,23 @@ $(function () {
         var b = $("#sel2").val();
         var c = $("#sel3").val();
         var d = $("#text3").val();
-        if (a=="0" ||b=="0" || c=="0") {
-            if(a=="0"){
+        if (a == "0" || b == "0" || c == "0") {
+            if (a == "0") {
                 $("#sel1").focus();
             }
-            if(b=="0"){
+            if (b == "0") {
                 $("#sel2").focus();
             }
-            if(c=="0"){
+            if (c == "0") {
                 $("#sel3").focus();
             }
             alert("Please Enter values in input field");
             return;
+        } else {
+            $("#btn1").hide();
+            $("#btn2").show();
         }
-        if(a==b) {
+        if (a == b) {
             alert("Pickup Location and Destination can not be same");
             return;
         }
@@ -52,5 +54,9 @@ $(function () {
                 alert("error");
             }
         });
+    });
+    $("#sel1,#sel2,#sel3").click(function(){
+        $("#btn1").show();
+        $("#btn2").hide();
     });
 });

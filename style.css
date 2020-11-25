@@ -5,6 +5,9 @@
 .btn1 {
     background-color: #DDE71B;
 }
+#btn2 {
+    display: none;
+}
 .row img{
     position: absolute;
 }
@@ -31,4 +34,230 @@
 .cd {
     height: auto;
     display: flex;
+}
+.body
+{
+    /* background-image: linear-gradient(to right, rgba(165, 105, 189,0 ), rgba(165, 105, 189 ,1)); */
+    background-image: url(./images/taxi4.jpg);
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Verdana;
+}
+#wrapper
+{
+    margin-left: 37%;
+    margin-top: 8%;
+}
+#login-form .submit input[type='submit'],
+#signup-form .submit input[type='submit']
+{
+    width: 280px;
+    height: 40px;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #DDE71B;
+    border-radius: 10px;
+    color:black;  
+}
+#login-form .submit input[type='submit']:hover,
+#signup-form .submit input[type='submit']:hover
+{
+    background-color: rgba(255, 0, 0,0.5);
+    font-size: 15px;
+    color: white;
+}
+#login-form .input input[type="text"], input[type="password"], input[type="email"],#roles,
+#signup-form .input input[type="password"], input[type="email"],#roles,
+#signup-form .input input[type="text"]
+{
+    display: block;
+    width: 280px;
+    height: 40px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: black;
+}
+.loginlogo
+{
+background-color: #928809;
+border-radius: 10px 10px 10px 10px;
+width: 280px;
+height: 40px;
+text-align: center;
+box-shadow: 5px 10px 18px #D1D0C4;
+padding: 15px 0px 0px 0px;
+color: white;
+}
+#head
+{
+    /* margin-left: 70px; */
+}
+#header
+{
+    text-align: center;
+    color: #4A235A;
+}
+.bottom {
+    color: white;
+    font-weight: bold;
+}
+.bottom a {
+    text-decoration: none;
+    color: Red;
+}
+.input label,#role{
+    color: white;
+    border: none;
+}
+.main ul{
+    background-color: #F1C40F;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+#nav li{
+    float: left; 
+}
+#nav li a 
+{
+    color: black;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 30px;
+}
+.dropdown-content
+{
+    display: none;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 3;
+}
+.dropdown-content a {
+
+    display: block;
+    background-color: grey;
+    text-decoration: none;
+    text-align: center;
+
+}
+#nav li.dropdown {
+    display: inline-block;
+}
+#nav li a:hover, .dropdown:hover .dropbtn {
+    background-color:#6C3483;
+  }
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content a:hover{
+    background-color: #2E4053;
+    text-decoration: none;
+    display: block;
+}
+header{  
+    background-color: #C70039 ;
+    overflow: hidden;
+    letter-spacing: 3px;
+}
+header img {
+    width: 130px;
+    height: 100px;
+}
+header #headernav li{
+    float: left;
+    list-style-type: none;
+}
+
+#headernav li a{
+    text-decoration: none;
+    display: block;
+    margin-left: 350px;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 50px;
+    color: white ;
+}
+.admintop {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgba(33, 47, 61 );
+}
+.adminbody img{
+    width: 100%;
+    font-family: Verdana;
+    position: absolute;
+    z-index: -3;
+    opacity: 0.5;
+}
+#AdminWelcomeQuote h1{
+    position: relative;
+    margin: 0;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+    letter-spacing: 1px;
+}
+#admin-location-form {
+    margin-left: 480px;
+    padding: 10px 50px;
+}
+#admin-location-form .submit input[type='submit']
+{
+    width: 280px;
+    height: 40px;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #DDE71B;
+    border-radius: 10px;
+    color:black;  
+}
+#admin-location-form .submit input[type='submit']:hover
+{
+    background-color: rgba(255, 0, 0,0.5);
+    font-size: 15px;
+    color: white;
+}
+#admin-location-form .input input[type="text"], input[type="password"], input[type="email"],#roles
+{
+    display: block;
+    width: 280px;
+    height: 40px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: black;
+}
+.location-logo {
+    text-align: center;
+    color: white;
+    font: bold;
+    margin-bottom: 0px;
+    font-size: 50px;
+}
+#AdminTable{
+    color: black;
+    border: 2px solid white;
+    border-collapse: collapse;
+    transform: translate(60%,70%);
+    background-color: white;
+    /* width: 600px; */
+}
+#AdminTable th,#AdminTable td {
+    border: 2px solid black;
+    padding: 20px;
+}
+#AdminTable td a{
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    background-color: #F5B041 ;
+    border-radius: 5px;
+    padding: 5px;
 }

@@ -8,11 +8,15 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20task%202/html/products.php
  */
+session_start();
+$data = array();
 global $distance,$luggageprice;
 $Location = $_REQUEST['Location'];
 $Destination = $_REQUEST['Destination'];
 $Cab = $_REQUEST['Cab'];
 $luggage = $_REQUEST['Luggage'];
+
+
 if ($luggage<=10) {
     $luggageprice = 50;
 } elseif ($luggage>10 && $luggage<=20) {
@@ -139,4 +143,18 @@ if ($Cab=="4") {
         }
     }
 }
+// class Book 
+// {
+//     public function bookride() 
+//     {
+//         $data = array("Location"=>$Location,
+//         "Destination"=>$Destination,
+//         "Cab"=>$Cab,
+//         "luggage"=>$luggage,
+//         "distance"=>$distance,
+//         "TotalFare"=>$totalFare);
+//         $_SESSION['ride'] = $data;
+//     }
+// }
+
 ?>
