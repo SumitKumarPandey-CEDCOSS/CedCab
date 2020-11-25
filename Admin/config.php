@@ -38,7 +38,7 @@ class DB
             echo "Some Exception Occured " . $ex;
         }
     }
-    public function select() 
+    public function signup_request() 
     {
         $result=mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`= '0' AND `is_admin`!='admin'");
         return $result;
@@ -53,14 +53,36 @@ class DB
         $result=mysqli_query($this->conn, "DELETE FROM userTable  WHERE `user_id`='".$user_id."'");
         return "Rejected SuccessFully";
     }
+    public function blocked($user_id) 
+    {
+        $result=mysqli_query($this->conn, "UPDATE userTable SET `is_block`='1' WHERE `user_id`='".$user_id."'");
+        return "Blocked SuccessFully";
+    }
+    public function unblocked($user_id) 
+    {
+        $result=mysqli_query($this->conn, "UPDATE userTable SET `is_block`='0' WHERE `user_id`='".$user_id."'");
+        return "UnBlocked SuccessFully";
+    }
+    public function getData()  
+    {
+        $result=mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ");
+        return $result;
+    }
+    public function location_getData()  
+    {
+        $result=mysqli_query($this->conn, "SELECT * FROM LocationTable ");
+        return $result;
+    }
+    
 }
 class User extends DB
 {
     public function login($username,$password,$roles) 
     {
+        $is_block=1;
         $sql ='SELECT * FROM userTable WHERE 
         `username`="'.$username.'" AND 
-        `password`="'.$password.'" AND is_admin="'.$roles.'"';
+        `password`="'.$password.'" AND is_admin="'.$roles.'" AND is_block="'.$is_block.'"';
         $result = $this->conn->query($sql);
         if ($result->num_rows>0) {
             while ($row = $result->fetch_assoc()) {

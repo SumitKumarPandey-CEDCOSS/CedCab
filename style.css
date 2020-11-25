@@ -120,10 +120,10 @@ color: white;
     padding: 0px;
     overflow: hidden;
 }
-#nav li{
+li{
     float: left; 
 }
-#nav li a 
+li a 
 {
     color: black;
     display: inline-block;
@@ -145,10 +145,10 @@ color: white;
     text-align: center;
 
 }
-#nav li.dropdown {
+li.dropdown {
     display: inline-block;
 }
-#nav li a:hover, .dropdown:hover .dropbtn {
+li a:hover, .dropdown:hover .dropbtn {
     background-color:#6C3483;
   }
 .dropdown:hover .dropdown-content {
@@ -245,7 +245,7 @@ header #headernav li{
     color: black;
     border: 2px solid white;
     border-collapse: collapse;
-    transform: translate(60%,70%);
+    transform: translate(40%,70%);
     background-color: white;
     /* width: 600px; */
 }

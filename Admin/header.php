@@ -37,19 +37,16 @@
             <a href="#">Manage Ride</a>
         </div>
     <li class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">Customer Detail</a>
-        <div class="dropdown-content">
-            <a href="#">Check Invoice</a>
-            <a href="#">Manage Customers</a>
-        </div>
-    <li class="dropdown">
         <a href="location.php">Location</a>
+        <div class="dropdown-content">
+        <a href="manageLocation.php">Manage Location</a>
+        </div>
     </li>
     <li class="dropdown">
         <a href="javascript:void(0)" class="dropbtn">User Menu</a>
         <div class="dropdown-content">
             <a href="#">Add User</a>
-            <a href="#">Manage User</a>
+            <a href="manageCustomer.php">Manage User</a>
     <li class="dropdown">
     <a href="logout.php">Logout</a>
     </div>

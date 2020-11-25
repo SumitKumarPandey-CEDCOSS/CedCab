@@ -11,7 +11,7 @@
 require 'config.php';
 $db = new DB();
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql=$db->select();
+$sql=$db->signup_request();
 if (isset($_REQUEST['user_id'])) {
     $user_id = $_REQUEST['user_id'];
     echo $db->approved($user_id);
