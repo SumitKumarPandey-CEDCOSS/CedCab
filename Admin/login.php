@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Php version 7.2.10
  * 
@@ -12,7 +13,7 @@ require 'config.php';
 // $con = new DB();
 $user = new User();
 $user->connect('localhost', 'root', '', 'CabBooking');
-$msg="";
+$msg = "";
 $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
@@ -24,12 +25,14 @@ if (isset($_POST["submit"])) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>
         Login
     </title>
     <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
+
 <body class="body">
     <div id="wrapper">
         <div id="login-form">
@@ -43,13 +46,14 @@ if (isset($_POST["submit"])) {
                         </Select></label>
                 </p>
                 <div id="errordiv">
-                    <?php if (sizeof($error)>0) : ?>
-                    <ul>
-                        <?php foreach ($error as $value) : ?>
-                        <li><?php echo $error['msg'] ;break ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <?php endif ; ?>
+                    <?php if (sizeof($error) > 0) : ?>
+                        <ul>
+                            <?php foreach ($error as $value) : ?>
+                                <li><?php echo $error['msg'];
+                                    break ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </div>
                 <p class="input">
                     <label for="username">Username:
@@ -67,4 +71,5 @@ if (isset($_POST["submit"])) {
         </div>
     </div>
 </body>
+
 </html>

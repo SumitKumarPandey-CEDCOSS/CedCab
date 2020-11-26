@@ -11,7 +11,7 @@
  */
 require 'header.php';
 require 'config.php';
-$db = new DB();
+$db = new User();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->getData();
 if (isset($_GET['blocked_id'])) {
@@ -48,35 +48,36 @@ if (isset($_REQUEST['delid'])) {
             <th>Status</th>
             <th>Action</th>
         </tr>
-        <?php
-        while ($row = mysqli_fetch_assoc($sql)) { ?>
-            <tr>
-                <td><?php echo $row['user_id'] ?></td>
-                <td><?php echo $row['username'] ?></td>
-                <td><?php echo $row['email'] ?></td>
-                <td><?php echo $row['mobile'] ?></td>
-                <td><?php if ($row['is_block'] == '1') {
-                        echo "Unblocked";
-                    } else {
-                        echo "Blocked";
-                    } ?></td>
-                <td><a id="blocked" href="manageCustomer.php?<?php if ($row['is_block'] == '0') {
-                                                                    echo "blocked";
-                                                                } else {
-                                                                    echo "unblocked";
-                                                                }
-                                                                ?>_id=<?php echo $row['user_id'] ?>">
-                        <?php if ($row['is_block'] == '0') {
-                                                                echo "Unblock";
-                                                                } else {
-                                                                    echo "blocked";
-                                                                }
-                                                                ?><p hidden>A $_GET</p>
-                    </a>
+        <?php if (isset($sql)) {
+            foreach ($sql as $key) { ?>
+                <tr>
+                    <td><?php echo $key['user_id'] ?></td>
+                    <td><?php echo $key['username'] ?></td>
+                    <td><?php echo $key['email'] ?></td>
+                    <td><?php echo $key['mobile'] ?></td>
+                    <td><?php if ($key['is_block'] == '1') {
+                            echo "Unblocked";
+                        } else {
+                            echo "Blocked";
+                        } ?></td>
+                    <td><a id="blocked" href="manageCustomer.php?<?php if ($key['is_block'] == '0') {
+                                                                        echo "blocked";
+                                                                    } else {
+                                                                        echo "unblocked";
+                                                                    }
+                                                                    ?>_id=<?php echo $key['user_id'] ?>">
+                            <?php if ($key['is_block'] == '0') {
+                                echo "Unblock";
+                            } else {
+                                echo "blocked";
+                            }
+                            ?><p hidden>A $_GET</p>
+                        </a>
 
-                    <a href="manageCustomer.php?delid=<?php echo $row['user_id'] ?>">Delete</a></td>
-            </tr>
-        <?php } ?>
+                        <a href="manageCustomer.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
+                </tr>
+        <?php }
+        } ?>
     </table>
     <script src="../script.js"></script>
 </body>

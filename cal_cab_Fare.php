@@ -8,8 +8,8 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20task%202/html/products.php
  */
-session_start();
-$data = array();
+require 'Admin/config.php';
+
 global $distance,$luggageprice;
 $Location = $_REQUEST['Location'];
 $Destination = $_REQUEST['Destination'];
@@ -35,6 +35,9 @@ $cabdetail=array(
         "Gorakhpur"=>210
     )
 );
+foreach ($cabdetail as $key=>$value) {
+    $distance = abs($value[$Location]-$value[$Destination]);
+}
 if ($Cab=="1") {
     $fixedFare=50;
     foreach ($cabdetail as $key=>$value) {
@@ -44,7 +47,6 @@ if ($Cab=="1") {
         $price3=(100*10.20);
         $price4=8.50;
         if ($key==$Location && $key==$Destination) {
-            $distance = abs($value[$Location]-$value[$Destination]);
             if ($distance>0 && $distance<=10) {
                 $totalFare=$fixedFare+($distance*$price);
             } elseif ($distance>10 && $distance<=50) {
@@ -71,7 +73,6 @@ if ($Cab=="2") {
         $price3=(100*11.20);
         $price4=9.50;
         if ($key==$Location && $key==$Destination) {
-            $distance = abs($value[$Location]-$value[$Destination]);
             if ($distance>0 && $distance<=10) {
                 $totalFare=$fixedFare+($distance*$price)+$luggageprice;
             } elseif ($distance>10 && $distance<=50) {
@@ -98,7 +99,6 @@ if ($Cab=="3") {
         $price3=(100*12.20);
         $price4=10.50;
         if ($key==$Location && $key==$Destination) {
-            $distance = abs($value[$Location]-$value[$Destination]);
             if ($distance>0 && $distance<=10) {
                 $totalFare=$fixedFare+($distance*$price)+$luggageprice;
             } elseif ($distance>10 && $distance<=50) {
@@ -125,7 +125,6 @@ if ($Cab=="4") {
         $price3=(100*13.20);
         $price4=11.50;
         if ($key==$Location && $key==$Destination) {
-            $distance = abs($value[$Location]-$value[$Destination]);
             if ($distance>0 && $distance<=10) {
                 $totalFare=$fixedFare+($distance*$price)+($luggageprice*2);
             } elseif ($distance>10 && $distance<=50) {
@@ -143,18 +142,21 @@ if ($Cab=="4") {
         }
     }
 }
-// class Book 
-// {
-//     public function bookride() 
-//     {
-//         $data = array("Location"=>$Location,
-//         "Destination"=>$Destination,
-//         "Cab"=>$Cab,
-//         "luggage"=>$luggage,
-//         "distance"=>$distance,
-//         "TotalFare"=>$totalFare);
-//         $_SESSION['ride'] = $data;
-//     }
-// }
-
-?>
+if (isset($_REQUEST['action'])) {
+    $db = new DB();
+    $db->connect('localhost', 'root', '', 'CabBooking');
+    $action = $_REQUEST['action'];
+    $user_id = $_SESSION['userdata']['user_id'];
+    echo $action;
+    if ($action == 1) {
+        $status=1;
+        $field = array('pickup', 'droplocation', 'total_distance', 'total_fare', 'status', 'user_id');
+        $values = array($Location, $Destination, $distance, $totalFare,  $status, $user_id);
+        $sql = $db->insert($field, $values, 'rideTable');
+        if ($sql) {
+            echo "";
+        } else {
+            echo "Something Went Wrong";
+        }
+    }
+}

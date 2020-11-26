@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Php version 7.2.10
  * 
@@ -8,33 +9,32 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-session_start();
+require 'Admin/config.php';
 if (!empty(isset($_SESSION['userdata']))) {
     $user = $_SESSION['userdata']['username'];
 }
-?><!doctype html>
+$db = new LocationTable();
+$db->connect('localhost', 'root', '', 'CabBooking');
+$sql = $db->location_getData();
+?>
+<!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <!-- fontawesome CSS -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
-        type='text/css'>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -57,14 +57,20 @@ if (!empty(isset($_SESSION['userdata']))) {
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">Home</a>
                         </li>
-                        <li class="nav-item text-color">
-                            <a class="nav-link mr-2 text-white" href="#">About Us</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Rides
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Pending Rides</a>
+                                <a class="dropdown-item" href="#">Completed Rides</a>
+                            </div>
                         </li>
                         <li class="nav-item text-color">
                             <?php if (empty($user)) { ?>
-                            <a class="nav-link mr-5 text-white" href="Admin/login.php">Login</a>
+                                <a class="nav-link mr-5 text-white" href="Admin/login.php">Login</a>
                             <?php } else { ?>
-                            <a class="nav-link mr-5 text-white" href="Admin/logout.php">Logout</a>
+                                <a class="nav-link mr-5 text-white" href="Admin/logout.php">Logout</a>
                             <?php } ?>
                         </li>
                         <li class="nav-item"><a href="Admin/signup.php" class="btn btn-default py-1 px-4 rounded-pill btn1">SIGN UP</a>
@@ -79,7 +85,7 @@ if (!empty(isset($_SESSION['userdata']))) {
             <div class="col-sm-12 col-md-12 pl-0">
                 <img class="w-100 h-100 img-fluid" src="images/bodyimage.jpg" alt="image">
                 <div class="col-md-12 col-sm-12">
-                    <h1 class="text-center text-dark pt-4">Book a City Taxi To your Destination in Town</h1>
+                    <h1 class="text-center text-dark pt-4">Book a City Taxi To your Destination in Town &nbsp; <?php if (isset($user)) echo $user ?></h1>
                     <span class="text-center d-block text-dark">Choose From range of categories and prices</span>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -95,13 +101,10 @@ if (!empty(isset($_SESSION['userdata']))) {
                                 </div>
                                 <select class="form-control" id="sel1" name="sellist1">
                                     <option class="dropdown-menu" value="0">Current Location</option>
-                                    <option class="dropdown-item">Charbagh</option>
-                                    <option class="dropdown-item">Indira Nagar</option>
-                                    <option class="dropdown-item">BBD</option>
-                                    <option class="dropdown-item">Barabanki</option>
-                                    <option class="dropdown-item">Faizabad</option>
-                                    <option class="dropdown-item">Basti</option>
-                                    <option class="dropdown-item">Gorakhpur</option>
+                                    <?php
+                                    while ($row = mysqli_fetch_assoc($sql)) { ?>
+                                        <option class="dropdown-item" value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="input-group mb-3">
@@ -110,13 +113,11 @@ if (!empty(isset($_SESSION['userdata']))) {
                                 </div>
                                 <select class="form-control" id="sel2" name="sellist1">
                                     <option value="0" class="dropdown-menu">Enter the Destination</option>
-                                    <option class="dropdown-item">Charbagh</option>
-                                    <option class="dropdown-item">Indira Nagar</option>
-                                    <option class="dropdown-item">BBD</option>
-                                    <option class="dropdown-item">Barabanki</option>
-                                    <option class="dropdown-item">Faizabad</option>
-                                    <option class="dropdown-item">Basti</option>
-                                    <option class="dropdown-item">Gorakhpur</option>
+                                    <?php
+                                    $sql = $db->location_getData();
+                                    while ($row = mysqli_fetch_assoc($sql)) { ?>
+                                        <option class="dropdown-item" value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="input-group mb-3">
@@ -132,18 +133,18 @@ if (!empty(isset($_SESSION['userdata']))) {
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Enter the Luggage Weight"
-                                    disabled="disabled" id="text3">&nbsp<span id="errormsg"></span>
+                                <input type="text" class="form-control" placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp<span id="errormsg"></span>
                             </div>
                             <button type="submit" id="btn1" class="btn btn-default btn1 form-control">Calculate
                                 Fare</button>
-                                <button type="submit" id="btn2" class="btn btn-default btn1 form-control">Book
+                            <button type="submit" id="btn2" class="btn btn-default btn1 form-control">Book
                                 Now</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row cd" id="table">
             <div class="col-sm-12 col-md-12">
                 <table class="table table-hover">

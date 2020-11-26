@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Php version 7.2.10
  * 
@@ -10,10 +11,19 @@
  */
 require 'header.php';
 require 'config.php';
-$db = new DB();
+$db = new LocationTable();
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql=$db->getData();
+if (isset($_REQUEST['update'])) {
+    $user_id = $_REQUEST['id'];
+    $locname = $_POST['Location_Name'];
+    $distance = $_POST['distance'];
+    $avail = $_POST['available'];
+    echo $locname, $user_id, $distance, $avail;
+    echo $db->setLocation($user_id, $locname, $distance, $avail);
+}
+$sql = $db->location_getData();
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
@@ -21,7 +31,7 @@ $sql=$db->getData();
             <h1>Location</h1>
         </div>
     </div>
-    <table id="AdminTable">
+    <table id="LocationTable">
         <tr>
             <th>ID</th>
             <th>Location</th>
@@ -29,17 +39,20 @@ $sql=$db->getData();
             <th>Availability</th>
             <th>Action</th>
         </tr>
-        <?php 
-        while ($row =mysqli_fetch_assoc($sql)) { ?>
-        <tr>
-            <td><input type="text" value="<?php echo $row['user_id'] ?>"/></td>
-            <td><input type="text" value="<?php echo $row['location'] ?>"/></td>
-            <td><input type="text" value="<?php echo $row['user_id'] ?>"/></td>
-            <td><input type="text" value="<?php echo $row['user_id'] ?>"/></td>
-            <td><a href="manageLocation.php?user_id=<?php echo $row['user_id']?>">Update</a></td>
-            <td><a href="manageLocation.php?delid=<?php echo $row['user_id']?>">Delete</a></td>
-        </tr>
-        <?php } ?>
+        <?php if (isset($sql)) {
+            foreach ($sql as $key) { ?>
+                <tr>
+                    <form method="POST" action="">
+                        <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
+                        <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
+                        <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
+                        <td><input type="text" name="available" value="<?php echo $key['is_available'] ?>" /></td>
+                        <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
+                            <a href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
+                    </form>
+                </tr>
+        <?php }
+        } ?>
     </table>
     <script src="../script.js"></script>
 </body>

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Php version 7.2.10
  * 
@@ -10,7 +11,7 @@
  */
 require 'header.php';
 require 'config.php';
-$loct = new DB();
+$loct = new LocationTable();
 $loct->connect('localhost', 'root', '', 'CabBooking');
 $error = array();
 if (isset($_POST["submit"])) {
@@ -21,34 +22,36 @@ if (isset($_POST["submit"])) {
     $loct->insert($fields, $values, 'LocationTable');
 }
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
     </div>
-    <p class="location-logo">Add Locations</p> 
+    <p class="location-logo">Add Locations</p>
     <div id="admin-location-form">
-            <form action="" method="POST">    
-                <div id="errordiv">
-                    <?php if (sizeof($error)>0) : ?>
+        <form action="" method="POST">
+            <div id="errordiv">
+                <?php if (sizeof($error) > 0) : ?>
                     <ul>
                         <?php foreach ($error as $value) : ?>
-                        <li><?php echo $error['msg'] ;break ?></li>
+                            <li><?php echo $error['msg'];
+                                break ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <?php endif ; ?>
-                </div>
-                <p class="input">
-                    <label for="username">Location:
-                        <input type="text" name="location" required></label>
-                </p>
-                <p class="input">
-                    <label for="text">Distance:
-                        <input type="text" name="distance" required></label>
-                </p>
-                <p class="submit">
-                    <input type="submit" name="submit" value="ADD">
-                </p>
-            </form>
-        </div>
+                <?php endif; ?>
+            </div>
+            <p class="input">
+                <label for="username">Location:
+                    <input type="text" name="location" required></label>
+            </p>
+            <p class="input">
+                <label for="text">Distance:
+                    <input type="text" name="distance" required></label>
+            </p>
+            <p class="submit">
+                <input type="submit" name="submit" value="ADD">
+            </p>
+        </form>
+    </div>
     </form>
 </body>

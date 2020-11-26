@@ -10,6 +10,7 @@
 }
 .row img{
     position: absolute;
+    z-index: -3;
 }
 #formcontent {
     background-color: white;
@@ -260,4 +261,55 @@ header #headernav li{
     background-color: #F5B041 ;
     border-radius: 5px;
     padding: 5px;
+}
+#LocationTable {
+    border: 1px solid white;
+    border-collapse: collapse;
+    transform: translate(100px,50px);
+}
+#LocationTable tr td,th{
+    border: 1px solid white;
+    padding: 20px;
+}
+#LocationTable td a,#update {
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    background-color: #F5B041 ;
+    border-radius: 5px;
+    padding: 5px;
+}
+#LocationTable th {
+    color: white;
+}
+#LocationTable input[type="text"]
+{
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+#td {
+    color: white;
+}
+.tiles {
+    margin: 0px;
+    padding:10px 20px;
+    display: inline;
+}
+.tiles a{
+    float: left;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 50px 80px;
+    margin-left: 20px;
+    background-color: white;
+}
+.tiles a p i{
+   font-size: 50px;
+   text-align: center;
+}
+.maintiles {
+    display: flex;
+    padding: 40px;
+    margin-left: 20px;
 }
