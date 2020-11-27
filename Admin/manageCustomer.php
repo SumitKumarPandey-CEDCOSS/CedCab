@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -13,7 +12,6 @@ require 'header.php';
 require 'config.php';
 $db = new User();
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql = $db->getData();
 if (isset($_GET['blocked_id'])) {
     $user_id = $_GET['blocked_id'];
     echo $user_id;
@@ -31,12 +29,28 @@ if (isset($_REQUEST['delid'])) {
     header("Refresh:0;url=manageCustomer.php");
 }
 ?>
-
+<?php if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+} else {
+    $sort ='user_id';
+}
+$sql = $db->getData($sort);
+?>
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>All Users</h1>
+        </div>
+    </div>
+    <div class="dropdown sort">
+                <button class="dropbtn sortbtn">Sort</button>
+                <div class="dropdown-content sortcontent">
+                    <a href="manageCustomer.php?sort=username">Name<p hidden>A $_GET</p></a>
+                    <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
+                    <a href="manageCustomer.php?sort=mobile">Blocked wise<p hidden>A $_GET</p></a>
+                </div>
+            </div>
         </div>
     </div>
     <table id="AdminTable">
@@ -45,6 +59,7 @@ if (isset($_REQUEST['delid'])) {
             <th>Name</th>
             <th>Email</th>
             <th>Mobile</th>
+            <th>Date of Signup</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -55,6 +70,7 @@ if (isset($_REQUEST['delid'])) {
                     <td><?php echo $key['username'] ?></td>
                     <td><?php echo $key['email'] ?></td>
                     <td><?php echo $key['mobile'] ?></td>
+                    <td><?php echo $key['date'] ?></td>
                     <td><?php if ($key['is_block'] == '1') {
                             echo "Unblocked";
                         } else {

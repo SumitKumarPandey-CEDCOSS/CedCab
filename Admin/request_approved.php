@@ -20,7 +20,7 @@ $sql = $db->show_approved();
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
-            <h1>All Users</h1>
+            <h1>Approved Users</h1>
         </div>
     </div>
     <table id="AdminTable">

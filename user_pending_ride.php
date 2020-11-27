@@ -9,38 +9,20 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
-require 'config.php';
+require 'userheader.php';
+require 'Admin/config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-
-if (isset($_REQUEST['delid'])) {
-    $user_id = $_REQUEST['delid'];
-    echo $db->reject($user_id);
-    header("Refresh:0;url=pending_ride.php");
+if (isset($_SESSION['userdata'])) {
+    $user = $_SESSION['userdata']['username'];
 }
+$sql= $db->pending($user);
 ?>
-<?php if (isset($_GET['sort'])) {
-    $sort = $_GET['sort'];
-} else {
-    $sort ='ride_id';
-}
-$sql = $db->All_ride($sort);
-?>
-
 <body class="admintop">
     <div class="adminbody">
-        <img src="../images/taxi4.jpg" alt="">
+        <img src="images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
-            <h1>All Rides</h1>
-            <div class="dropdown sort">
-                <button class="dropbtn sortbtn">Sort By</button>
-                <div class="dropdown-content sortcontent">
-                    <a href="All_rides.php?sort=pickup">Name<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=ride_date">Date<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
-                </div>
-            </div>
+            <h1>Pending Rides</h1>
         </div>
     </div>
     <table id="LocationTable" class="ridetable">
@@ -53,7 +35,6 @@ $sql = $db->All_ride($sort);
             <th>Total_fare</th>
             <th>User Id</th>
             <th>Status</th>
-            <th>Action</th>
         </tr>
         <?php if (isset($sql)) {
             foreach ($sql as $key) { ?>
@@ -65,14 +46,9 @@ $sql = $db->All_ride($sort);
                     <td id="td"><?php echo $key['ride_date'] ?></td>
                     <td id="td"><?php echo $key['total_fare'] ?></td>
                     <td id="td"><?php echo $key['user_id'] ?></td>
-                    <td id="td"><?php if ($key['status'] == '2') {
-                                    echo "completed";
-                                } elseif ($key['status'] == '1') {
+                    <td id="td"><?php if ($key['status'] == '1') {
                                     echo "pending";
-                                } else {
-                                    echo "confirm";
                                 } ?></td>
-                    <td><a href="pending_ride.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
                 </tr>
         <?php }
         } ?>

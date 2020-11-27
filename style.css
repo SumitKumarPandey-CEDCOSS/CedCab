@@ -243,15 +243,14 @@ header #headernav li{
     font-size: 50px;
 }
 #AdminTable{
-    color: black;
+    color: white;
     border: 2px solid white;
     border-collapse: collapse;
-    transform: translate(40%,70%);
-    background-color: white;
+    transform: translate(150px,50px);
     /* width: 600px; */
 }
 #AdminTable th,#AdminTable td {
-    border: 2px solid black;
+    border: 2px solid white;
     padding: 20px;
 }
 #AdminTable td a{
@@ -265,7 +264,7 @@ header #headernav li{
 #LocationTable {
     border: 1px solid white;
     border-collapse: collapse;
-    transform: translate(100px,50px);
+    transform: translate(97px,2px);
 }
 #LocationTable tr td,th{
     border: 1px solid white;
@@ -303,13 +302,52 @@ header #headernav li{
     padding: 50px 80px;
     margin-left: 20px;
     background-color: white;
+    color: Black;
 }
 .tiles a p i{
    font-size: 50px;
    text-align: center;
+   color: #6C3483;
 }
 .maintiles {
     display: flex;
     padding: 40px;
     margin-left: 20px;
+}
+.tiles a:hover {
+    background-color: #566573;
+    color:white;
+    transition: 0.3s;
+}
+.tiles a p i:hover {
+    color: white;
+    transition: 0.3s;
+}
+#invoice {
+    margin: 20px 150px;
+    background-color: floralwhite;
+}
+#invoice td{
+    padding: 5px 100px;
+}
+#invoice th {
+    border-bottom: 1px solid black;
+}
+.sort {
+    margin-left: 7%;
+    display: inline-block;
+}
+.sortbtn {
+    background-color: #F5B041;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.sortcontent a{
+    transition: 0.3s;
+    background-color: white;
+    color: black;
+}
+.dropnav {
+    z-index: 3;
 }

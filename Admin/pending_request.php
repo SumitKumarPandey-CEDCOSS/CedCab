@@ -16,12 +16,12 @@ $sql = $db->signup_request();
 if (isset($_REQUEST['user_id'])) {
     $user_id = $_REQUEST['user_id'];
     echo $db->approved($user_id);
-    header("Refresh:0;url=Admindashboard.php");
+    header("Refresh:0;url=pending_request.php");
 }
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->reject($user_id);
-    header("Refresh:0;url=Admindashboard.php");
+    header("Refresh:0;url=pending_request.php");
 }
 if (!empty(isset($_SESSION['userdata']))) {
     $user = $_SESSION['userdata']['username'];
@@ -36,9 +36,7 @@ require 'header.php';
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
-            <h1>Welcome &nbsp;<?php if (!empty($user)) {
-                                    echo $user;
-                                } ?></h1>
+            <h1>Pending Request List</h1>
         </div>
     </div>
     <table id="AdminTable">
@@ -54,8 +52,8 @@ require 'header.php';
                     <td><?php echo $key['user_id'] ?></td>
                     <td><?php echo $key['username'] ?></td>
                     <td><?php echo $key['email'] ?></td>
-                    <td><a href="Admindashboard.php?user_id=<?php echo $key['user_id'] ?>">Approved</a>
-                        <a href="Admindashboard.php?delid=<?php echo $key['user_id'] ?>">Reject</a></td>
+                    <td><a href="pending_request.php?user_id=<?php echo $key['user_id'] ?>">Approved</a>
+                        <a href="pending_request.php?delid=<?php echo $key['user_id'] ?>">Reject</a></td>
                 </tr>
         <?php }
         } ?>

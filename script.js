@@ -93,6 +93,7 @@ $(function () {
             data: { Location: a, Destination: b, Cab: c, Luggage: d, action: action },
             success: function (result) {
                 alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
+                // alert(result);
             },
             error: function () {
                 alert("error");

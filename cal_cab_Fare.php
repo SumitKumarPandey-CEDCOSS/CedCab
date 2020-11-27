@@ -10,7 +10,7 @@
  */
 require 'Admin/config.php';
 
-global $distance,$luggageprice;
+global $distance,$luggageprice,$cab;
 $Location = $_REQUEST['Location'];
 $Destination = $_REQUEST['Destination'];
 $Cab = $_REQUEST['Cab'];
@@ -39,6 +39,7 @@ foreach ($cabdetail as $key=>$value) {
     $distance = abs($value[$Location]-$value[$Destination]);
 }
 if ($Cab=="1") {
+    $cab="CedMicro";
     $fixedFare=50;
     foreach ($cabdetail as $key=>$value) {
         $price=13.50;
@@ -65,6 +66,7 @@ if ($Cab=="1") {
     }
 }
 if ($Cab=="2") {
+    $cab="CedMini";
     $fixedFare=150;
     foreach ($cabdetail as $key=>$value) {
         $price=14.50;
@@ -91,6 +93,7 @@ if ($Cab=="2") {
     }
 }
 if ($Cab=="3") {
+    $cab="CedRoyal";
     $fixedFare=200;
     foreach ($cabdetail as $key=>$value) {
         $price=15.50;
@@ -117,6 +120,7 @@ if ($Cab=="3") {
     }
 }
 if ($Cab=="4") {
+    $cab="CedSUV";
     $fixedFare=250;
     foreach ($cabdetail as $key=>$value) {
         $price = 16.50;
@@ -142,21 +146,25 @@ if ($Cab=="4") {
         }
     }
 }
-if (isset($_REQUEST['action'])) {
-    $db = new DB();
-    $db->connect('localhost', 'root', '', 'CabBooking');
-    $action = $_REQUEST['action'];
-    $user_id = $_SESSION['userdata']['user_id'];
-    echo $action;
-    if ($action == 1) {
-        $status=1;
-        $field = array('pickup', 'droplocation', 'total_distance', 'total_fare', 'status', 'user_id');
-        $values = array($Location, $Destination, $distance, $totalFare,  $status, $user_id);
-        $sql = $db->insert($field, $values, 'rideTable');
-        if ($sql) {
-            echo "";
-        } else {
-            echo "Something Went Wrong";
+if (!empty($_SESSION['userdata'])) {
+    if (isset($_REQUEST['action'])) {
+        $db = new DB();
+        $db->connect('localhost', 'root', '', 'CabBooking');
+        $action = $_REQUEST['action'];
+        $user_id = $_SESSION['userdata']['user_id'];
+        echo $action;
+        if ($action == 1) {
+            $status=1;
+            $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
+            $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
+            $sql = $db->insert($field, $values, 'rideTable');
         }
     }
-}
+} 
+// else {
+//     phpAlert("Login First To book Ride");
+// }
+// function phpAlert($msg) {
+//     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+//     header("L");
+// }

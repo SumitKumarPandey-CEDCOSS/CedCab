@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Php version 7.2.10
  * 
@@ -9,9 +10,9 @@
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
 session_start();
-class DB 
+class DB
 {
-    public function connect($host, $user, $pass, $dtb) 
+    public function connect($host, $user, $pass, $dtb)
     {
         $this->serverame = $host;
         $this->username = $user;
@@ -20,14 +21,14 @@ class DB
 
         return $this->conn = mysqli_connect($host, $user, $pass, $dtb) or die('Could Not Connect.');
     }
-    public function insert($fields, $data, $table) 
+    public function insert($fields, $data, $table)
     {
         try {
             $queryFields = implode(",", $fields);
 
             $queryValues = implode('","', $data);
-            
-            $insert = 'INSERT INTO '.$table.'('.$queryFields.') VALUES ("'.$queryValues.'")';
+
+            $insert = 'INSERT INTO ' . $table . '(' . $queryFields . ') VALUES ("' . $queryValues . '")';
 
             if (mysqli_query($this->conn, $insert)) {
                 return true;
@@ -41,20 +42,20 @@ class DB
 }
 class User extends DB
 {
-    public function login($username,$password,$roles) 
+    public function login($username, $password, $roles)
     {
-        $is_block=1;
-        $sql ='SELECT * FROM userTable WHERE 
-        `username`="'.$username.'" AND 
-        `password`="'.$password.'" AND is_admin="'.$roles.'" AND is_block="'.$is_block.'"';
+        $is_block = 1;
+        $sql = 'SELECT * FROM userTable WHERE 
+        `username`="' . $username . '" AND 
+        `password`="' . $password . '" AND is_admin="' . $roles . '" AND is_block="' . $is_block . '"';
         $result = $this->conn->query($sql);
-        if ($result->num_rows>0) {
+        if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $_SESSION["userdata"]=array('username' => $row['username'],'user_id'=> $row['user_id']);
-                if ($row['is_admin']=='admin') {
+                $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id']);
+                if ($row['is_admin'] == 'admin') {
                     $rtn = "Login Success";
                     header("Refresh:0; url=Admindashboard.php");
-                } elseif ($row['is_admin']=='user') {
+                } elseif ($row['is_admin'] == 'user') {
                     $rtn = "Login Success";
                     header("Refresh:0; url=../index.php");
                 } else {
@@ -64,104 +65,192 @@ class User extends DB
             }
         }
     }
-    public function signup_request() 
+    public function signup_request()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`= '0' AND `is_admin`!='admin'");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`= '0' AND `is_admin`!='admin'");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function approved($user_id) 
+    public function approved($user_id)
     {
-        $result=mysqli_query($this->conn, "UPDATE userTable SET `is_block`='1' WHERE `user_id`='".$user_id."'");
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `is_block`='1' WHERE `user_id`='" . $user_id . "'");
         return "SuccessFully Approved";
     }
-    public function show_approved() 
+    public function show_approved()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`='1' ");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`='1' ");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function reject($user_id) 
+    public function reject($user_id)
     {
-        $result=mysqli_query($this->conn, "DELETE FROM userTable  WHERE `user_id`='".$user_id."'");
+        $result = mysqli_query($this->conn, "DELETE FROM userTable  WHERE `user_id`='" . $user_id . "'");
         return "Rejected SuccessFully";
     }
-    public function blocked($user_id) 
+    public function blocked($user_id)
     {
-        $result=mysqli_query($this->conn, "UPDATE userTable SET `is_block`='1' WHERE `user_id`='".$user_id."'");
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `is_block`='1' WHERE `user_id`='" . $user_id . "'");
         return "Blocked SuccessFully";
     }
-    public function unblocked($user_id) 
+    public function unblocked($user_id)
     {
-        $result=mysqli_query($this->conn, "UPDATE userTable SET `is_block`='0' WHERE `user_id`='".$user_id."'");
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `is_block`='0' WHERE `user_id`='" . $user_id . "'");
         return "UnBlocked SuccessFully";
     }
-    public function getData()  
+    public function getData($sort)
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ORDER BY $sort ");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
+    public function count_user()
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ");
+        return $result->num_rows;
+    }
+    public function count_pending_request()
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`= '0' AND `is_admin`!='admin'");
+        return $result->num_rows;
+    }
+    public function count_blocked()
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`='0'");
+        return $result->num_rows;
+    }
+
 }
-class LocationTable extends DB 
+class LocationTable extends DB
 {
-    public function location_getData()  
+    public function location_getData()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM LocationTable ");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM LocationTable WHERE `is_block`='1' ");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function setLocation($user_id, $locname, $distance, $avail) 
+    public function setLocation($user_id, $locname, $distance, $avail)
     {
-        $result=mysqli_query($this->conn, "UPDATE LocationTable SET `name`='$locname',`distance`='$distance',`is_available`='$avail' WHERE `id`='".$user_id."'");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "UPDATE LocationTable SET `name`='$locname',`distance`='$distance',`is_available`='$avail' WHERE `id`='" . $user_id . "'");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
-    } 
+    }
 }
-class Ride extends DB 
+class Ride extends DB
 {
 
-    public function pending_ride() 
+    public function pending_ride()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1'");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1'");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function completed_ride() 
+    public function completed_ride()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2'");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2'");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function All_ride() 
+    public function All_ride($order)
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM rideTable");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY $order");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function cancelled_ride() 
+    public function cancelled_ride()
     {
-        $result=mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '0'");
-        if (mysqli_num_rows($result)>0) {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '0'");
+        if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function confirm($ride_id) 
+    public function count_ride()
     {
-        $result=mysqli_query($this->conn, "UPDATE rideTable SET `status`='2' WHERE `ride_id`='".$ride_id."'");
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable");
+        return $result->num_rows;
+    }
+    ///count pending_ride
+    public function count_pending_ride()
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1'");
+        return $result->num_rows;
+    }
+    public function confirm($ride_id)
+    {
+        $result = mysqli_query($this->conn, "UPDATE rideTable SET `status`='2' WHERE `ride_id`='" . $ride_id . "'");
         return "Confirm SuccessFully";
     }
-    public function cancelled($ride_id) 
+    public function count_confirm_ride()
     {
-        $result=mysqli_query($this->conn, "UPDATE rideTable SET `status`='0' WHERE `ride_id`='".$ride_id."'");
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2'");
+        return $result->num_rows;
+    }
+    public function cancelled($ride_id)
+    {
+        $result = mysqli_query($this->conn, "UPDATE rideTable SET `status`='0' WHERE `ride_id`='" . $ride_id . "'");
         return "Cancelled Approved";
     }
+    public function Total_Revenue()
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2'");
+        if (mysqli_num_rows($result)) {
+            return $result;
+        }
+    }
+    public function blocked_Ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "UPDATE LocationTable SET `is_block`='1' WHERE `id`='" . $user_id . "'");
+        return "Blocked SuccessFully";
+    }
+    public function unblocked_Ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "UPDATE LocationTable SET `is_block`='0' WHERE `id`='" . $user_id . "'");
+        return "UnBlocked SuccessFully";
+    }
+    public function user_completed_ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' AND `user_id`='$user_id '");
+        return $result->num_rows;
+    }
+    public function user_pending_ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1' AND `user_id`='$user_id' ");
+        return $result->num_rows;
+    }
+    public function user_revenu($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' AND `user_id`='$user_id' ");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+    public function complete_ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' AND `user_id`='$user_id '");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+    public function pending($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1' AND `user_id`='$user_id' ");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+    public function ride_user($user_id,$sort)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ORDER BY $sort ");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
 }
+ 
