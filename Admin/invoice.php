@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Php version 7.2.10
  * 
@@ -12,14 +12,11 @@ require 'config.php';
 require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql=$db->confirm_ride();
+$sql = $db->confirm_ride();
 ?>
 <body class="admintop">
-    <!-- <div class="adminbody"> -->
-        <!-- <img src="../images/taxi4.jpg" alt=""> -->
-        <div id="AdminWelcomeQuote">
-            <h1>User Invoice</h1>
-        <!-- </div> -->
+    <div id="AdminWelcomeQuote">
+        <h1>User Invoice</h1>     
     </div>
     <table id="invoice">
         <tr>
@@ -29,12 +26,12 @@ $sql=$db->confirm_ride();
             <th>Total Fare</th>
         </tr>
         <?php foreach ($sql as $key) { ?>
-        <tr>
-            <td><?php echo $key['user_id'] ?></td>
-            <td><?php echo $key['cabType'] ?></td>
-            <td><?php echo $key['pickup'] ?></td>
-            <td><?php echo $key['total_fare'] ?>$</td>
-        </tr>
+            <tr>
+                <td><?php echo $key['user_id'] ?></td>
+                <td><?php echo $key['cabType'] ?></td>
+                <td><?php echo $key['pickup'] ?></td>
+                <td><?php echo $key['total_fare'] ?>$</td>
+            </tr>
         <?php } ?>
     </table>
 </body>

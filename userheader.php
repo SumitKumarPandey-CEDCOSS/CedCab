@@ -33,9 +33,9 @@
     <ul id="nav">
         <li class="dropdown">
             <a href="index.php" class="dropbtn">UserDashboard</a>
-            <li class="dropdown">
-            <a href="book_ride.php" class="dropbtn">Book Ride</a>
-            </li>
+        <li class="dropdown">
+            <a href="index.php" class="dropbtn">Book Ride</a>
+        </li>
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Ride</a>
             <div class="dropdown-content">
@@ -46,11 +46,11 @@
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">User Account</a>
             <div class="dropdown-content">
-                <a href="update.php">Update Account</a>
+                <a href="user_account.php">View Details</a>
                 <a href="change_password.php">Change Password</a>
-            <li class="dropdown">
-                <a href="Admin/logout.php">Logout</a>
-            </div>
-        </li>
-    </ul>
+        <li class="dropdown">
+            <a href="Admin/logout.php">Logout</a>
+</div>
+</li>
+</ul>
 </div>

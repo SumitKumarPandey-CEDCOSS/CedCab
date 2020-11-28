@@ -14,7 +14,7 @@ require 'Admin/config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['userdata'])) {
-    $user = $_SESSION['userdata']['username'];
+    $user = $_SESSION['userdata']['user_id'];
 }
 $sql= $db->pending($user);
 ?>

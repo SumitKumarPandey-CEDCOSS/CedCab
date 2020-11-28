@@ -60,8 +60,7 @@ if ($Cab=="1") {
                 $totaldistance=$price4*($distance-160);
                 $totalFare=$fixedFare+$totaldistance+$price1+$price2+$price3;
             }
-            echo "<tr><td>".$Location."</td><td>".
-            $Destination."</td><td>".$distance."</td><td>".$totalFare."</td></tr>";
+            echo "Total Fare : ".$totalFare ."$";
         }
     }
 }
@@ -87,8 +86,7 @@ if ($Cab=="2") {
                 $totaldistance=$price4*($distance-160);
                 $totalFare=$fixedFare+$totaldistance+$price1+$price2+$price3+$luggageprice;
             }
-            echo "<tr><td>".$Location."</td><td>".
-            $Destination."</td><td>".$distance."</td><td>".$totalFare."</td></tr>";
+            echo "Total Fare : ".$totalFare ."$";
         }
     }
 }
@@ -114,8 +112,7 @@ if ($Cab=="3") {
                 $totaldistance=$price4*($distance-160);
                 $totalFare=$fixedFare+$totaldistance+$price1+$price2+$price3+$luggageprice;
             }
-            echo "<tr><td>".$Location."</td><td>".
-            $Destination."</td><td>".$distance."</td><td>".$totalFare."</td></tr>";
+            echo "Total Fare : ".$totalFare ."$";
         }
     }
 }
@@ -141,8 +138,7 @@ if ($Cab=="4") {
                 $totaldistance=$price4*($distance-160);
                 $totalFare=$fixedFare+$totaldistance+$price1+$price2+$price3+($luggageprice*2);
             }
-            echo "<tr><td>".$Location."</td><td>".
-            $Destination."</td><td>".$distance."</td><td>".$totalFare."</td></tr>";
+            echo "Total Fare : ".$totalFare ."$";
         }
     }
 }
@@ -161,10 +157,3 @@ if (!empty($_SESSION['userdata'])) {
         }
     }
 } 
-// else {
-//     phpAlert("Login First To book Ride");
-// }
-// function phpAlert($msg) {
-//     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
-//     header("L");
-// }

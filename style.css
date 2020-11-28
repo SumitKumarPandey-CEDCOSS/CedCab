@@ -1,44 +1,13 @@
-.logo {
-    height: 100px;
-    width: 150px;
-}
 .btn1 {
     background-color: #DDE71B;
+    padding: 10px;
+    border-radius: 10px;
 }
 #btn2 {
     display: none;
 }
-.row img{
-    position: absolute;
-    z-index: -3;
-}
-#formcontent {
-    background-color: white;
-     border-radius: 10px;
-}
-#formlogo span{
-    background-color:#DDE71B;
-}
-.custom-select {
-    text-decoration: none;
-}
-#sel1,#sel2,#sel3{
-    -webkit-appearance: none;
-}
-.color {
-    background-color: #08AFF7;
-}
-.font i{
-    padding:5px 5px 10px 0;
-    font-size: 40px;
-}
-.cd {
-    height: auto;
-    display: flex;
-}
 .body
 {
-    /* background-image: linear-gradient(to right, rgba(165, 105, 189,0 ), rgba(165, 105, 189 ,1)); */
     background-image: url(./images/taxi4.jpg);
     width: 100%;
     height: 80vh;
@@ -92,10 +61,6 @@ text-align: center;
 box-shadow: 5px 10px 18px #D1D0C4;
 padding: 15px 0px 0px 0px;
 color: white;
-}
-#head
-{
-    /* margin-left: 70px; */
 }
 #header
 {
@@ -247,7 +212,6 @@ header #headernav li{
     border: 2px solid white;
     border-collapse: collapse;
     transform: translate(150px,50px);
-    /* width: 600px; */
 }
 #AdminTable th,#AdminTable td {
     border: 2px solid white;
@@ -323,6 +287,12 @@ header #headernav li{
     color: white;
     transition: 0.3s;
 }
+.tiles span {
+    overflow: hidden;
+    padding-left: 30px;
+    font-size: 20px;
+    color: red;
+}
 #invoice {
     margin: 20px 150px;
     background-color: floralwhite;
@@ -350,4 +320,42 @@ header #headernav li{
 }
 .dropnav {
     z-index: 3;
+}
+#form {
+    padding: 40px;
+    transform: translate(110%,50%);
+    width: 400px;
+    height: 40vh;
+    background-color: white;
+    border-radius: 10px;
+}
+.table1,.table2 {
+    color: black;
+    border-radius: 20px;
+    border: 2px solid white;
+    width: 400px;
+    line-height: 32px;
+    letter-spacing: 1px;
+    transform: translate(77%,10%);
+    padding: 70px;
+    background-color: #B2BABB ;
+}
+.formid label {
+    font-weight: bold;
+    padding-right: 10px;
+}
+#sel1,#sel2,#sel3 {
+    border-radius: 10px;
+    padding: 10px;
+    -webkit-appearance: none;
+}
+.bookid input[type="submit"] {
+    padding: 10px;
+}
+.bookid #text3 {
+    padding: 10px;
+    border-radius: 10px;
+}
+.bookid label {
+    color: black;
 }

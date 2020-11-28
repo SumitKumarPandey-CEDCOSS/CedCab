@@ -40,21 +40,21 @@ require 'header.php';
         </div>
         <div class="maintiles">
             <div class="tiles"><a href="pending_ride.php">
-                    <p><i class="fa fa-bar-chart"></i></p>Pending Rides &nbsp; <?php echo $sql ?>
+                    <p><i class="fa fa-bar-chart"></i></p>Pending_Rides &nbsp;<span><?php echo $sql ?></span>
                 </a></div>
             <div class="tiles"><a href="pending_request.php">
-                    <p><i class="fa fa-cubes"></i></p>Pending User &nbsp; <?php echo $count_pending_user ?>
+                    <p><i class="fa fa-cubes"></i></p>Pending User &nbsp;<span><?php echo $count_pending_user ?></span>
                 </a></div>
             <div class="tiles"><a href="All_rides.php">
-                    <p><i class="fa fa-group"></i></p>Total Rides &nbsp; <?php echo $confirm ?>
+                    <p><i class="fa fa-group"></i></p>Total Rides &nbsp; <span><?php echo $confirm ?></span>
                 </a></div>
             <div class="tiles"><a href="manageCustomer.php">
-                    <p><i class="fa fa-handshake-o"></i></p>All Users &nbsp; <?php echo $count_user ?>
+                    <p><i class="fa fa-handshake-o"></i></p>All Users &nbsp; <span><?php echo $count_user ?></span>
                 </a></div>
         </div>
         <div class="maintiles">
             <div class="tiles"><a href="pending_ride.php">
-                    <p><i class="fa fa-hourglass-2"></i></p>Confirm_Rides &nbsp;<?php echo $confirm_rides ?>
+                    <p><i class="fa fa-hourglass-2"></i></p>Confirm_Rides &nbsp;<span><?php echo $confirm_rides ?></span>
                 </a></div>
             <div class="tiles"><a href="pending_request.php">
                     <?php
@@ -62,9 +62,9 @@ require 'header.php';
                     foreach ($total_revenue as $key) {
                         $sum += $key['total_fare'];
                     }   ?>
-                    <p><i class="fa fa-line-chart"></i></p>Total_Revenue <?php echo $sum ?></a></div>
+                    <p><i class="fa fa-line-chart"></i></p>Total_Revenue <span><?php echo $sum ?> &nbsp;$</span></a></div>
             <div class="tiles"><a href="pending_rides.php">
-                    <p><i class="fa fa-search-plus"></i></p>Blocked_Users <br> <?php echo $blocked ?>
+                    <p><i class="fa fa-search-plus"></i></p>Blocked_Users <span><?php echo $blocked ?></span>
                 </a></div>
             <div class="tiles"><a href="manageCustomers.php">
                     <p><i class="fa fa-signal"></i></p>All Users

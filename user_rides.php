@@ -15,18 +15,19 @@ $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 
 if (isset($_SESSION['userdata'])) {
-    $user = $_SESSION['userdata']['username'];
+    $user = $_SESSION['userdata']['user_id'];
 }
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
-    $sort ='ride_id';
+    $sort = 'ride_id';
 }
-$sql = $db->ride_user($user,$sort);
+$sql = $db->ride_user($user, $sort);
 ?>
+
 <body class="admintop">
     <div class="adminbody">
-        <img src="../images/taxi4.jpg" alt="">
+        <img src="images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>All Rides</h1>
             <div class="dropdown sort">
@@ -68,6 +69,7 @@ $sql = $db->ride_user($user,$sort);
                                 } else {
                                     echo "confirm";
                                 } ?></td>
+                    <td><a href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                 </tr>
         <?php }
         } ?>

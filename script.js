@@ -47,7 +47,7 @@ $(function () {
             data: { Location: a, Destination: b, Cab: c, Luggage: d },
             success: function (result) {
                 // alert(result);
-                $("#table").show();
+                $('.booktable').show();
                 $('#table1').html(result);
             },
             error: function () {
@@ -59,7 +59,7 @@ $(function () {
         $("#btn1").show();
         $("#btn2").hide();
     });
-
+    $('.booktable').hide();
     $("#btn2").click(function (e) {
         e.preventDefault();
         var a = $("#sel1").val();
@@ -92,12 +92,23 @@ $(function () {
             type: "POST",
             data: { Location: a, Destination: b, Cab: c, Luggage: d, action: action },
             success: function (result) {
-                alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
-                // alert(result);
+                
+                $data = $('#table1').html();
+                if($data == result) {
+                    alert("please login");
+                    window.location.href='Admin/login.php';
+                } else {
+                    alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
+                }
             },
             error: function () {
                 alert("error");
             }
         });
     });
+    $('.table2').hide();
+    $("#edit").click(function(){
+        $('.table1').hide();
+        $('.table2').show();
+    })
 });

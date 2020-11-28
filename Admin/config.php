@@ -57,7 +57,7 @@ class User extends DB
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     $rtn = "Login Success";
-                    header("Refresh:0; url=../index.php");
+                    header("Refresh:0; url=../userdashboard.php");
                 } else {
                     $rtn = "Login Failed";
                 }
@@ -121,7 +121,18 @@ class User extends DB
         $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_block`='0'");
         return $result->num_rows;
     }
-
+    public function current_user($user_id)
+    {
+        $result = mysqli_query($this->conn,"SELECT * FROM userTable WHERE `user_id`='$user_id' ");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+    public function setuser($user_id, $username, $mobile, $email, $date)
+    {
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `username`='$username',`mobile`='$mobile',`email`='$email',`date`='$date' WHERE `user_id`='" . $user_id . "'");
+        return "SuccessFull Updated";
+    }
 }
 class LocationTable extends DB
 {
