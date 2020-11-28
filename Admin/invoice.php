@@ -12,7 +12,10 @@ require 'config.php';
 require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql = $db->confirm_ride();
+if (isset($_REQUEST['user_id'])) {
+    $user_id = $_REQUEST['user_id'];
+}
+$sql = $db->confirm_ride($user_id);
 ?>
 <body class="admintop">
     <div id="AdminWelcomeQuote">

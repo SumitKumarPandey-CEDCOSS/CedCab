@@ -263,5 +263,12 @@ class Ride extends DB
             return $result;
         }
     }
+    public function confirm_ride($user_id) 
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
 }
  

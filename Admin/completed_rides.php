@@ -38,6 +38,7 @@ if (isset($_REQUEST['delid'])) {
             <th>Total_fare</th>
             <th>User Id</th>
             <th>Status</th>
+            <th>Invoice</th>
             <th>Action</th>
         </tr>
         <?php if (isset($sql)) {
@@ -53,6 +54,7 @@ if (isset($_REQUEST['delid'])) {
                     <td id="td"><?php if ($key['status'] == '2') {
                                     echo "completed";
                                 } ?></td>
+                    <td><a href="invoice.php?user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
                     <td><a href="pending_ride.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
                 </tr>
         <?php }
