@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -32,68 +33,68 @@ if (isset($_REQUEST['delid'])) {
 <?php if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
-    $sort ='user_id';
+    $sort = 'user_id';
 }
 $sql = $db->getData($sort);
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>All Users</h1>
         </div>
-    </div>
-    <div class="dropdown sort">
-                <button class="dropbtn sortbtn">Sort</button>
-                <div class="dropdown-content sortcontent">
-                    <a href="manageCustomer.php?sort=username">Name<p hidden>A $_GET</p></a>
-                    <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
-                    <a href="manageCustomer.php?sort=mobile">Blocked wise<p hidden>A $_GET</p></a>
-                </div>
+        <div class="dropdown sort">
+            <button class="dropbtn sortbtn">Sort</button>
+            <div class="dropdown-content sortcontent">
+                <a href="manageCustomer.php?sort=username">Name<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=is_block">Blocked wise<p hidden>A $_GET</p></a>
             </div>
         </div>
-    </div>
-    <table id="AdminTable">
-        <tr>
-            <th>User_ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Date of Signup</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        <?php if (isset($sql)) {
-            foreach ($sql as $key) { ?>
-                <tr>
-                    <td><?php echo $key['user_id'] ?></td>
-                    <td><?php echo $key['username'] ?></td>
-                    <td><?php echo $key['email'] ?></td>
-                    <td><?php echo $key['mobile'] ?></td>
-                    <td><?php echo $key['date'] ?></td>
-                    <td><?php if ($key['is_block'] == '1') {
-                            echo "Unblocked";
-                        } else {
-                            echo "Blocked";
-                        } ?></td>
-                    <td><a id="blocked" href="manageCustomer.php?<?php if ($key['is_block'] == '0') {
-                                                                        echo "blocked";
-                                                                    } else {
-                                                                        echo "unblocked";
-                                                                    }
-                                                                    ?>_id=<?php echo $key['user_id'] ?>">
-                            <?php if ($key['is_block'] == '0') {
-                                echo "Unblock";
+        <table id="AdminTable">
+            <tr>
+                <th>User_ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Date of Signup</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <?php if (isset($sql)) {
+                foreach ($sql as $key) { ?>
+                    <tr>
+                        <td><?php echo $key['user_id'] ?></td>
+                        <td><?php echo $key['username'] ?></td>
+                        <td><?php echo $key['email'] ?></td>
+                        <td><?php echo $key['mobile'] ?></td>
+                        <td><?php echo $key['date'] ?></td>
+                        <td><?php if ($key['is_block'] == '1') {
+                                echo "Unblocked";
                             } else {
-                                echo "blocked";
-                            }
-                            ?><p hidden>A $_GET</p>
-                        </a>
+                                echo "Blocked";
+                            } ?></td>
+                        <td><a id="blocked" href="manageCustomer.php?<?php if ($key['is_block'] == '0') {
+                                                                            echo "blocked";
+                                                                        } else {
+                                                                            echo "unblocked";
+                                                                        }
+                                                                        ?>_id=<?php echo $key['user_id'] ?>">
+                                <?php if ($key['is_block'] == '0') {
+                                    echo "Unblock";
+                                } else {
+                                    echo "blocked";
+                                }
+                                ?><p hidden>A $_GET</p>
+                            </a>
 
-                        <a href="manageCustomer.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
-                </tr>
-        <?php }
-        } ?>
-    </table>
+                            <a href="manageCustomer.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
+                    </tr>
+            <?php }
+            } ?>
+        </table>
+    </div>
+    <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>

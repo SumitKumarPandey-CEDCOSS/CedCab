@@ -21,6 +21,7 @@ if (isset($_POST["submit"])) {
     $roles = $_POST['roles'];
     // echo $roles;
     echo $user->login($username, $password, $roles);
+    // setcookie('username', $username, time() + (86400 * 30), "/");
 }
 ?>
 <!DOCTYPE html>
@@ -66,7 +67,11 @@ if (isset($_POST["submit"])) {
                 <p class="submit">
                     <input type="submit" name="submit" value="Login">
                 </p>
-                <span class='bottom'>Need a account? <a href="signup.php">Sign Up</a> </span>
+                <span class='bottom'>Need a account? <a href="signup.php" style="margin-left:70px;">Sign Up</a>
+                <br>
+                <br>
+                <a href="../index.php" style="margin-left:70px;">Book Ride Now</a></span>
+                
             </form>
         </div>
     </div>

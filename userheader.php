@@ -26,13 +26,13 @@
 <header>
     <ul id="headernav">
         <li><img src="images/logo.png" alt="Logo"></li>
-        <li><a href="#">CADCABB</a></li>
+        <li><a href="#">CEDCABB</a></li>
     </ul>
 </header>
 <div class="main">
     <ul id="nav">
         <li class="dropdown">
-            <a href="index.php" class="dropbtn">UserDashboard</a>
+            <a href="userdashboard.php" class="dropbtn">UserDashboard</a>
         <li class="dropdown">
             <a href="index.php" class="dropbtn">Book Ride</a>
         </li>

@@ -31,6 +31,7 @@ class DB
             $insert = 'INSERT INTO ' . $table . '(' . $queryFields . ') VALUES ("' . $queryValues . '")';
 
             if (mysqli_query($this->conn, $insert)) {
+                unset($_SESSION['bookdata']);
                 return true;
             } else {
                 die(mysqli_error($this->conn));
@@ -57,9 +58,12 @@ class User extends DB
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     $rtn = "Login Success";
+                    $cookie_name = $row['username'];
+                    setcookie($cookie_name, time() + (86400 * 30), "/");
                     header("Refresh:0; url=../userdashboard.php");
                 } else {
                     $rtn = "Login Failed";
+                    unset($_SESSION['bookdata']);
                 }
                 return $rtn;
             }
@@ -123,7 +127,7 @@ class User extends DB
     }
     public function current_user($user_id)
     {
-        $result = mysqli_query($this->conn,"SELECT * FROM userTable WHERE `user_id`='$user_id' ");
+        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `user_id`='$user_id' ");
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
@@ -149,6 +153,11 @@ class LocationTable extends DB
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
+    }
+    public function count_location() 
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM LocationTable");
+        return $result->num_rows;
     }
 }
 class Ride extends DB
@@ -235,7 +244,7 @@ class Ride extends DB
         $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '1' AND `user_id`='$user_id' ");
         return $result->num_rows;
     }
-    public function user_revenu($user_id)
+    public function user_revenue($user_id)
     {
         $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' AND `user_id`='$user_id' ");
         if (mysqli_num_rows($result) > 0) {
@@ -256,19 +265,38 @@ class Ride extends DB
             return $result;
         }
     }
-    public function ride_user($user_id,$sort)
+    public function ride_user($user_id, $sort)
     {
         $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ORDER BY $sort ");
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
-    public function confirm_ride($user_id) 
+    public function confirm_ride($ride_id)
     {
-        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `ride_id`='$ride_id' AND `status`='2' ");
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
     }
+    public function filter_user($user_id, $sort)
+    {
+        if ($sort == 'day') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 DAY) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
+        }
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+    public function user_ride($user_id)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
+        return $result->num_rows;
+    }
 }
- 

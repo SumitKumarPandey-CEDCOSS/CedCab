@@ -19,6 +19,7 @@ $sql = $db->location_getData();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,7 +61,7 @@ $sql = $db->location_getData();
             <li class="dropdown">
                 <a href="Admin/logout.php">Logout</a>
 </div>
-<?php }?>
+<?php } ?>
 <?php if (empty($_SESSION['userdata']['username'])) { ?>
     <li class="dropdown">
         <a href="Admin/signup.php">Sign In</a>
@@ -69,59 +70,59 @@ $sql = $db->location_getData();
     </li>
     </ul>
     </div>
-<body class="admintop">
-    <div class="adminbody">
-        <img src="images/taxi6.jpg" alt="">
-    </div>
-    <p class="location-logo">Book Ride</p>
-    <div class="table1">
-        <form action="" method="POST" class="bookid">
-            <p class="input">
-                <label for="username">Pickup:
-                    <select id="sel1" name="sellist1">
-                        <option value="0" class="dropdown-menu">Enter the Pickup</option>
-                        <?php
-                        foreach ($sql as $key) { ?>
-                            <option class="dropdown-item" value="<?php echo $key['name'] ?>"><?php echo $key['name'] ?></option>
-                        <?php } ?>
-                    </select>
-                </label>
-            </p>
-            <p class="input">
-                <label for="text">Drop:
-                    <select id="sel2" name="sellist1">
-                        <option value="0" class="dropdown-menu">Enter the Destination</option>
-                        <?php
-                        $sql = $db->location_getData();
-                        foreach ($sql as $key) { ?>
-                            <option class="dropdown-item" value="<?php echo $key['name'] ?>"><?php echo $key['name'] ?></option>
-                        <?php } ?>
-                    </select></label>
-            </p>
-            <p class="input">
-                <label for="text">Select Cab:
-                    <select id="sel3">
-                        <option class="dropdown-menu" value="0">Choose...</option>
-                        <option class="dropdown-item" value="1">CedMicro</option>
-                        <option class="dropdown-item" value="2">CedMini</option>
-                        <option class="dropdown-item" value="3">CedRoyal</option>
-                        <option class="dropdown-item" value="4">CedSUV</option>
-                    </select></label>
-            </p>
-            <p class="input">
-                <label for="text">Luggage:
-                    <input type="text"  placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
-            </p></label>
-            <p class="submit">
-                <button type="submit" id="btn1" class="btn1">Calculate
-                    Fare</button>
-                <button type="submit" id="btn2" class="btn1">Book
-                    Now</button>
-            </p>
-        </form>
-        <div class="booktable">
-            <p id="table1"></p>
-    </div>
-    
-    </div>
-</body>
+
+    <body class="admintop">
+        <div class="adminbody">
+            <img src="images/taxi6.jpg" alt="taxiimage">
+            <p class="location-logo">Book Ride</p>
+            <div class="table1">
+                <form action="" method="POST" class="bookid">
+                    <p class="input">
+                        <label for="username">Pickup:
+                            <select id="sel1" name="sellist1">
+                                <option value="0" class="dropdown-menu">Enter the Pickup</option>
+                                <?php
+                                foreach ($sql as $key) { ?>
+                                    <option class="dropdown-item" value="<?php echo $key['name'] ?>"><?php echo $key['name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </label>
+                    </p>
+                    <p class="input">
+                        <label for="text">Drop:
+                            <select id="sel2" name="sellist1">
+                                <option value="0" class="dropdown-menu">Enter the Destination</option>
+                                <?php
+                                $sql = $db->location_getData();
+                                foreach ($sql as $key) { ?>
+                                    <option class="dropdown-item" value="<?php echo $key['name'] ?>"><?php echo $key['name'] ?></option>
+                                <?php } ?>
+                            </select></label>
+                    </p>
+                    <p class="input">
+                        <label for="text">Select Cab:
+                            <select id="sel3">
+                                <option class="dropdown-menu" value="0">Choose...</option>
+                                <option class="dropdown-item" value="1">CedMicro</option>
+                                <option class="dropdown-item" value="2">CedMini</option>
+                                <option class="dropdown-item" value="3">CedRoyal</option>
+                                <option class="dropdown-item" value="4">CedSUV</option>
+                            </select></label>
+                    </p>
+                    <p class="input">
+                        <label for="text">Luggage:
+                            <input type="text" placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
+                    </p></label>
+                    <p class="submit">
+                        <button type="submit" id="btn1" class="btn1">Calculate
+                            Fare</button>
+                        <button type="submit" id="btn2" class="btn1">Book
+                            Now</button>
+                    </p>
+                </form>
+                <div class="booktable">
+                    <p id="table1"></p>
+                </div>
+            </div>
+        </div>
+    </body>

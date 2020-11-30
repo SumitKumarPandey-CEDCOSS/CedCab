@@ -19,6 +19,18 @@ if (isset($_POST["submit"])) {
     $password = $_POST['password'];
     $repassword = $_POST['repassword'];
     $mobile = $_POST['mobile'];
+
+    if (!empty($mobile)) // phone number is not empty
+    {
+        if (preg_match('/^\d{10}$/', $mobile)) // phone number is valid
+        {
+            $mobile = '0' . $mobile;
+        } else {
+            echo "<script>alert('Enter valid Mobile Number')</script>";
+            $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
+        }
+    }
+
     $email = $_POST['email'];
     echo $username, $password;
     if ($password != $repassword) {
@@ -33,6 +45,7 @@ if (isset($_POST["submit"])) {
         if ($res) {
             echo "<script>alert('inserted')</script>";
             $error = array('input' => 'form', 'msg' => "1 Row inserted");
+            header('refresh:0; url=login.php');
         }
     }
 }
@@ -47,20 +60,20 @@ if (isset($_POST["submit"])) {
 </head>
 
 <body class="body">
+    <div id="errordiv">
+        <?php if (sizeof($error) > 0) : ?>
+            <ul>
+                <?php foreach ($error as $value) : ?>
+                    <li><?php echo $error['msg'];
+                        break ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
     <div id="wrapper">
         <div id="signup-form">
             <form action="" method="POST">
                 <div class="loginlogo"><span>Sign Up</span></div>
-                <div id="errordiv">
-                    <?php if (sizeof($error) > 0) : ?>
-                        <ul>
-                            <?php foreach ($error as $value) : ?>
-                                <li><?php echo $error['msg'];
-                                    break ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                </div>
                 <p class="input">
                     <label for="username">Username:
                         <input type="text" name="username" required>
@@ -91,6 +104,7 @@ if (isset($_POST["submit"])) {
                 </p>
                 <p class="bottom">
                     <a href="login.php" style="margin-left:70px;">Click Here To Login</a>
+                    <!-- <a href="index.php" style="margin-left:70px;">Book Ride Now</a> -->
                 </p>
             </form>
         </div>

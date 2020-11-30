@@ -149,10 +149,14 @@ header #headernav li{
     color: white ;
 }
 .admintop {
+    height: 900px;
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     background-color: rgba(33, 47, 61 );
+}
+.adminbody {
+    height: 900px;
 }
 .adminbody img{
     width: 100%;
@@ -160,6 +164,7 @@ header #headernav li{
     position: absolute;
     z-index: -3;
     opacity: 0.5;
+    height: 900px;
 }
 #AdminWelcomeQuote h1{
     position: relative;
@@ -251,6 +256,9 @@ header #headernav li{
     border-radius: 5px;
     text-align: center;
 }
+/* .location-logo {
+    padding-top: 60px;
+} */
 #td {
     color: white;
 }
@@ -294,7 +302,7 @@ header #headernav li{
     color: red;
 }
 #invoice {
-    margin: 20px 150px;
+    margin: 20px 50px;
     background-color: floralwhite;
 }
 #invoice td{
@@ -329,6 +337,9 @@ header #headernav li{
     background-color: white;
     border-radius: 10px;
 }
+#errordiv li {
+    color: white;
+}
 .table1,.table2 {
     color: black;
     border-radius: 20px;
@@ -358,4 +369,18 @@ header #headernav li{
 }
 .bookid label {
     color: black;
+}
+footer {
+    background-color: #0D0B0B;
+    font-size: 15px;
+    text-align: center;
+    height: 25px;
+    color: white;
+    padding-top: 15px;
+    margin: 0;
+}
+#foot {
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #D35400 
 }

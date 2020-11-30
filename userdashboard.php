@@ -12,7 +12,23 @@
 require 'userheader.php';
 require 'Admin/config.php';
 $db = new Ride();
+$ddb = new DB();
 $db->connect('localhost', 'root', '', 'CabBooking');
+$ddb->connect('localhost', 'root', '', 'CabBooking');
+if (isset($_SESSION['bookdata'])) {
+    $status = 1;
+    $user_id = $_SESSION['userdata']['user_id'];
+    $Location = $_SESSION['bookdata']['pickup'];
+    $Destination = $_SESSION['bookdata']['droplocation'];
+    $cab = $_SESSION['bookdata']['cabType'];
+    $distance = $_SESSION['bookdata']['total_distance'];
+    $totalFare = $_SESSION['bookdata']['total_fare'];
+    $status = $_SESSION['bookdata']['status'];
+    $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
+    $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
+    $sql = $ddb->insert($field, $values, 'rideTable');
+    header("Location: user_pending_ride.php");
+}
 if (empty($_SESSION['userdata'])) {
     echo "<script>alert('please login to entered')</script>";
     header('Refresh:0; url=Admin/login.php');
@@ -23,7 +39,8 @@ if (isset($_SESSION['userdata'])) {
 }
 $sql = $db->user_completed_ride($user);
 $pending_ride = $db->user_pending_ride($user);
-$expense = $db->Total_Revenue($user);
+$expense = $db->user_revenue($user);
+$sql1 = $db->user_ride($user);
 ?>
 
 <body class="admintop">
@@ -34,21 +51,31 @@ $expense = $db->Total_Revenue($user);
                                     echo $username;
                                 } ?></h1>
         </div>
+
+        <div class="maintiles">
+            <div class="tiles"><a href="user_pending_ride.php">
+                    <p><i class="fa fa-bar-chart"></i></p>Pending_Rides&nbsp; <?php echo $pending_ride ?>
+                </a></div>
+            <div class="tiles"><a href="completed_rides.php">
+                    <p><i class="fa fa-group"></i></p>Completed_Rides &nbsp;<?php echo $sql ?>
+                </a></div>
+            <?php
+            if (isset($expense)) {
+                $sum = 0;
+                foreach ($expense as $key) {
+                    $sum += $key['total_fare'];
+                } ?>
+                <div class="tiles"><a href="#">
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; <?php echo $sum ?> $
+                    </a></div>
+            <?php } else { ?>
+                <div class="tiles"><a href="#">
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; 0 $
+                    </a></div> <?php } ?>
+                    <div class="tiles"><a href="user_rides.php">
+                    <p><i class="fa fa-group"></i></p>All_Rides &nbsp;<?php echo $sql1 ?>
+                </a></div>
+        </div>
     </div>
-    <div class="maintiles">
-        <div class="tiles"><a href="user_pending_ride.php">
-                <p><i class="fa fa-bar-chart"></i></p>Pending Rides :&nbsp; <?php echo $pending_ride ?>
-            </a></div>
-        <div class="tiles"><a href="completed_rides.php">
-                <p><i class="fa fa-group"></i></p>Completed Rides :&nbsp;<?php echo $sql ?>
-            </a></div>
-        <?php
-        $sum = 0;
-        foreach ($expense as $key) {
-            $sum += $key['total_fare'];
-        } ?>
-        <div class="tiles"><a href="#">
-                <p><i class="fa fa-handshake-o"></i></p>Total Expense : &nbsp; <?php echo $sum ?> $
-            </a></div>
-    </div>
+    <?php require 'footer.php' ?>
 </body>

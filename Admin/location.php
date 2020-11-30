@@ -26,32 +26,34 @@ if (isset($_POST["submit"])) {
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
-    </div>
-    <p class="location-logo">Add Locations</p>
-    <div id="admin-location-form">
-        <form action="" method="POST">
-            <div id="errordiv">
-                <?php if (sizeof($error) > 0) : ?>
-                    <ul>
-                        <?php foreach ($error as $value) : ?>
-                            <li><?php echo $error['msg'];
-                                break ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-            <p class="input">
-                <label for="username">Location:
-                    <input type="text" name="location" required></label>
-            </p>
-            <p class="input">
-                <label for="text">Distance:
-                    <input type="text" name="distance" required></label>
-            </p>
-            <p class="submit">
-                <input type="submit" name="submit" value="ADD">
-            </p>
+
+        <p class="location-logo">Add Locations</p>
+        <div id="admin-location-form">
+            <form action="" method="POST">
+                <div id="errordiv">
+                    <?php if (sizeof($error) > 0) : ?>
+                        <ul>
+                            <?php foreach ($error as $value) : ?>
+                                <li><?php echo $error['msg'];
+                                    break ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                <p class="input">
+                    <label for="username">Location:
+                        <input type="text" name="location" required></label>
+                </p>
+                <p class="input">
+                    <label for="text">Distance:
+                        <input type="text" name="distance" required></label>
+                </p>
+                <p class="submit">
+                    <input type="submit" name="submit" value="ADD">
+                </p>
+            </form>
+        </div>
         </form>
     </div>
-    </form>
+    <?php require 'footer.php' ?>
 </body>

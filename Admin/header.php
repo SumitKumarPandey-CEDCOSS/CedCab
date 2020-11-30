@@ -26,7 +26,7 @@
 <header>
     <ul id="headernav">
         <li><img src="../images/logo.png" alt="Logo"></li>
-        <li><a href="#">CADCABB</a></li>
+        <li><a href="#">CEDCABB</a></li>
     </ul>
 </header>
 <div class="main">
@@ -55,9 +55,9 @@
                 <a href="request_approved.php">Request Approved</a>
                 <a href="manageCustomer.php">All User</a>
         <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Users Accounts</a>
+            <!-- <a href="javascript:void(0)" class="dropbtn">Users Accounts</a> -->
             <div class="dropdown-content">
-                <a href="invoice.php">User Invoice</a>
+                <!-- <a href="invoice.php">User Invoice</a> -->
                 <li class="dropdown">
             <a href="logout.php">Logout</a>
             </div>

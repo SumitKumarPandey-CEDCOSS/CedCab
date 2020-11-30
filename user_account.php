@@ -35,7 +35,6 @@ if (isset($_REQUEST['update'])) {
         <div id="AdminWelcomeQuote">
             <h1>User Details</h1>
         </div>
-    </div>
     <div class="table1">
     <?php foreach ($sql as $key) {?>
         <form action="" method="post" class="formid">
@@ -66,7 +65,6 @@ if (isset($_REQUEST['update'])) {
         <? } ?>
     </div>
 
-
     <div class="table2">
         <?php foreach ($sql as $key) {?>
             <form action="" method="post" class="formid">
@@ -82,12 +80,7 @@ if (isset($_REQUEST['update'])) {
                 <input type="text" name="mobile" value="<?php echo $key['mobile'] ?>" /> 
                 </p>
                 <p>
-                <label for="">Email:</label>
-                <input type="text" name="email" value="<?php echo $key['email'] ?>" /> 
-                </p>
-                <p>
-                <label for="">Date:</label>
-                <input type="text" name="date" value="<?php echo $key['date'] ?>" />
+                <label for="">Email: <?php echo $key['email'] ?></label>
                 </p>
                 <p>
                 <input type="submit" class="btn1" name="update" value="Update" id="update" />
@@ -95,5 +88,7 @@ if (isset($_REQUEST['update'])) {
             </form>
             <? } ?>
     </div>
+    </div>
+    <?php require 'Admin/footer.php'?>
     <script src="script.js"></script>
 </body>

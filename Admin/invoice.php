@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -12,20 +13,22 @@ require 'config.php';
 require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-if (isset($_REQUEST['user_id'])) {
-    $user_id = $_REQUEST['user_id'];
+if (isset($_REQUEST['ride_id'])) {
+    $ride_id = $_REQUEST['ride_id'];
 }
-$sql = $db->confirm_ride($user_id);
+$sql = $db->confirm_ride($ride_id);
 ?>
+
 <body class="admintop">
     <div id="AdminWelcomeQuote">
-        <h1>User Invoice</h1>     
+        <h1>User Invoice</h1>
     </div>
     <table id="invoice">
         <tr>
             <th>User Id</th>
-            <th>Name</th>
-            <th>Cab Type</th>
+            <th>CabName</th>
+            <th>Pickup</th>
+            <th>Drop</th>
             <th>Total Fare</th>
         </tr>
         <?php foreach ($sql as $key) { ?>
@@ -33,6 +36,7 @@ $sql = $db->confirm_ride($user_id);
                 <td><?php echo $key['user_id'] ?></td>
                 <td><?php echo $key['cabType'] ?></td>
                 <td><?php echo $key['pickup'] ?></td>
+                <td><?php echo $key['droplocation'] ?></td>
                 <td><?php echo $key['total_fare'] ?>$</td>
             </tr>
         <?php } ?>

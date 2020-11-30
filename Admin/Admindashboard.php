@@ -12,6 +12,8 @@
 require 'config.php';
 $db = new Ride();
 $Us = new User();
+$loc = new LocationTable();
+$loc->connect('localhost', 'root', '', 'CabBooking');
 $db->connect('localhost', 'root', '', 'CabBooking');
 $Us->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->count_pending_ride();
@@ -21,6 +23,7 @@ $count_user = $Us->count_user();
 $count_pending_user = $Us->count_pending_request();
 $total_revenue = $db->Total_Revenue();
 $blocked = $Us->count_blocked();
+$location = $loc->count_location();
 if (!empty(isset($_SESSION['userdata']))) {
     $user = $_SESSION['userdata']['username'];
 } else {
@@ -49,11 +52,11 @@ require 'header.php';
                     <p><i class="fa fa-group"></i></p>Total Rides &nbsp; <span><?php echo $confirm ?></span>
                 </a></div>
             <div class="tiles"><a href="manageCustomer.php">
-                    <p><i class="fa fa-handshake-o"></i></p>All Users &nbsp; <span><?php echo $count_user ?></span>
+                    <p><i class="fa fa-handshake-o"></i></p>All location &nbsp; <span><?php echo $location ?></span>
                 </a></div>
         </div>
         <div class="maintiles">
-            <div class="tiles"><a href="pending_ride.php">
+            <div class="tiles"><a href="completed_ride.php">
                     <p><i class="fa fa-hourglass-2"></i></p>Confirm_Rides &nbsp;<span><?php echo $confirm_rides ?></span>
                 </a></div>
             <div class="tiles"><a href="pending_request.php">
@@ -67,9 +70,10 @@ require 'header.php';
                     <p><i class="fa fa-search-plus"></i></p>Blocked_Users <span><?php echo $blocked ?></span>
                 </a></div>
             <div class="tiles"><a href="manageCustomers.php">
-                    <p><i class="fa fa-signal"></i></p>All Users
+                    <p><i class="fa fa-signal"></i></p>All_Users <span><?php echo $count_user ?></span>
                 </a></div>
         </div>
     </div>
+    <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>

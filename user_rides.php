@@ -17,12 +17,19 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
 }
+// if (isset($_GET['sort'])) {
+//     $sort = $_GET['sort'];
+// } else {
+//     $sort = 'ride_id';
+// }
+// $sql = $db->ride_user($user, $sort);
+
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
-    $sort = 'ride_id';
+    $sort = `ride_date`;
 }
-$sql = $db->ride_user($user, $sort);
+$sql = $db->filter_user($user, $sort);
 ?>
 
 <body class="admintop">
@@ -31,48 +38,49 @@ $sql = $db->ride_user($user, $sort);
         <div id="AdminWelcomeQuote">
             <h1>All Rides</h1>
             <div class="dropdown sort">
-                <button class="dropbtn sortbtn">Sort By</button>
+                <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="user_rides.php?sort=pickup">Name<p hidden>A $_GET</p></a>
-                    <a href="user_rides.php?sort=ride_date">Date<p hidden>A $_GET</p></a>
-                    <a href="user_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=day">DAY<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>
+        <table id="LocationTable" class="ridetable">
+            <tr>
+                <th>ID</th>
+                <th>PickUp Location</th>
+                <th>Drop Location</th>
+                <th>Total Distance</th>
+                <th>Ride Date</th>
+                <th>Total_fare</th>
+                <th>User Id</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <?php if (isset($sql)) {
+                foreach ($sql as $key) { ?>
+                    <tr>
+                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['pickup'] ?></td>
+                        <td id="td"><?php echo $key['droplocation'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['ride_date'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td"><?php if ($key['status'] == '2') {
+                                        echo "completed";
+                                    } elseif ($key['status'] == '1') {
+                                        echo "pending";
+                                    } else {
+                                        echo "confirm";
+                                    } ?></td>
+                        <td><a href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                    </tr>
+            <?php }
+            } ?>
+        </table>
     </div>
-    <table id="LocationTable" class="ridetable">
-        <tr>
-            <th>ID</th>
-            <th>PickUp Location</th>
-            <th>Drop Location</th>
-            <th>Total Distance</th>
-            <th>Ride Date</th>
-            <th>Total_fare</th>
-            <th>User Id</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        <?php if (isset($sql)) {
-            foreach ($sql as $key) { ?>
-                <tr>
-                    <td id="td"><?php echo $key['ride_id'] ?></td>
-                    <td id="td"><?php echo $key['pickup'] ?></td>
-                    <td id="td"><?php echo $key['droplocation'] ?></td>
-                    <td id="td"><?php echo $key['total_distance'] ?></td>
-                    <td id="td"><?php echo $key['ride_date'] ?></td>
-                    <td id="td"><?php echo $key['total_fare'] ?></td>
-                    <td id="td"><?php echo $key['user_id'] ?></td>
-                    <td id="td"><?php if ($key['status'] == '2') {
-                                    echo "completed";
-                                } elseif ($key['status'] == '1') {
-                                    echo "pending";
-                                } else {
-                                    echo "confirm";
-                                } ?></td>
-                    <td><a href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
-                </tr>
-        <?php }
-        } ?>
-    </table>
+    <?php require 'Admin/footer.php' ?>
     <script src="../script.js"></script>
 </body>

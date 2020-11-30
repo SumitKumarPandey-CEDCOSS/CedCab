@@ -33,46 +33,47 @@ if (isset($_REQUEST['canid'])) {
         <div id="AdminWelcomeQuote">
             <h1>Pending Rides</h1>
         </div>
-    </div>
-    <table id="LocationTable" class="ridetable">
-        <tr>
-            <th>ID</th>
-            <th>PickUp Location</th>
-            <th>Drop Location</th>
-            <th>Total Distance</th>
-            <th>Ride Date</th>
-            <th>Total_fare</th>
-            <th>User Id</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        <?php if (isset($sql)) {
-            foreach ($sql as $key) { ?>
-                <tr>
-                    <td id="td"><?php echo $key['ride_id'] ?></td>
-                    <td id="td"><?php echo $key['pickup'] ?></td>
-                    <td id="td"><?php echo $key['droplocation'] ?></td>
-                    <td id="td"><?php echo $key['total_distance'] ?></td>
-                    <td id="td"><?php echo $key['ride_date'] ?></td>
-                    <td id="td"><?php echo $key['total_fare'] ?></td>
-                    <td id="td"><?php echo $key['user_id'] ?></td>
-                    <td id="td"><?php if ($key['status'] == '1') {
-                                    echo "pending";
-                                } ?></td>
-                    <td><a id="blocked" href="pending_ride.php?<?php if ($key['status'] == '1') {
-                                                                    echo "Confirm";
-                                                                }
-                                                                ?>_id=<?php echo $key['ride_id'] ?>">
-                            <?php if ($key['status'] == '1') {
-                                echo "Confirm";
-                            }
-                            ?><p hidden>A $_GET</p>
-                        </a>
+        <table id="LocationTable" class="ridetable">
+            <tr>
+                <th>ID</th>
+                <th>PickUp Location</th>
+                <th>Drop Location</th>
+                <th>Total Distance</th>
+                <th>Ride Date</th>
+                <th>Total_fare</th>
+                <th>User Id</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <?php if (isset($sql)) {
+                foreach ($sql as $key) { ?>
+                    <tr>
+                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['pickup'] ?></td>
+                        <td id="td"><?php echo $key['droplocation'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['ride_date'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td"><?php if ($key['status'] == '1') {
+                                        echo "pending";
+                                    } ?></td>
+                        <td><a id="blocked" href="pending_ride.php?<?php if ($key['status'] == '1') {
+                                                                        echo "Confirm";
+                                                                    }
+                                                                    ?>_id=<?php echo $key['ride_id'] ?>">
+                                <?php if ($key['status'] == '1') {
+                                    echo "Confirm";
+                                }
+                                ?><p hidden>A $_GET</p>
+                            </a>
 
-                        <a href="pending_ride.php?canid=<?php echo $key['ride_id'] ?>">Cancelled</a></td>
-                </tr>
-        <?php }
-        } ?>
-    </table>
+                            <a href="pending_ride.php?canid=<?php echo $key['ride_id'] ?>">Cancelled</a></td>
+                    </tr>
+            <?php }
+            } ?>
+        </table>
+    </div>
+    <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>

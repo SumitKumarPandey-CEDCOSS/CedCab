@@ -28,36 +28,37 @@ if (isset($_REQUEST['delid'])) {
         <div id="AdminWelcomeQuote">
             <h1>Cancelled Rides</h1>
         </div>
+        <table id="LocationTable" class="ridetable">
+            <tr>
+                <th>ID</th>
+                <th>PickUp Location</th>
+                <th>Drop Location</th>
+                <th>Total Distance</th>
+                <th>Ride Date</th>
+                <th>Total_fare</th>
+                <th>User Id</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <?php if (isset($sql)) {
+                foreach ($sql as $key) { ?>
+                    <tr>
+                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['pickup'] ?></td>
+                        <td id="td"><?php echo $key['droplocation'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['ride_date'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td"><?php if ($key['status'] == '0') {
+                                        echo "Cancelled Rides";
+                                    } ?></td>
+                        <td><a href="cancelled_ride.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                    </tr>
+            <?php }
+            } ?>
+        </table>
     </div>
-    <table id="LocationTable" class="ridetable">
-        <tr>
-            <th>ID</th>
-            <th>PickUp Location</th>
-            <th>Drop Location</th>
-            <th>Total Distance</th>
-            <th>Ride Date</th>
-            <th>Total_fare</th>
-            <th>User Id</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        <?php if (isset($sql)) {
-            foreach ($sql as $key) { ?>
-                <tr>
-                    <td id="td"><?php echo $key['ride_id'] ?></td>
-                    <td id="td"><?php echo $key['pickup'] ?></td>
-                    <td id="td"><?php echo $key['droplocation'] ?></td>
-                    <td id="td"><?php echo $key['total_distance'] ?></td>
-                    <td id="td"><?php echo $key['ride_date'] ?></td>
-                    <td id="td"><?php echo $key['total_fare'] ?></td>
-                    <td id="td"><?php echo $key['user_id'] ?></td>
-                    <td id="td"><?php if ($key['status'] == '0') {
-                                    echo "Cancelled Rides";
-                                } ?></td>
-                    <td><a href="cancelled_ride.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
-                </tr>
-        <?php }
-        } ?>
-    </table>
+    <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>

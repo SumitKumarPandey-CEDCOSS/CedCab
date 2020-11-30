@@ -43,42 +43,43 @@ if (isset($_GET['unblocked_id'])) {
         <div id="AdminWelcomeQuote">
             <h1>Locations</h1>
         </div>
+        <table id="LocationTable">
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Distance</th>
+                <th>Availability</th>
+                <th>Action</th>
+            </tr>
+            <?php if (isset($sql)) {
+                foreach ($sql as $key) { ?>
+                    <tr>
+                        <form method="POST" action="">
+                            <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
+                            <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
+                            <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
+                            <td><input type="text" name="available" value="<?php echo $key['is_available'] ?>" /></td>
+                            <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
+                                <a id="blocked" href="manageLocation.php?<?php if ($key['is_block'] == '0') {
+                                                                                echo "blocked";
+                                                                            } else {
+                                                                                echo "unblocked";
+                                                                            }
+                                                                            ?>_id=<?php echo $key['id'] ?>">
+                                    <?php if ($key['is_block'] == '0') {
+                                        echo "Unblock";
+                                    } else {
+                                        echo "blocked";
+                                    }
+                                    ?><p hidden>A $_GET</p>
+                                </a>
+                                <a href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
+                        </form>
+                    </tr>
+            <?php }
+            } ?>
+        </table>
     </div>
-    <table id="LocationTable">
-        <tr>
-            <th>ID</th>
-            <th>Location</th>
-            <th>Distance</th>
-            <th>Availability</th>
-            <th>Action</th>
-        </tr>
-        <?php if (isset($sql)) {
-            foreach ($sql as $key) { ?>
-                <tr>
-                    <form method="POST" action="">
-                        <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
-                        <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
-                        <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
-                        <td><input type="text" name="available" value="<?php echo $key['is_available'] ?>" /></td>
-                        <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
-                        <a id="blocked" href="manageLocation.php?<?php if ($key['is_block'] == '0') {
-                                                                        echo "blocked";
-                                                                    } else {
-                                                                        echo "unblocked";
-                                                                    }
-                                                                    ?>_id=<?php echo $key['id'] ?>">
-                            <?php if ($key['is_block'] == '0') {
-                                echo "Unblock";
-                            } else {
-                                echo "blocked";
-                            }
-                            ?><p hidden>A $_GET</p>
-                        </a>
-                            <a href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
-                    </form>
-                </tr>
-        <?php }
-        } ?>
-    </table>
+    <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>
