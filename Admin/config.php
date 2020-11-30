@@ -10,6 +10,7 @@
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
 session_start();
+
 class DB
 {
     public function connect($host, $user, $pass, $dtb)
@@ -136,6 +137,10 @@ class User extends DB
     {
         $result = mysqli_query($this->conn, "UPDATE userTable SET `username`='$username',`mobile`='$mobile',`email`='$email',`date`='$date' WHERE `user_id`='" . $user_id . "'");
         return "SuccessFull Updated";
+    }
+    public function changepassword($newpassword, $user) {
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `password`='$newpassword' WHERE `user_id` = '" .$user. "' ") ;
+        return "Password changed SuccessFully";
     }
 }
 class LocationTable extends DB

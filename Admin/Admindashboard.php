@@ -24,6 +24,7 @@ $count_pending_user = $Us->count_pending_request();
 $total_revenue = $db->Total_Revenue();
 $blocked = $Us->count_blocked();
 $location = $loc->count_location();
+
 if (!empty(isset($_SESSION['userdata']))) {
     $user = $_SESSION['userdata']['username'];
 } else {

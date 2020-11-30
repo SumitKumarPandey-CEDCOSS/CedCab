@@ -51,14 +51,15 @@ $sql1 = $db->user_ride($user);
                                     echo $username;
                                 } ?></h1>
         </div>
-
         <div class="maintiles">
             <div class="tiles"><a href="user_pending_ride.php">
                     <p><i class="fa fa-bar-chart"></i></p>Pending_Rides&nbsp; <?php echo $pending_ride ?>
-                </a></div>
+                </a>
+            </div>
             <div class="tiles"><a href="completed_rides.php">
                     <p><i class="fa fa-group"></i></p>Completed_Rides &nbsp;<?php echo $sql ?>
-                </a></div>
+                </a>
+            </div>
             <?php
             if (isset($expense)) {
                 $sum = 0;
@@ -67,14 +68,17 @@ $sql1 = $db->user_ride($user);
                 } ?>
                 <div class="tiles"><a href="#">
                         <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; <?php echo $sum ?> $
-                    </a></div>
+                    </a>
+                </div>
             <?php } else { ?>
                 <div class="tiles"><a href="#">
                         <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; 0 $
-                    </a></div> <?php } ?>
-                    <div class="tiles"><a href="user_rides.php">
+                    </a>
+                </div> <?php } ?>
+            <div class="tiles"><a href="user_rides.php">
                     <p><i class="fa fa-group"></i></p>All_Rides &nbsp;<?php echo $sql1 ?>
-                </a></div>
+                </a>
+            </div>
         </div>
     </div>
     <?php require 'footer.php' ?>

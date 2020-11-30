@@ -17,7 +17,7 @@ $msg = "";
 $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password']);
     $roles = $_POST['roles'];
     // echo $roles;
     echo $user->login($username, $password, $roles);

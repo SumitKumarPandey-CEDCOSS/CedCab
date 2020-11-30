@@ -16,8 +16,8 @@ $msg = '';
 $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
-    $password = $_POST['password'];
-    $repassword = $_POST['repassword'];
+    $password = md5($_POST['password']);
+    $repassword = md5($_POST['repassword']);
     $mobile = $_POST['mobile'];
 
     if (!empty($mobile)) // phone number is not empty
