@@ -81,5 +81,5 @@ $sql1 = $db->user_ride($user);
             </div>
         </div>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require 'Admin/footer.php' ?>
 </body>

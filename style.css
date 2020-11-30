@@ -256,9 +256,6 @@ header #headernav li{
     border-radius: 5px;
     text-align: center;
 }
-/* .location-logo {
-    padding-top: 60px;
-} */
 #td {
     color: white;
 }
@@ -271,7 +268,7 @@ header #headernav li{
     float: left;
     text-decoration: none;
     border-radius: 10px;
-    padding: 50px 80px;
+    padding: 50px 60px;
     margin-left: 20px;
     background-color: white;
     color: Black;
