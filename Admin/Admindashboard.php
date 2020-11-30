@@ -33,7 +33,35 @@ if (!empty(isset($_SESSION['userdata']))) {
 }
 require 'header.php';
 ?>
+<!-- <script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
 
+// Draw the chart and set the chart values
+function drawChart() {
+//   var total_rides = document.getElementById('total_rides').value;
+//   var total_revenue = document.getElementById('total_revenue').value;
+//   var total_user = document.getElementById('total_user').value;
+//   var confirm_rides = document.getElementById('confirm_rides').value;
+//   var pending_rides = document.getElementById('pending_rides').value;
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Total Rides', 7],
+  ['Total Revenue', 9],
+  ['Total User', 6],
+  ['Confirm Rides', 10],
+  ['Pending Rides', 8]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Graphical Representation of data', 'width':1350, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script> -->
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
@@ -72,9 +100,11 @@ require 'header.php';
                 </a></div>
             <div class="tiles"><a href="manageCustomers.php">
                     <p><i class="fa fa-signal"></i></p>All_Users <span><?php echo $count_user ?></span>
-                </a></div>
+                </a>
+            </div>
         </div>
     </div>
+    <div id="piechart"></div>
     <?php require 'footer.php' ?>
     <script src="../script.js"></script>
 </body>

@@ -20,8 +20,7 @@ if (isset($_REQUEST['update'])) {
     $locname = $_POST['Location_Name'];
     $distance = $_POST['distance'];
     $avail = $_POST['available'];
-    echo $locname, $user_id, $distance, $avail;
-    echo $db->setLocation($user_id, $locname, $distance, $avail);
+    $db->setLocation($user_id, $locname, $distance, $avail);
 }
 $sql = $db->location_getData();
 if (isset($_GET['blocked_id'])) {
@@ -58,8 +57,32 @@ if (isset($_GET['unblocked_id'])) {
                             <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
                             <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
                             <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
-                            <td><input type="text" name="available" value="<?php echo $key['is_available'] ?>" /></td>
-                            <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
+                            <td>
+                            <select name="available">
+                                    <option value="<?php if ($key['is_available'] == '1') {
+                                                        echo '1';
+                                                    } else {
+                                                        echo '0';
+                                                    } ?>" selected="<?php if ($key['is_available'] == '1') {
+                                                                        echo 'Available';
+                                                                    } else {
+                                                                        echo 'Not Available';
+                                                                    } ?>"><?php if ($key['is_available'] == '1') {
+                                                                            echo 'Available';
+                                                                        } else {
+                                                                            echo 'Not Available';
+                                                                        } ?></option>
+                                    <option value="<?php if ($key['is_available'] == '1') {
+                                                        echo '0';
+                                                    } else {
+                                                        echo '1';
+                                                    } ?>"><?php if ($key['is_available'] == '1') {
+                                                                echo 'Not Available';
+                                                            } else {
+                                                                echo 'Available';
+                                                            } ?></option>
+                                </select>
+                            </td> <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
                                 <a id="blocked" href="manageLocation.php?<?php if ($key['is_block'] == '0') {
                                                                                 echo "blocked";
                                                                             } else {
