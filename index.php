@@ -61,7 +61,7 @@ $sql = $db->location_getData();
             <li class="dropdown">
                 <a href="Admin/logout.php">Logout</a>
                 </div>
-                <?php } ?>
+        <?php } ?>
                 <?php if (empty($_SESSION['userdata']['username'])) { ?>
                     <li class="dropdown">
                         <a href="Admin/signup.php">Sign In</a>

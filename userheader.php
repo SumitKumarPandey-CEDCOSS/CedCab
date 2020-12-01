@@ -27,7 +27,7 @@
 <header id="userheader">
     <ul id="headernav">
         <li><img src="images/logo.png" alt="Logo"></li>
-        <li><a href="#">CEDCABB</a></li>
+        <li><a href="userdashboard.php">CEDCABB</a></li>
     </ul>
 </header>
 <div class="main">
