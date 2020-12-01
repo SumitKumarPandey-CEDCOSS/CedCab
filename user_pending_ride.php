@@ -62,6 +62,6 @@ $sql = $db->pending($user);
             } ?>
         </table>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require 'Admin/footer.php' ?>
     <script src="../script.js"></script>
 </body>

@@ -58,5 +58,5 @@ $sql = $db->complete_ride($user);
             } ?>
         </table>
     </div>
-    <?php require 'footer.php' ?>
+    <?php require 'Admin/footer.php' ?>
 </body>
