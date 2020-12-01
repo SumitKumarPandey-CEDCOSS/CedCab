@@ -114,7 +114,7 @@ li a
 li.dropdown {
     display: inline-block;
 }
-li a:hover, .dropdown:hover .dropbtn {
+#nav li a:hover, .dropdown:hover .dropbtn {
     background-color:#6C3483;
   }
 .dropdown:hover .dropdown-content {

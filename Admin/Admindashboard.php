@@ -75,7 +75,7 @@ require 'header.php';
                     <p><i class="fa fa-search-plus"></i></p>Blocked_Users <span><?php echo $blocked ?></span>
                 </a>
             </div>
-            <div class="tiles"><a href="manageCustomers.php">
+            <div class="tiles"><a href="manageCustomer.php">
                     <p><i class="fa fa-signal"></i></p>All_Users <span><?php echo $count_user ?></span>
                 </a>
             </div>
