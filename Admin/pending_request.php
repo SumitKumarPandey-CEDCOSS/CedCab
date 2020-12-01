@@ -38,7 +38,7 @@ require 'header.php';
         <div id="AdminWelcomeQuote">
             <h1>Pending Request List</h1>
         </div>
-        <table id="AdminTable">
+        <table id="AdminTable" style="margin-left:15%;">
             <tr>
                 <th>User_ID</th>
                 <th>Name</th>

@@ -70,7 +70,7 @@ $sql = $db->All_ride($sort);
                                     } elseif ($key['status'] == '1') {
                                         echo "pending";
                                     } else {
-                                        echo "confirm";
+                                        echo "cancelled";
                                     } ?></td>
                         <td><a href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>

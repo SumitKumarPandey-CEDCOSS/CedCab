@@ -22,7 +22,7 @@ $sql = $db->show_approved();
         <div id="AdminWelcomeQuote">
             <h1>Approved Users</h1>
         </div>
-        <table id="AdminTable">
+        <table id="AdminTable" style="margin-left:10%;">
             <tr>
                 <th>User_ID</th>
                 <th>Name</th>

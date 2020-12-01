@@ -16,6 +16,12 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
 }
+if (isset($_REQUEST['canid'])) {
+    $ride_id = $_REQUEST['canid'];
+    echo $db->cancelled($ride_id);
+    echo "<script>alert('Ride cancelled SuccessFully')</script>";
+    header("Refresh:0;url=user_pending_ride.php");
+}
 $sql = $db->pending($user);
 ?>
 
@@ -35,6 +41,7 @@ $sql = $db->pending($user);
                 <th>Total_fare</th>
                 <th>User Id</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
@@ -49,6 +56,7 @@ $sql = $db->pending($user);
                         <td id="td"><?php if ($key['status'] == '1') {
                                         echo "pending";
                                     } ?></td>
+                        <td id="td"><a href="user_pending_ride.php?canid=<?php echo $key['ride_id'] ?>">Cancelled</a></td>
                     </tr>
             <?php }
             } ?>

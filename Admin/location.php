@@ -22,9 +22,8 @@ if (isset($_POST["submit"])) {
     $loct->insert($fields, $values, 'LocationTable');
 }
 ?>
-
 <body class="admintop">
-    <div class="adminbody">
+    <div class="adminbody" style="position:absolute; width:100%">
         <img src="../images/taxi4.jpg" alt="">
 
         <p class="location-logo">Add Locations</p>
@@ -55,5 +54,4 @@ if (isset($_POST["submit"])) {
         </div>
         </form>
     </div>
-    <?php require 'footer.php' ?>
 </body>

@@ -58,8 +58,20 @@ if (isset($_POST["submit"])) {
     </title>
     <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
-
-<body class="body">
+<header style="margin-top:-2%;">
+    <ul id="headernav">
+        <li><img src="../images/logo.png" alt="Logo"></li>
+        <li><a href="Admindashboard.php">CEDCABB</a></li>
+    </ul>
+</header>
+<div class="main">
+    <ul id="nav">
+        <li class="dropdown">
+            <a href="../index.php" class="dropbtn">Book Ride</a>
+        </li>
+    </ul>
+</div>
+<body class="body" style="margin:0;">
     <div id="errordiv">
         <?php if (sizeof($error) > 0) : ?>
             <ul>

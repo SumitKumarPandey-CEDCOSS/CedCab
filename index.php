@@ -65,14 +65,13 @@ $sql = $db->location_getData();
                 <?php if (empty($_SESSION['userdata']['username'])) { ?>
                     <li class="dropdown">
                         <a href="Admin/signup.php">Sign In</a>
-                        <a href="Admin/login.php">Login In</a>
+                        <a href="Admin/login.php">Log In</a>
                 <?php }  ?>
         </li>
     </ul>
 </div>
-
     <body class="admintop">
-        <div class="adminbody">
+        <div class="adminbody" style="position:absolute; width:100%;">
             <img src="images/taxi6.jpg" alt="taxiimage">
             <p class="location-logo">Book Ride</p>
             <div class="table1">

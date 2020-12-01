@@ -25,8 +25,8 @@ if (isset($_REQUEST['update'])) {
     $user_id = $_REQUEST['user_id'];
     $username = $_POST['username'];
     $mobile = $_POST['mobile'];
-    $email = $_POST['email'];
-    $date = $_POST['date'];
+    $email = isset($_POST["email"]);
+    $date = isset($_POST["date"]);
     echo $conn->setuser($user_id, $username, $mobile, $email, $date);
 }
 ?>

@@ -67,7 +67,7 @@ $sql = $db->filter_user($user, $sort);
                                     } elseif ($key['status'] == '1') {
                                         echo "pending";
                                     } else {
-                                        echo "confirm";
+                                        echo "cancelled";
                                     } ?></td>
                         <td><a href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
