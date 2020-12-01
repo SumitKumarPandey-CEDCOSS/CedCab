@@ -25,7 +25,7 @@ $total_revenue = $db->Total_Revenue();
 $blocked = $Us->count_blocked();
 $location = $loc->count_location();
 
-if (!empty(isset($_SESSION['userdata']))) {
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin']=='admin'))) {
     $user = $_SESSION['userdata']['username'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
@@ -33,35 +33,6 @@ if (!empty(isset($_SESSION['userdata']))) {
 }
 require 'header.php';
 ?>
-<!-- <script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-// Draw the chart and set the chart values
-function drawChart() {
-//   var total_rides = document.getElementById('total_rides').value;
-//   var total_revenue = document.getElementById('total_revenue').value;
-//   var total_user = document.getElementById('total_user').value;
-//   var confirm_rides = document.getElementById('confirm_rides').value;
-//   var pending_rides = document.getElementById('pending_rides').value;
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['Total Rides', 7],
-  ['Total Revenue', 9],
-  ['Total User', 6],
-  ['Confirm Rides', 10],
-  ['Pending Rides', 8]
-]);
-
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'Graphical Representation of data', 'width':1350, 'height':400};
-
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}
-</script> -->
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
@@ -104,6 +75,30 @@ function drawChart() {
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Total Rides', <?php echo $confirm ?>],
+  ['Total User', <?php echo $count_user?>],
+  ['Confirm Rides', <?php echo $confirm_rides?>],
+  ['Pending Rides', <?php echo $sql?>]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Graphical Representation of data', 'width':1350, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
     <div id="piechart"></div>
     <?php require 'footer.php' ?>
     <script src="../script.js"></script>

@@ -21,7 +21,7 @@ if (isset($_POST["submit"])) {
     $roles = $_POST['roles'];
     // echo $roles;
     echo $user->login($username, $password, $roles);
-    // setcookie('username', $username, time() + (86400 * 30), "/");
+    setcookie('username', $username, time() + (86400 * 30), "/");
 }
 ?>
 <!DOCTYPE html>

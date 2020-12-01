@@ -53,12 +53,13 @@ class User extends DB
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id']);
                 if ($row['is_admin'] == 'admin') {
                     $rtn = "Login Success";
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'admin' );
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     $rtn = "Login Success";
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user' );
                     $cookie_name = $row['username'];
                     setcookie($cookie_name, time() + (86400 * 30), "/");
                     header("Refresh:0; url=../userdashboard.php");
