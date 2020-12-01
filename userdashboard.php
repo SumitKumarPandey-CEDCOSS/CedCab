@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -82,28 +81,34 @@ $sql1 = $db->user_ride($user);
         </div>
     </div>
     <script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+        // Load google charts
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
 
-// Draw the chart and set the chart values
-function drawChart() {
+        // Draw the chart and set the chart values
+        function drawChart() {
 
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['All Rides', <?php echo $sql1 ?>],
-  ['Completed Rides', <?php echo $sql?>],
-  ['Pending Rides', <?php echo $pending_ride ?>]
-]);
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['All Rides', <?php echo $sql1 ?>],
+                ['Completed Rides', <?php echo $sql ?>],
+                ['Pending Rides', <?php echo $pending_ride ?>]
+            ]);
 
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'Graphical Representation of data', 'width':1350, 'height':400};
+            // Optional; add a title and set the width and height of the chart
+            var options = {
+                'title': 'Graphical Representation of data',
+                'width': 1350,
+                'height': 400
+            };
 
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}
-</script>
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
     <div id="piechart"></div>
     <?php require 'Admin/footer.php' ?>
 </body>

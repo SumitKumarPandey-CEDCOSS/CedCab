@@ -17,8 +17,8 @@ $sql = $db->cancelled_ride();
 
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
-    echo $db->reject($user_id);
-    header("Refresh:0;url=cancelled_ride.php");
+    echo $db->delete($user_id);
+    header("Refresh:0;url=cancelled_rides.php");
 }
 ?>
 
@@ -53,7 +53,7 @@ if (isset($_REQUEST['delid'])) {
                         <td id="td"><?php if ($key['status'] == '0') {
                                         echo "Cancelled Rides";
                                     } ?></td>
-                        <td><a href="cancelled_ride.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                        <td><a href="cancelled_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

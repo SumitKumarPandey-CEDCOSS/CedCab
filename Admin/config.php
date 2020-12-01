@@ -61,7 +61,6 @@ class User extends DB
                     $rtn = "Login Success";
                     $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user' );
                     $cookie_name = $row['username'];
-                    setcookie($cookie_name, time() + (86400 * 30), "/");
                     header("Refresh:0; url=../userdashboard.php");
                 } else {
                     $rtn = "Login Failed";
@@ -148,7 +147,7 @@ class LocationTable extends DB
 {
     public function location_getData()
     {
-        $result = mysqli_query($this->conn, "SELECT * FROM LocationTable WHERE `is_block`='1' ");
+        $result = mysqli_query($this->conn, "SELECT * FROM LocationTable ");
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
@@ -164,6 +163,11 @@ class LocationTable extends DB
     {
         $result = mysqli_query($this->conn, "SELECT * FROM LocationTable");
         return $result->num_rows;
+    }
+    public function deleteloc($id)
+    {
+        $result = mysqli_query($this->conn, "DELETE FROM LocationTable  WHERE `id`='" . $id ."' ");
+        return "Deleted SuccessFully";
     }
 }
 class Ride extends DB
@@ -304,5 +308,10 @@ class Ride extends DB
     {
         $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
         return $result->num_rows;
+    }
+    public function delete($ride_id)
+    {
+        $result = mysqli_query($this->conn, "DELETE FROM rideTable  WHERE `ride_id`='" . $ride_id ."'");
+        return "Deleted SuccessFully";
     }
 }

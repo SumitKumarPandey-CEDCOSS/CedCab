@@ -60,16 +60,16 @@ $sql = $db->location_getData();
                     <a href="change_password.php">Change Password</a>
             <li class="dropdown">
                 <a href="Admin/logout.php">Logout</a>
-</div>
-<?php } ?>
-<?php if (empty($_SESSION['userdata']['username'])) { ?>
-    <li class="dropdown">
-        <a href="Admin/signup.php">Sign In</a>
-        <a href="Admin/login.php">Login In</a>
-    <?php }  ?>
-    </li>
+                </div>
+                <?php } ?>
+                <?php if (empty($_SESSION['userdata']['username'])) { ?>
+                    <li class="dropdown">
+                        <a href="Admin/signup.php">Sign In</a>
+                        <a href="Admin/login.php">Login In</a>
+                <?php }  ?>
+        </li>
     </ul>
-    </div>
+</div>
 
     <body class="admintop">
         <div class="adminbody">

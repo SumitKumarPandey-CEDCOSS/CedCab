@@ -17,12 +17,6 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
 }
-// if (isset($_GET['sort'])) {
-//     $sort = $_GET['sort'];
-// } else {
-//     $sort = 'ride_id';
-// }
-// $sql = $db->ride_user($user, $sort);
 
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -34,6 +33,11 @@ if (isset($_GET['unblocked_id'])) {
     echo $conn->unblocked_Ride($user_id);
     header("Refresh:0;url=manageLocation.php");
 }
+if (isset($_REQUEST['delid'])) {
+    $id = $_REQUEST['delid'];
+    echo $db->deleteloc($id);
+    header("Refresh:0;url=manageLocation.php");
+}
 ?>
 
 <body class="admintop">
@@ -58,7 +62,7 @@ if (isset($_GET['unblocked_id'])) {
                             <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
                             <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
                             <td>
-                            <select name="available">
+                                <select name="available">
                                     <option value="<?php if ($key['is_available'] == '1') {
                                                         echo '1';
                                                     } else {
@@ -68,10 +72,10 @@ if (isset($_GET['unblocked_id'])) {
                                                                     } else {
                                                                         echo 'Not Available';
                                                                     } ?>"><?php if ($key['is_available'] == '1') {
-                                                                            echo 'Available';
-                                                                        } else {
-                                                                            echo 'Not Available';
-                                                                        } ?></option>
+                                                                                echo 'Available';
+                                                                            } else {
+                                                                                echo 'Not Available';
+                                                                            } ?></option>
                                     <option value="<?php if ($key['is_available'] == '1') {
                                                         echo '0';
                                                     } else {
@@ -82,7 +86,8 @@ if (isset($_GET['unblocked_id'])) {
                                                                 echo 'Available';
                                                             } ?></option>
                                 </select>
-                            </td> <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
+                            </td>
+                            <td><a href=""><input type="submit" name="update" style="border:none;" value="Update" id="update" /></a>
                                 <a id="blocked" href="manageLocation.php?<?php if ($key['is_block'] == '0') {
                                                                                 echo "blocked";
                                                                             } else {

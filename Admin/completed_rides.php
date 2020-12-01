@@ -17,8 +17,8 @@ $sql = $db->completed_ride();
 
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
-    echo $db->reject($user_id);
-    header("Refresh:0;url=pending_ride.php");
+    echo $db->delete($user_id);
+    header("Refresh:0;url=completed_rides.php");
 }
 ?>
 <body class="admintop">
@@ -54,7 +54,7 @@ if (isset($_REQUEST['delid'])) {
                                         echo "completed";
                                     } ?></td>
                         <td><a href="invoice.php?ride_id=<?php echo $key['ride_id'] ?>">Invoice</a></td>
-                        <td><a href="pending_ride.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
+                        <td><a href="completed_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

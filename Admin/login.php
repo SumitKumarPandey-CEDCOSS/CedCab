@@ -10,7 +10,6 @@
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
 require 'config.php';
-// $con = new DB();
 $user = new User();
 $user->connect('localhost', 'root', '', 'CabBooking');
 $msg = "";
@@ -19,9 +18,11 @@ if (isset($_POST["submit"])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
     $roles = $_POST['roles'];
-    // echo $roles;
     echo $user->login($username, $password, $roles);
-    setcookie('username', $username, time() + (86400 * 30), "/");
+    if (isset($_POST['rememberme'])) {
+        setcookie('username', $_POST['username'], time()+60*60*24*365);
+        
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -58,11 +59,16 @@ if (isset($_POST["submit"])) {
                 </div>
                 <p class="input">
                     <label for="username">Username:
-                        <input type="text" name="username" required></label>
+                        <input type="text" name="username" value="<?php if ($_COOKIE['username']) { echo $_COOKIE['username'] ; } ?>" required></label>
                 </p>
                 <p class="input">
                     <label for="password">Password:
                         <input type="password" name="password" required></label>
+                </p>
+                <p class="input">
+                    <label for="">Remember Me:
+                        <input type="checkbox" name="rememberme" value="1"><br>
+                    </label>
                 </p>
                 <p class="submit">
                     <input type="submit" name="submit" value="Login">

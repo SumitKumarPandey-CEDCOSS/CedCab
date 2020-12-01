@@ -16,8 +16,8 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
-    echo $db->reject($user_id);
-    header("Refresh:0;url=pending_ride.php");
+    echo $db->delete($user_id);
+    header("Refresh:0;url=All_rides.php");
 }
 ?>
 <?php if (isset($_GET['sort'])) {
@@ -72,7 +72,7 @@ $sql = $db->All_ride($sort);
                                     } else {
                                         echo "confirm";
                                     } ?></td>
-                        <td><a href="pending_ride.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
+                        <td><a href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

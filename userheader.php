@@ -24,7 +24,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title>Document</title>
 </head>
-<header>
+<header id="userheader">
     <ul id="headernav">
         <li><img src="images/logo.png" alt="Logo"></li>
         <li><a href="#">CEDCABB</a></li>
