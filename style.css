@@ -277,6 +277,7 @@ header #headernav li{
    font-size: 50px;
    text-align: center;
    color: #6C3483;
+   display: block;
 }
 .maintiles {
     display: flex;
@@ -381,4 +382,3 @@ footer {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #D35400 
 }
-#header
