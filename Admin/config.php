@@ -58,9 +58,14 @@ class User extends DB
                     $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'admin');
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
+                    //unset session['bookdata] after 3min
+                    if ((time()-$_SESSION['bookdata']['time'])>10) {
+                        unset($_SESSION['bookdata']);
+                        header("location: ../userdashboard.php");
+                    }
+
                     $rtn = "Login Success";
                     $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user');
-                    $cookie_name = $row['username'];
                     header("Refresh:0; url=../userdashboard.php");
                 } else {
                     $rtn = "Login Failed";

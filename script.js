@@ -99,6 +99,7 @@ $(function () {
                     window.location.href='Admin/login.php';
                 } else {
                     alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
+                    window.location.href='user_pending_ride.php';
                 }
             },
             error: function () {

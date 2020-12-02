@@ -25,12 +25,6 @@ if (isset($_SESSION['bookdata'])) {
     $totalFare = $_SESSION['bookdata']['total_fare'];
     $status = $_SESSION['bookdata']['status'];
 
-    // if ((time()-$_SESSION['bookdata']['time'])==10) {
-    //     header('Location:Admin/logout.php');
-    //     exit;
-    // } else {
-    //     $_SESSION['bookdata']['time'] = time();
-    // }
     $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
     $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
     $sql = $ddb->insert($field, $values, 'rideTable');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -34,6 +35,7 @@ if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] ==
 // Header
 require 'header.php';
 ?>
+
 <body class="admintop">
     <div class="adminbody" style="height:800px;">
         <img src="../images/taxi4.jpg" alt="" style="height:800px;">
