@@ -43,8 +43,8 @@ if (isset($_POST["submit"])) {
         $error = array('input' => 'password', 'msg' => 'password doesnt match');
     }
     if (sizeof($error) == 0) {
-        $fields = array('username', 'mobile', 'password', 'email');
-        $values = array($username, $mobile, $password, $email);
+        $fields = array('username', 'name', 'mobile', 'password', 'email');
+        $values = array($username, $name, $mobile, $password, $email);
 
         $res = $con->insert($fields, $values, 'userTable');
 
