@@ -16,8 +16,8 @@ $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-    $roles = $_POST['roles'];
-    echo $user->login($username, $password, $roles);
+    // $roles = $_POST['roles'];
+    echo $user->login($username, $password);
     if (isset($_POST['rememberme'])) {
         setcookie('username', $_POST['username'], time()+60*60*24*365);  
     }
@@ -49,13 +49,13 @@ if (isset($_POST["submit"])) {
         <div id="login-form">
             <form action="" method="POST">
                 <div class="loginlogo"><span>Login</span></div>
-                <p>
+                <!-- <p>
                     <label for="roles" id="role">Login As:
                         <select id="roles" name="roles">
                             <option value="Admin">Admin</option>
                             <option value="User">User</option>
                         </Select></label>
-                </p>
+                </p> -->
                 <div id="errordiv">
                     <?php if (sizeof($error) > 0) : ?>
                         <ul>

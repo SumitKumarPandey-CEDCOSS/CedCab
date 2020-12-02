@@ -33,26 +33,25 @@ $sql = $db->complete_ride($user);
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
                 <th>Total Distance</th>
+                <th>Luggage</th>
                 <th>Ride Date</th>
                 <th>Total_fare</th>
-                <th>User Id</th>
                 <th>Status</th>
-                <th>Action</th>
             </tr>
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
                     <tr>
-                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td" hidden><?php echo $key['ride_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
                         <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['luggage'] ?></td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['total_fare'] ?></td>
-                        <td id="td"><?php echo $key['user_id'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>
-                        <td><a href="pending_ride.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

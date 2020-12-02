@@ -17,7 +17,11 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
 }
-
+if (isset($_REQUEST['delid'])) {
+    $user_id = $_REQUEST['delid'];
+    echo $db->delete($user_id);
+    header("Refresh:0;url=user_rides.php");
+}
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
@@ -25,7 +29,6 @@ if (isset($_GET['sort'])) {
 }
 $sql = $db->filter_user($user, $sort);
 ?>
-
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">
@@ -34,7 +37,7 @@ $sql = $db->filter_user($user, $sort);
             <div class="dropdown sort">
                 <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="user_rides.php?sort=day">DAY<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
                 </div>
@@ -42,26 +45,27 @@ $sql = $db->filter_user($user, $sort);
         </div>
         <table id="LocationTable" class="ridetable">
             <tr>
-                <th>ID</th>
+                <th>User Id</th>
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
                 <th>Total Distance</th>
+                <th>Luggage</th>
                 <th>Ride Date</th>
                 <th>Total_fare</th>
-                <th>User Id</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
                     <tr>
-                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td" hidden><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
                         <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['luggage'] ?></td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
-                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?></td>                      
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } elseif ($key['status'] == '1') {

@@ -160,6 +160,6 @@ if (!empty($_SESSION['userdata'])) {
     $status = 1;
     $_SESSION['bookdata'] = array(
         'pickup' => $Location, 'droplocation' => $Destination, 'cabType' => $cab,
-        'total_distance' => $distance, 'total_fare' => $totalFare, 'status' => $status,
+        'total_distance' => $distance, 'luggage'=>$luggage, 'total_fare' => $totalFare, 'status' => $status,
     );
 }

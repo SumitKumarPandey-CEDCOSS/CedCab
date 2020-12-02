@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -12,6 +11,7 @@
 require 'userheader.php';
 require 'Admin/config.php';
 $conn = new User();
+$error = array();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
@@ -25,15 +25,40 @@ if (isset($_REQUEST['update'])) {
     $user_id = $_REQUEST['user_id'];
     $username = $_POST['username'];
     $mobile = $_POST['mobile'];
+
+    if (!empty($mobile)) // phone number is not empty
+    {
+        if (preg_match('/^\d{10}$/', $mobile)) // phone number is valid
+        {
+            $mobile = '0' . $mobile;
+        } else {
+            echo "<script>alert('Enter valid Mobile Number')</script>";
+            $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
+        }
+    }
     $email = isset($_POST["email"]);
     $date = isset($_POST["date"]);
-    echo $conn->setuser($user_id, $username, $mobile, $email, $date);
+
+    if (sizeof($error) == 0) {
+
+        echo $conn->setuser($user_id, $username, $mobile, $email, $date);
+    }
 }
 ?>
 
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">
+        <div id="errordiv">
+            <?php if (sizeof($error) > 0) : ?>
+                <ul>
+                    <?php foreach ($error as $value) : ?>
+                        <li><?php echo $error['msg'];
+                            break ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
         <div id="AdminWelcomeQuote">
             <h1>User Details</h1>
         </div>
@@ -52,16 +77,6 @@ if (isset($_REQUEST['update'])) {
                     <p>
                         <label for="">Date:</label><?php echo $key['date']; ?>
                     </p>
-                    <?php
-                    if (isset($expense)) {
-                        $sum = 0;
-                        foreach ($expense as $key) {
-                            $sum += $key['total_fare'];
-                        } ?>
-                        <p>
-                            <label for="">Total Fare:</label><?php echo $sum; ?>
-                        </p>
-                    <?php } ?>
                     <p>
                         <input type="button" class="btn1" name="update" value="Edit" id="edit" class="editbtn" />
                     </p>
@@ -73,11 +88,11 @@ if (isset($_REQUEST['update'])) {
             <?php foreach ($sql as $key) { ?>
                 <form action="" method="post" class="formid">
                     <p>
-                        <input type="hidden" name="user_id" value="<?php echo $key['user_id'] ?>" />
+                        <input type="hidden"  name="user_id" value="<?php echo $key['user_id'] ?>" />
                     </p>
                     <p>
                         <label for="">UserName :</label>
-                        <input type="text" name="username" value="<?php echo $key['username'] ?>" />
+                        <input type="text" name="username" readonly value="<?php echo $key['username'] ?>" />
                     </p>
                     <p>
                         <label for="">Mobile :</label>

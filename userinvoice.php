@@ -9,20 +9,22 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'config.php';
-require 'header.php';
+require 'Admin/config.php';
+require 'userheader.php';
 $db = new Ride();
-$db->connect('localhost', 'root', '', 'CabBooking');
-if (isset($_REQUEST['ride_id'])) {
-    $ride_id = $_REQUEST['ride_id'];
-    $user_id = $_REQUEST['user_id'];
+
+if (isset($_SESSION['userdata'])) {
+    $user = $_SESSION['userdata']['user_id'];
+    $username = $_SESSION['userdata']['username'];
 }
-$sql = $db->confirm_ride($ride_id);
-$expense = $db->user_revenue($user_id)
+$db->connect('localhost', 'root', '', 'CabBooking');
+$sql = $db->complete_ride($user);
+$expense = $db->user_revenue($user);
 ?>
+
 <body class="admintop">
     <div class="adminbody">
-        <img src="../images/taxi4.jpg" alt="">
+        <img src="images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>Invoice</h1>
         </div>
@@ -30,7 +32,7 @@ $expense = $db->user_revenue($user_id)
             <?php foreach ($sql as $key) { ?>
                 <form action="" method="post" class="formid">
                     <p>
-                        <label for="">User_Id :</label> <?php echo $key['user_id'] ?>
+                        <label for="">UserName :</label> <?php echo $username ?>
                     </p>
                     <p>
                         <label for="">Pickup Location :</label><?php echo $key['pickup']; ?>
@@ -56,7 +58,7 @@ $expense = $db->user_revenue($user_id)
                         </p>
                     <?php } ?>
                     <p>
-                        <input type="button" class="btn1" onclick="window.print();" name="update" value="Print" id="edit" class="editbtn" />
+                        <input type="button" class="btn1" onclick="windows.print()" name="update" value="Print" id="edit" class="editbtn" />
                     </p>
                 </form>
             <?php } ?>

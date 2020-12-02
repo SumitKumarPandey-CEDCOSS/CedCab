@@ -28,9 +28,11 @@ if (isset($_SESSION['bookdata'])) {
     $sql = $ddb->insert($field, $values, 'rideTable');
     header("Location: user_pending_ride.php");
 }
-if (empty($_SESSION['userdata'])) {
-    echo "<script>alert('please login to entered')</script>";
-    header('Refresh:0; url=Admin/login.php');
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=Admin/login.php");
 }
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
@@ -65,12 +67,12 @@ $sql1 = $db->user_ride($user);
                 foreach ($expense as $key) {
                     $sum += $key['total_fare'];
                 } ?>
-                <div class="tiles"><a href="#">
+                <div class="tiles"><a href="userinvoice.php">
                         <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; <?php echo $sum ?> $
                     </a>
                 </div>
             <?php } else { ?>
-                <div class="tiles"><a href="#">
+                <div class="tiles"><a href="userinvoice.php">
                         <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; 0 $
                     </a>
                 </div> <?php } ?>

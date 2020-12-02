@@ -44,12 +44,12 @@ class DB
 }
 class User extends DB
 {
-    public function login($username, $password, $roles)
+    public function login($username, $password)
     {
         $is_block = 1;
         $sql = 'SELECT * FROM userTable WHERE 
         `username`="' . $username . '" AND 
-        `password`="' . $password . '" AND is_admin="' . $roles . '" AND is_block="' . $is_block . '"';
+        `password`="' . $password . '" AND is_block="' . $is_block . '"';
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -291,8 +291,8 @@ class Ride extends DB
     }
     public function filter_user($user_id, $sort)
     {
-        if ($sort == 'day') {
-            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 DAY) ");
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
         } elseif ($sort == 'month') {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
         } elseif ($sort == 'year') {

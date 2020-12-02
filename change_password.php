@@ -25,13 +25,17 @@ if (isset($_POST['update'])) {
     $new = md5($_POST['newpassword']);
     $confirm = md5($_POST['confirmpassword']);
     if ($new == $confirm) {
-        echo $conn->changepassword($new, $user);
+        $sql = $conn->changepassword($new, $user);
+        if ($sql) {
+            unset($_SESSION['userdata']);
+            echo '<script>alert("Password changed Successfully")</script>';
+            header('Refresh:0;url=Admin/login.php');
+        }
     } else {
         echo "<script>alert('password doesnt match')</script>";
     }
 }
 ?>
-
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">

@@ -30,7 +30,6 @@ if (isset($_POST["submit"])) {
             $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
         }
     }
-
     $email = $_POST['email'];
     echo $username, $password;
     if ($password != $repassword) {
@@ -51,7 +50,6 @@ if (isset($_POST["submit"])) {
 }
 ?>
 <html>
-
 <head>
     <title>
         Register

@@ -53,7 +53,7 @@ if (isset($_REQUEST['delid'])) {
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>
-                        <td><a href="invoice.php?ride_id=<?php echo $key['ride_id'] ?>">Invoice</a></td>
+                        <td><a href="invoice.php?ride_id=<?php echo $key['ride_id'] ?>&amp;user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
                         <td><a href="completed_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
