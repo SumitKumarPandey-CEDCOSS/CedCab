@@ -14,12 +14,14 @@ require 'config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 
+// Delete the Record From the database
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->delete($user_id);
     header("Refresh:0;url=All_rides.php");
 }
 ?>
+<!-- Sorting the data -->
 <?php if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
@@ -42,7 +44,7 @@ $sql = $db->All_ride($sort);
                 </div>
             </div>
         </div>
-
+        <!-- Representing All Ride data in Table Form -->
         <table id="LocationTable" class="ridetable">
             <tr>
                 <th>ID</th>
@@ -79,6 +81,8 @@ $sql = $db->All_ride($sort);
             } ?>
         </table>
     </div>
+    <!-- Footer -->
     <?php require 'footer.php' ?>
+    <!-- Javascript -->
     <script src="../script.js"></script>
 </body>

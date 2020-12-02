@@ -16,6 +16,7 @@ $msg = '';
 $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
+    $name = $_POST['name'];
     $password = md5($_POST['password']);
     $repassword = md5($_POST['repassword']);
     $mobile = $_POST['mobile'];
@@ -30,8 +31,14 @@ if (isset($_POST["submit"])) {
             $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
         }
     }
+    if (!empty($username)&&($name)) {
+        if (!preg_match("/^[a-zA-Z\s]+$/", $username)) {
+
+            echo "<script>alert('Enter valid Username Number')</script>";
+            $error = array('input' => 'password', 'msg' => 'Enter Valid Username');
+        }
+    }
     $email = $_POST['email'];
-    echo $username, $password;
     if ($password != $repassword) {
         $error = array('input' => 'password', 'msg' => 'password doesnt match');
     }
@@ -50,6 +57,7 @@ if (isset($_POST["submit"])) {
 }
 ?>
 <html>
+
 <head>
     <title>
         Register
@@ -69,6 +77,7 @@ if (isset($_POST["submit"])) {
         </li>
     </ul>
 </div>
+
 <body class="body" style="margin:0;">
     <div id="errordiv">
         <?php if (sizeof($error) > 0) : ?>
@@ -87,6 +96,11 @@ if (isset($_POST["submit"])) {
                 <p class="input">
                     <label for="username">Username:
                         <input type="text" name="username" required>
+                    </label>
+                </p>
+                <p class="input">
+                    <label for="username">Name:
+                        <input type="text" name="name" required>
                     </label>
                 </p>
                 <p class="input">

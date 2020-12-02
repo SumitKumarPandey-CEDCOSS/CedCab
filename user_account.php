@@ -24,24 +24,30 @@ $expense = $db->user_revenue($user);
 if (isset($_REQUEST['update'])) {
     $user_id = $_REQUEST['user_id'];
     $username = $_POST['username'];
+    $name = $_POST['name'];
     $mobile = $_POST['mobile'];
 
     if (!empty($mobile)) // phone number is not empty
     {
-        if (preg_match('/^\d{10}$/', $mobile)) // phone number is valid
+        if (!preg_match('/^\d{10}$/', $mobile)) // phone number is valid
         {
-            $mobile = '0' . $mobile;
-        } else {
             echo "<script>alert('Enter valid Mobile Number')</script>";
             $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
         }
     }
-    $email = isset($_POST["email"]);
-    $date = isset($_POST["date"]);
-
+    // Name number is not empty
+    if (!empty($name)) {
+        if (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
+            echo "<script>alert('Enter valid name ')</script>";
+            $error = array('input' => 'password', 'msg' => 'Enter Valid Username');
+        }
+    }
     if (sizeof($error) == 0) {
 
-        echo $conn->setuser($user_id, $username, $mobile, $email, $date);
+        $sql = $conn->setuser($user_id, $username, $name, $mobile);
+        if ($sql) {
+            header("Location:user_account.php");
+        }
     }
 }
 ?>
@@ -69,6 +75,9 @@ if (isset($_REQUEST['update'])) {
                         <label for="">UserName :</label> <?php echo $key['username']; ?>
                     </p>
                     <p>
+                        <label for="">Name :</label> <?php echo $key['name']; ?>
+                    </p>
+                    <p>
                         <label for="">Mobile :</label><?php echo $key['mobile']; ?>
                     </p>
                     <p>
@@ -88,11 +97,15 @@ if (isset($_REQUEST['update'])) {
             <?php foreach ($sql as $key) { ?>
                 <form action="" method="post" class="formid">
                     <p>
-                        <input type="hidden"  name="user_id" value="<?php echo $key['user_id'] ?>" />
+                        <input type="hidden" name="user_id" value="<?php echo $key['user_id'] ?>" />
                     </p>
                     <p>
                         <label for="">UserName :</label>
                         <input type="text" name="username" readonly value="<?php echo $key['username'] ?>" />
+                    </p>
+                    <p>
+                        <label for="">Name :</label>
+                        <input type="text" name="name" value="<?php echo $key['name'] ?>" />
                     </p>
                     <p>
                         <label for="">Mobile :</label>

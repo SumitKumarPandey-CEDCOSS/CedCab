@@ -10,5 +10,6 @@
  */
 session_start();
 unset($_SESSION["userdata"]);
+unset($_SESSION["bookdata"]);
 header("Location:login.php");
 ?>

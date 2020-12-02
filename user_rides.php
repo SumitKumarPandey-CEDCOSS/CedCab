@@ -40,6 +40,7 @@ $sql = $db->filter_user($user, $sort);
                     <a href="user_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>

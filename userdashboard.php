@@ -14,6 +14,7 @@ $db = new Ride();
 $ddb = new DB();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $ddb->connect('localhost', 'root', '', 'CabBooking');
+
 if (isset($_SESSION['bookdata'])) {
     $status = 1;
     $user_id = $_SESSION['userdata']['user_id'];
@@ -23,6 +24,13 @@ if (isset($_SESSION['bookdata'])) {
     $distance = $_SESSION['bookdata']['total_distance'];
     $totalFare = $_SESSION['bookdata']['total_fare'];
     $status = $_SESSION['bookdata']['status'];
+
+    // if ((time()-$_SESSION['bookdata']['time'])==10) {
+    //     header('Location:Admin/logout.php');
+    //     exit;
+    // } else {
+    //     $_SESSION['bookdata']['time'] = time();
+    // }
     $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
     $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
     $sql = $ddb->insert($field, $values, 'rideTable');
@@ -46,8 +54,8 @@ $sql1 = $db->user_ride($user);
 ?>
 
 <body class="admintop">
-    <div class="adminbody">
-        <img src="images/taxi4.jpg" alt="">
+    <div class="adminbody" style="height:600px;">
+        <img src="images/taxi4.jpg" alt="" style="height:600px;">
         <div id="AdminWelcomeQuote">
             <h1>Welcome &nbsp;<?php if (!empty($username)) {
                                     echo $username;

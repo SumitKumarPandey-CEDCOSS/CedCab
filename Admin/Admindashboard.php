@@ -24,18 +24,19 @@ $total_revenue = $db->Total_Revenue();
 $blocked = $Us->count_blocked();
 $location = $loc->count_location();
 
+// check Admin Login
 if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
     $user = $_SESSION['userdata']['username'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
     header("Refresh:0; url=login.php");
 }
+// Header
 require 'header.php';
 ?>
-
 <body class="admintop">
-    <div class="adminbody">
-        <img src="../images/taxi4.jpg" alt="">
+    <div class="adminbody" style="height:800px;">
+        <img src="../images/taxi4.jpg" alt="" style="height:800px;">
         <div id="AdminWelcomeQuote">
             <h1>Welcome &nbsp;<?php if (!empty($user)) {
                                     echo $user;
@@ -81,6 +82,8 @@ require 'header.php';
             </div>
         </div>
     </div>
+
+    <!-- Google Chart to show data in Graphical form -->
     <script type="text/javascript">
         // Load google charts
         google.charts.load('current', {
@@ -112,6 +115,8 @@ require 'header.php';
         }
     </script>
     <div id="piechart"></div>
+    <!-- Footer -->
     <?php require 'footer.php' ?>
+    <!-- Javascript included -->
     <script src="../script.js"></script>
 </body>

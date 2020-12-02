@@ -55,11 +55,11 @@ class User extends DB
             while ($row = $result->fetch_assoc()) {
                 if ($row['is_admin'] == 'admin') {
                     $rtn = "Login Success";
-                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'admin' );
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'admin');
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     $rtn = "Login Success";
-                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user' );
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user');
                     $cookie_name = $row['username'];
                     header("Refresh:0; url=../userdashboard.php");
                 } else {
@@ -133,13 +133,14 @@ class User extends DB
             return $result;
         }
     }
-    public function setuser($user_id, $username, $mobile, $email, $date)
+    public function setuser($user_id, $username, $name, $mobile)
     {
-        $result = mysqli_query($this->conn, "UPDATE userTable SET `username`='$username',`mobile`='$mobile',`email`='$email',`date`='$date' WHERE `user_id`='" . $user_id . "'");
-        return "SuccessFull Updated";
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `username`='$username', `name`='$name', `mobile`='$mobile' WHERE `user_id`='" . $user_id . "'");
+        return "Updated SuccessFully";
     }
-    public function changepassword($newpassword, $user) {
-        $result = mysqli_query($this->conn, "UPDATE userTable SET `password`='$newpassword' WHERE `user_id` = '" .$user. "' ") ;
+    public function changepassword($newpassword, $user)
+    {
+        $result = mysqli_query($this->conn, "UPDATE userTable SET `password`='$newpassword' WHERE `user_id` = '" . $user . "' ");
         return "Password changed SuccessFully";
     }
 }
@@ -159,14 +160,14 @@ class LocationTable extends DB
             return $result;
         }
     }
-    public function count_location() 
+    public function count_location()
     {
         $result = mysqli_query($this->conn, "SELECT * FROM LocationTable");
         return $result->num_rows;
     }
     public function deleteloc($id)
     {
-        $result = mysqli_query($this->conn, "DELETE FROM LocationTable  WHERE `id`='" . $id ."' ");
+        $result = mysqli_query($this->conn, "DELETE FROM LocationTable  WHERE `id`='" . $id . "' ");
         return "Deleted SuccessFully";
     }
 }
@@ -297,6 +298,8 @@ class Ride extends DB
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
         } elseif ($sort == 'year') {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
         } else {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
         }
@@ -311,7 +314,7 @@ class Ride extends DB
     }
     public function delete($ride_id)
     {
-        $result = mysqli_query($this->conn, "DELETE FROM rideTable  WHERE `ride_id`='" . $ride_id ."'");
+        $result = mysqli_query($this->conn, "DELETE FROM rideTable  WHERE `ride_id`='" . $ride_id . "'");
         return "Deleted SuccessFully";
     }
 }

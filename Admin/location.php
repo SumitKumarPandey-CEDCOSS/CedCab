@@ -17,9 +17,11 @@ $error = array();
 if (isset($_POST["submit"])) {
     $location = $_POST['location'];
     $distance = $_POST['distance'];
-    $fields = array('name', 'distance');
-    $values = array($location, $distance);
-    $loct->insert($fields, $values, 'LocationTable');
+    if ((preg_match("/^[a-zA-Z\s]+$/", $location)) && (preg_match("/^[0-9]+$/", $distance))) {
+            $fields = array('name', 'distance');
+            $values = array($location, $distance);
+            $loct->insert($fields, $values, 'LocationTable');
+    }
 }
 ?>
 <body class="admintop">
