@@ -13,13 +13,14 @@ require 'Admin/config.php';
 require 'userheader.php';
 $db = new Ride();
 
-if (isset($_SESSION['userdata'])) {
-    $user = $_SESSION['userdata']['user_id'];
+if (isset($_REQUEST['ride_id'])) {
+    $ride_id = $_REQUEST['ride_id'];
+    $user_id = $_REQUEST['user_id'];
     $username = $_SESSION['userdata']['username'];
 }
 $db->connect('localhost', 'root', '', 'CabBooking');
-$sql = $db->complete_ride($user);
-$expense = $db->user_revenue($user);
+$sql = $db->confirm_ride($ride_id);
+$expense = $db->user_revenue($user_id);
 ?>
 
 <body class="admintop">
@@ -46,19 +47,11 @@ $expense = $db->user_revenue($user);
                     <p>
                         <label for="">Luggage:</label><?php echo $key['luggage']; ?>
                     </p>
-                    <?php
-                    if (isset($expense)) {
-                        $sum = 0;
-                        foreach ($expense as $key) {
-                            $sum += $key['total_fare'];
-                        }
-                    ?>
                         <p>
-                            <label for="">Total Fare:</label><?php echo $sum; ?>
+                            <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>
                         </p>
-                    <?php } ?>
                     <p>
-                        <input type="button" class="btn1" onclick="windows.print()" name="update" value="Print" id="edit" class="editbtn" />
+                        <input type="button" class="btn1" onclick="window.print()" name="update" value="Print" id="edit" class="editbtn" />
                     </p>
                 </form>
             <?php } ?>

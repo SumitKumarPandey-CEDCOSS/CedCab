@@ -37,6 +37,7 @@ $sql = $db->complete_ride($user);
                 <th>Ride Date</th>
                 <th>Total_fare</th>
                 <th>Status</th>
+                <th>Invoice</th>
             </tr>
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
@@ -52,6 +53,7 @@ $sql = $db->complete_ride($user);
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>
+                                    <td><a href="userinvoice.php?ride_id=<?php echo $key['ride_id'] ?>&amp;user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
                     </tr>
             <?php }
             } ?>

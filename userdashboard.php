@@ -26,13 +26,14 @@ if (isset($_SESSION['bookdata'])) {
     $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
     $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
     $sql = $ddb->insert($field, $values, 'rideTable');
-    header("Location: user_pending_ride.php");
+    echo "<script>alert('Your Ride Is Pending Wait For confirmation')</script>";
+    header("Refresh:0; url=user_pending_ride.php");
 }
 if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user'))) {
     $user = $_SESSION['userdata']['username'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
+    header("Refresh:; url=Admin/login.php");
 }
 if (isset($_SESSION['userdata'])) {
     $user = $_SESSION['userdata']['user_id'];
@@ -54,11 +55,11 @@ $sql1 = $db->user_ride($user);
         </div>
         <div class="maintiles">
             <div class="tiles"><a href="user_pending_ride.php">
-                    <p><i class="fa fa-bar-chart"></i></p>Pending_Rides&nbsp; <?php echo $pending_ride ?>
+                    <p><i class="fa fa-bar-chart"></i></p>Pending_Rides <span><?php echo $pending_ride ?></span>
                 </a>
             </div>
             <div class="tiles"><a href="completed_rides.php">
-                    <p><i class="fa fa-group"></i></p>Completed_Rides &nbsp;<?php echo $sql ?>
+                    <p><i class="fa fa-group"></i></p>Completed_Rides <span><?php echo $sql ?></span>
                 </a>
             </div>
             <?php
@@ -67,17 +68,17 @@ $sql1 = $db->user_ride($user);
                 foreach ($expense as $key) {
                     $sum += $key['total_fare'];
                 } ?>
-                <div class="tiles"><a href="userinvoice.php">
-                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; <?php echo $sum ?> $
+                <div class="tiles"><a href="completed_rides.php">
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense <span><?php echo $sum ?>$</span>
                     </a>
                 </div>
             <?php } else { ?>
-                <div class="tiles"><a href="userinvoice.php">
-                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense &nbsp; 0 $
+                <div class="tiles"><a href="completed_rides.php">
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense <span>0 $</span> 
                     </a>
                 </div> <?php } ?>
             <div class="tiles"><a href="user_rides.php">
-                    <p><i class="fa fa-group"></i></p>All_Rides &nbsp;<?php echo $sql1 ?>
+                    <p><i class="fa fa-group"></i></p>All_Rides <span><?php echo $sql1 ?></span>
                 </a>
             </div>
         </div>

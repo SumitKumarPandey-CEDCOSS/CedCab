@@ -47,7 +47,7 @@ class User extends DB
     public function login($username, $password)
     {
         $is_block = 1;
-        $sql = 'SELECT * FROM userTable WHERE 
+        $sql = 'SELECT * FROM userTable WHERE BINARY 
         `username`="' . $username . '" AND 
         `password`="' . $password . '" AND is_block="' . $is_block . '"';
         $result = $this->conn->query($sql);
