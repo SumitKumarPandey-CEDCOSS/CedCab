@@ -16,7 +16,6 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 $ddb->connect('localhost', 'root', '', 'CabBooking');
 
 if (isset($_SESSION['bookdata'])) {
-    $status = 1;
     $user_id = $_SESSION['userdata']['user_id'];
     $Location = $_SESSION['bookdata']['pickup'];
     $Destination = $_SESSION['bookdata']['droplocation'];

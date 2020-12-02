@@ -59,7 +59,7 @@ class User extends DB
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     //unset session['bookdata] after 3min
-                    if ((time()-$_SESSION['bookdata']['time'])>10) {
+                    if ((time()-$_SESSION['bookdata']['time'])>180) {
                         unset($_SESSION['bookdata']);
                         header("location: ../userdashboard.php");
                     }
