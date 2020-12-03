@@ -19,6 +19,12 @@ if (isset($_SESSION['userdata'])) {
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->complete_ride($user);
 
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+} else {
+    $sort = 'ASC';
+}
+$sql = $db->pending_order($sort);
 ?>
 
 <body class="admintop">
@@ -26,6 +32,14 @@ $sql = $db->complete_ride($user);
         <img src="images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>Completed Rides</h1>
+        </div>
+        <div class="dropdown sort">
+            <button class="dropbtn sortbtn">Sort By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="completed_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
+            </div>
         </div>
         <table id="LocationTable" class="ridetable">
             <tr>
@@ -53,7 +67,7 @@ $sql = $db->complete_ride($user);
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>
-                                    <td><a href="userinvoice.php?ride_id=<?php echo $key['ride_id'] ?>&amp;user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
+                        <td><a href="userinvoice.php?ride_id=<?php echo $key['ride_id'] ?>&amp;user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
                     </tr>
             <?php }
             } ?>

@@ -14,6 +14,14 @@ require 'config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->pending_ride();
+
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 if (isset($_GET['Confirm_id'])) {
     $ride_id = $_GET['Confirm_id'];
     echo $ride_id;

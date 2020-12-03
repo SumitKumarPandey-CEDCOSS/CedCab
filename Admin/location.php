@@ -23,6 +23,14 @@ if (isset($_POST["submit"])) {
             $loct->insert($fields, $values, 'LocationTable');
     }
 }
+
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 ?>
 <body class="admintop">
     <div class="adminbody" style="position:absolute; width:100%">

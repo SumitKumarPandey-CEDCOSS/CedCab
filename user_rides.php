@@ -37,6 +37,8 @@ $sql = $db->filter_user($user, $sort);
             <div class="dropdown sort">
                 <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
+                <a href="user_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
+                <a href="user_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>

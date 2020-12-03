@@ -1,4 +1,5 @@
 <?php
+
 /**
  * * PHP version 7.2.10
  * 
@@ -19,36 +20,27 @@ $Destination = $_REQUEST['Destination'];
 $Cab = $_REQUEST['Cab'];
 $luggage = $_REQUEST['Luggage'];
 
-if ($luggage <= 10) {
-    $luggageprice = 50;
-} elseif ($luggage > 10 && $luggage <= 20) {
-    $luggageprice = 100;
-} elseif ($luggage > 20) {
-    $luggageprice = 200;
-} else {
-    $luggageprice = 0;
+if (isset($luggage)) {
+    if ($luggage <= 10) {
+        $luggageprice = 50;
+    } elseif ($luggage > 10 && $luggage <= 20) {
+        $luggageprice = 100;
+    } elseif ($luggage > 20) {
+        $luggageprice = 200;
+    } else {
+        $luggageprice = 0;
+    }
 }
-// $cabdetail = array(
-//     array(
-//         "Charbagh" => 0, "Indira Nagar" => 10, "BBD" => 30,
-//         "Barabanki" => 60,
-//         "Faizabad" => 100,
-//         "Basti" => 150,
-//         "Gorakhpur" => 210
-//     )
-// );
-// foreach ($cabdetail as $key => $value) {
-//     $distance = abs($value[$Location] - $value[$Destination]);
-// }
+
 foreach ($sql as $key) {
     if ($key['name'] == $Location) {
         $pickup = $key['distance'];
     }
-    if ($key['name']==$Destination) {
+    if ($key['name'] == $Destination) {
         $drop = $key['distance'];
     }
 }
-$distance = abs($pickup-$drop);
+$distance = abs($pickup - $drop);
 
 if ($Cab == "1") {
     $cab = "CedMicro";
@@ -147,16 +139,18 @@ if (!empty($_SESSION['userdata'])) {
         $action = $_REQUEST['action'];
         echo $action;
         if ($action == 1) {
-            $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
-            $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
+            $field = array('pickup', 'droplocation', 'cabType', 'luggage', 'total_distance', 'total_fare', 'status', 'user_id');
+            $values = array($Location, $Destination, $cab, $luggage,  $distance, $totalFare,  $status, $user_id);
             $sql = $db->insert($field, $values, 'rideTable');
         }
     }
 } else {
     $status = 1;
-    $_SESSION['bookdata'] = array(
-        'pickup' => $Location, 'droplocation' => $Destination, 'cabType' => $cab,
-        'total_distance' => $distance, 'luggage' => $luggage, 'total_fare' => $totalFare, 'status' => $status,
-        'time'=>time()
-    );
+    if (isset($action)) {
+        $_SESSION['bookdata'] = array(
+            'pickup' => $Location, 'droplocation' => $Destination, 'cabType' => $cab,
+            'total_distance' => $distance, 'luggage' => $luggage, 'total_fare' => $totalFare, 'status' => $status,
+            'time' => time()
+        );
+    }
 }

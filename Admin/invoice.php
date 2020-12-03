@@ -17,6 +17,14 @@ if (isset($_REQUEST['ride_id'])) {
     $ride_id = $_REQUEST['ride_id'];
     $user_id = $_REQUEST['user_id'];
 }
+
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 $sql = $db->confirm_ride($ride_id);
 $expense = $db->user_revenue($user_id)
 ?>

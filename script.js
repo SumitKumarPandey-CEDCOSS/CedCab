@@ -13,7 +13,7 @@ $(function () {
     $('#text3').keyup(function () {
         this.value = this.value.replace(/[^0-9\.]/g, '');
     });
-
+    //ajax function used for cab fare calculation
     $("#btn1").click(function (e) {
         e.preventDefault();
         var a = $("#sel1").val();
@@ -55,11 +55,29 @@ $(function () {
             }
         });
     });
+
+    var original = '';
+    $('.checkForDot').on('input', function () {
+        if ($(this).val().replace(/[^.]/g, "").length > 1) {
+            $(this).val(original);
+        } else {
+            original = $(this).val();
+        }
+    });
+
     $("#sel1,#sel2,#sel3").click(function () {
         $("#btn1").show();
         $("#btn2").hide();
     });
+    //hide booktable
     $('.booktable').hide();
+
+    //hide button when any keypress event occur
+    $('#sel1,#sel2,#sel3,#text3').keypress(function (e) {
+        $('#btn1').show();
+        $('#btn2').hide();
+    });
+
     $("#btn2").click(function (e) {
         e.preventDefault();
         var a = $("#sel1").val();
@@ -92,14 +110,23 @@ $(function () {
             type: "POST",
             data: { Location: a, Destination: b, Cab: c, Luggage: d, action: action },
             success: function (result) {
-                
                 $data = $('#table1').html();
-                if($data == result) {
-                    alert("please login");
-                    window.location.href='Admin/login.php';
+                if ($data == result) {
+                    var r = confirm("Do You Want to Continue to Confirm Ride?");
+                    if (r == true) {
+                        alert("please login");
+                        window.location.href = 'Admin/login.php';
+                    } else {
+                        window.location.href = 'destroy.php';
+                    }
                 } else {
-                    alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
-                    window.location.href='user_pending_ride.php';
+                    var r = confirm("Do You Want to Continue to Confirm Ride?");
+                    if (r == true) {
+                        alert("RIDE BOOK PLEASE WAIT FOR APPROVAL");
+                        window.location.href = 'user_pending_ride.php';
+                    } else {
+                        window.location.href = 'destroy.php';
+                    }
                 }
             },
             error: function () {
@@ -108,7 +135,7 @@ $(function () {
         });
     });
     $('.table2').hide();
-    $("#edit").click(function(){
+    $("#edit").click(function () {
         $('.table1').hide();
         $('.table2').show();
     })

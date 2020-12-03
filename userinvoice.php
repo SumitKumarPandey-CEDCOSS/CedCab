@@ -47,12 +47,15 @@ $expense = $db->user_revenue($user_id);
                     <p>
                         <label for="">Luggage:</label><?php echo $key['luggage']; ?>
                     </p>
-                        <p>
-                            <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>
-                        </p>
+                    <p>
+                        <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>
+                    </p>
                     <p>
                         <input type="button" class="btn1" onclick="window.print()" name="update" value="Print" id="edit" class="editbtn" />
                     </p>
                 </form>
             <?php } ?>
         </div>
+    </div>
+    <?php require 'Admin/footer.php' ?>
+</body>

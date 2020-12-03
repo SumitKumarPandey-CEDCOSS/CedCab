@@ -13,6 +13,14 @@ require 'header.php';
 require 'config.php';
 $db = new User();
 $db->connect('localhost', 'root', '', 'CabBooking');
+
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 if (isset($_GET['blocked_id'])) {
     $user_id = $_GET['blocked_id'];
     echo $user_id;
@@ -47,6 +55,8 @@ $sql = $db->getData($sort);
         <div class="dropdown sort">
             <button class="dropbtn sortbtn">Sort</button>
             <div class="dropdown-content sortcontent">
+            <a href="manageCustomer.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=username">Name<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=is_block">Blocked wise<p hidden>A $_GET</p></a>

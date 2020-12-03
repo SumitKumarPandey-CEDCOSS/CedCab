@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
     // $roles = $_POST['roles'];
     echo $user->login($username, $password);
     if (isset($_POST['rememberme'])) {
-        setcookie('username', $_POST['username'], time()+60*60*24*365);  
+        setcookie('username', $_POST['username'],  time() + (86400 * 30), "/");  
     }
 }
 ?>
@@ -45,7 +45,7 @@ if (isset($_POST["submit"])) {
     </ul>
 </div>
 <body class="body" style="margin:0;">
-    <div id="wrapper">
+    <div id="wrapper"  style="height:600px;">
         <div id="login-form">
             <form action="" method="POST">
                 <div class="loginlogo"><span>Login</span></div>
@@ -89,6 +89,6 @@ if (isset($_POST["submit"])) {
             </form>
         </div>
     </div>
+    <?php require 'footer.php' ?>
 </body>
-
 </html>

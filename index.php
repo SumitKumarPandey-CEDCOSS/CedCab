@@ -26,6 +26,7 @@ $sql = $db->location_getData();
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <title>Document</title>
     <script src="script.js"></script>
@@ -70,7 +71,7 @@ $sql = $db->location_getData();
     </ul>
 </div>
     <body class="admintop">
-        <div class="adminbody" style="position:absolute; width:100%;">
+        <div class="adminbody" style="margin-top:-3.5%; width:100%;">
             <img src="images/taxi6.jpg" alt="taxiimage">
             <p class="location-logo">Book Ride</p>
             <div class="table1">
@@ -109,7 +110,7 @@ $sql = $db->location_getData();
                     </p>
                     <p class="input">
                         <label for="text">Luggage:
-                            <input type="text" placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
+                            <input type="text" class='checkForDot' placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
                     </p></label>
                     <p class="submit">
                         <button type="submit" id="btn1" class="btn1">Calculate
@@ -124,3 +125,4 @@ $sql = $db->location_getData();
             </div>
         </div>
     </body>
+    <?php require 'Admin/footer.php' ?>

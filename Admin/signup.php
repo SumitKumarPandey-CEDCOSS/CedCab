@@ -14,41 +14,58 @@ $con = new DB();
 $con->connect('localhost', 'root', '', 'CabBooking');
 $msg = '';
 $error = array();
+$headers = "";
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
     $name = $_POST['name'];
     $password = md5($_POST['password']);
     $repassword = md5($_POST['repassword']);
     $mobile = $_POST['mobile'];
+    $email = $_POST['email'];
+    $activationcode = md5($email . time());
 
     if (!empty($mobile)) // phone number is not empty
     {
         if (preg_match('/^\d{10}$/', $mobile)) // phone number is valid
         {
-            $mobile = '0' . $mobile;
+            $mobile = $mobile;
         } else {
             echo "<script>alert('Enter valid Mobile Number')</script>";
             $error = array('input' => 'password', 'msg' => 'Enter Valid Mobile Number');
         }
     }
-    if (!empty($username)&&($name)) {
-        if (!preg_match("/^[a-zA-Z\s]+$/", $username)) {
+    if (!empty($name)) {
+        if (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
 
-            echo "<script>alert('Enter valid Username Number')</script>";
+            echo "<script>alert('Enter valid Username ')</script>";
             $error = array('input' => 'password', 'msg' => 'Enter Valid Username');
         }
     }
-    $email = $_POST['email'];
     if ($password != $repassword) {
         $error = array('input' => 'password', 'msg' => 'password doesnt match');
     }
     if (sizeof($error) == 0) {
-        $fields = array('username', 'name', 'mobile', 'password', 'email');
-        $values = array($username, $name, $mobile, $password, $email);
+        $fields = array('username', 'name', 'mobile', 'password', 'email', 'activationcode');
+        $values = array($username, $name, $mobile, $password, $email, $activationcode);
 
         $res = $con->insert($fields, $values, 'userTable');
 
         if ($res) {
+            // $to = $email;
+            // $subject = "Email Verification";
+            // $txt = "Hello";
+            // $headers .= "MIME-Version: 1.0" . "\r\n";
+            // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            // $headers .= "From: pandeysumit399@gmail.com" . "\r\n" .
+            //     "CC: somebodyelse@example.com";
+
+            // $status = mail($to, $subject, $txt, $headers);
+
+            // if ($status) {
+            //     echo '<p>Your mail has been sent!</p>';
+            // } else {
+            //     echo '<p>Something went wrong. Please try again!</p>';
+            // }
             echo "<script>alert('inserted')</script>";
             $error = array('input' => 'form', 'msg' => "1 Row inserted");
             header('refresh:0; url=login.php');
@@ -89,18 +106,18 @@ if (isset($_POST["submit"])) {
             </ul>
         <?php endif; ?>
     </div>
-    <div id="wrapper">
+    <div id="wrapper" style="height:600px;">
         <div id="signup-form">
             <form action="" method="POST">
                 <div class="loginlogo"><span>Sign Up</span></div>
                 <p class="input">
                     <label for="username">Username:
-                        <input type="text" name="username" required>
+                        <input type="text" name="username" pattern="[a-zA-Z][a-zA-Z0-9-_\.]{1,20}" required>
                     </label>
                 </p>
                 <p class="input">
                     <label for="username">Name:
-                        <input type="text" name="name" required>
+                        <input type="text" name="name"  required>
                     </label>
                 </p>
                 <p class="input">
@@ -133,6 +150,6 @@ if (isset($_POST["submit"])) {
             </form>
         </div>
     </div>
+    <?php require 'footer.php' ?> 
 </body>
-
 </html>

@@ -22,9 +22,11 @@ if (isset($_REQUEST['canid'])) {
     echo "<script>alert('Ride cancelled SuccessFully')</script>";
     header("Refresh:0;url=user_pending_ride.php");
 }
+// if (empty($user)) {
+//     header('Location:Admin/login.php');
+// }
 $sql = $db->pending($user);
 ?>
-
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">

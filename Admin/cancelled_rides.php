@@ -15,6 +15,13 @@ $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->cancelled_ride();
 
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->delete($user_id);

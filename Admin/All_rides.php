@@ -14,6 +14,13 @@ require 'config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $user = $_SESSION['userdata']['username'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=login.php");
+}
+
 // Delete the Record From the database
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
@@ -28,6 +35,7 @@ if (isset($_REQUEST['delid'])) {
     $sort = 'ride_id';
 }
 $sql = $db->All_ride($sort);
+
 ?>
 
 <body class="admintop">
@@ -38,12 +46,15 @@ $sql = $db->All_ride($sort);
             <div class="dropdown sort">
                 <button class="dropbtn sortbtn">Sort By</button>
                 <div class="dropdown-content sortcontent">
+                    <a href="All_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=pickup">Name<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=ride_date">Date<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>
+
         <!-- Representing All Ride data in Table Form -->
         <table id="LocationTable" class="ridetable">
             <tr>
