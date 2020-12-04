@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR);
 /**
  * Php version 7.2.10
  * 
@@ -56,7 +56,9 @@
                 <a href="request_approved.php">Request Approved</a>
                 <a href="manageCustomer.php">All User</a>
         <li class="dropdown">
-            <!-- <a href="javascript:void(0)" class="dropbtn">Users Accounts</a> -->
+            <a href="javascript:void(0)" class="dropbtn">Accounts</a>
+            <div class="dropdown-content">
+            <a href="admin_change_password.php">Change Password</a>
             <div class="dropdown-content">
                 <!-- <a href="invoice.php">User Invoice</a> -->
                 <li class="dropdown">

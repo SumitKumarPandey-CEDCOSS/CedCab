@@ -53,13 +53,20 @@ $sql = $db->getData($sort);
             <h1>All Users</h1>
         </div>
         <div class="dropdown sort">
-            <button class="dropbtn sortbtn">Sort</button>
+            <button class="dropbtn sortbtn">Sort by</button>
             <div class="dropdown-content sortcontent">
-            <a href="manageCustomer.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
-                <a href="manageCustomer.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
-                <a href="manageCustomer.php?sort=username">Name<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=name">Name<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
-                <a href="manageCustomer.php?sort=is_block">Blocked wise<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=ASC">ASC by Id<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=DESC">DESC by Id<p hidden>A $_GET</p></a>
+            </div>
+        </div>
+        <div class="dropdown sort" style="margin-left:-5px;">
+            <button class="dropbtn sortbtn">Filter By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="manageCustomer.php?sort=blocked">Blocked<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=unblocked">Unblocked<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=all">Show all<p hidden>A $_GET</p></a>
             </div>
         </div>
         <table id="AdminTable">
@@ -99,7 +106,7 @@ $sql = $db->getData($sort);
                                 ?><p hidden>A $_GET</p>
                             </a>
 
-                            <a href="manageCustomer.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
+                            <a  onClick="javascript: return confirm('Please confirm deletion');" href="manageCustomer.php?delid=<?php echo $key['user_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

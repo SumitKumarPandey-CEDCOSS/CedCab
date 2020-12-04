@@ -98,7 +98,6 @@ require 'header.php';
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
                 ['Total Rides', <?php echo $confirm ?>],
-                ['Total User', <?php echo $count_user ?>],
                 ['Confirm Rides', <?php echo $confirm_rides ?>],
                 ['Pending Rides', <?php echo $sql ?>]
             ]);

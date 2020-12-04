@@ -1,4 +1,12 @@
 <?php
+require 'config.php';
+if (isset($_SESSION['userdata']['is_admin'])) {
+    if ($_SESSION['userdata']['is_admin'] == 'admin') {
+        header('Location:Admindashboard.php');
+    } elseif ($_SESSION['userdata']['is_admin'] == 'user') {
+        header('Location:../userdashboard.php');
+    }
+}
 /**
  * Php version 7.2.10
  * 
@@ -8,7 +16,6 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'config.php';
 $user = new User();
 $user->connect('localhost', 'root', '', 'CabBooking');
 $msg = "";
@@ -16,15 +23,15 @@ $error = array();
 if (isset($_POST["submit"])) {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-    // $roles = $_POST['roles'];
-    echo $user->login($username, $password);
+    $user->login($username, $password);
     if (isset($_POST['rememberme'])) {
-        setcookie('username', $_POST['username'],  time() + (86400 * 30), "/");  
+        setcookie('username', $_POST['username'],  time() + (86400 * 30), "/");
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>
         Login
@@ -44,18 +51,12 @@ if (isset($_POST["submit"])) {
         </li>
     </ul>
 </div>
+
 <body class="body" style="margin:0;">
-    <div id="wrapper"  style="height:600px;">
+    <div id="wrapper" style="height:600px;">
         <div id="login-form">
             <form action="" method="POST">
                 <div class="loginlogo"><span>Login</span></div>
-                <!-- <p>
-                    <label for="roles" id="role">Login As:
-                        <select id="roles" name="roles">
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                        </Select></label>
-                </p> -->
                 <div id="errordiv">
                     <?php if (sizeof($error) > 0) : ?>
                         <ul>
@@ -68,7 +69,9 @@ if (isset($_POST["submit"])) {
                 </div>
                 <p class="input">
                     <label for="username">Username:
-                        <input type="text" name="username" value="<?php if (isset($_COOKIE['username'])) { echo $_COOKIE['username'] ; } ?>" required></label>
+                        <input type="text" name="username" value="<?php if (isset($_COOKIE['username'])) {
+                                                                        echo $_COOKIE['username'];
+                                                                    } ?>" required></label>
                 </p>
                 <p class="input">
                     <label for="password">Password:
@@ -83,12 +86,10 @@ if (isset($_POST["submit"])) {
                     <input type="submit" name="submit" value="Login">
                 </p>
                 <span class='bottom'>Need a account? <a href="signup.php" style="margin-left:70px;">Sign Up</a>
-                <br>
-                <br>
-                <!-- <a href="../index.php" style="margin-left:70px;">Book Ride Now</a></span> -->          
             </form>
         </div>
     </div>
     <?php require 'footer.php' ?>
 </body>
+
 </html>

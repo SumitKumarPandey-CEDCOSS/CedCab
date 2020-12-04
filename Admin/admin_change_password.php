@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -9,17 +8,16 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'Admin/config.php';
-require 'userheader.php';
+require 'config.php';
+require 'header.php';
 $conn = new User();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 
-if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
-    $username = $_SESSION['userdata']['username'];
+if (!empty(isset($_SESSION['userdata']))) {
     $user = $_SESSION['userdata']['user_id'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
+    header("Refresh:0; url=login.php");
 }
 
 if (isset($_POST['update'])) {
@@ -30,7 +28,7 @@ if (isset($_POST['update'])) {
         if ($sql) {
             unset($_SESSION['userdata']);
             echo '<script>alert("Password changed Successfully")</script>';
-            header('Refresh:0;url=Admin/login.php');
+            header('Refresh:0;url=login.php');
         }
     } else {
         echo "<script>alert('password doesnt match')</script>";
@@ -39,7 +37,7 @@ if (isset($_POST['update'])) {
 ?>
 <body class="admintop">
     <div class="adminbody">
-        <img src="images/taxi4.jpg" alt="">
+        <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>Change Password</h1>
         </div>
@@ -59,4 +57,4 @@ if (isset($_POST['update'])) {
             </form>
         </div>
     </div>
-    <?php require 'Admin/footer.php' ?>
+    <?php require 'footer.php' ?>

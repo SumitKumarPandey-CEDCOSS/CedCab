@@ -18,27 +18,25 @@ $ddb->connect('localhost', 'root', '', 'CabBooking');
 if (isset($_SESSION['bookdata'])) {
     $user_id = $_SESSION['userdata']['user_id'];
     $Location = $_SESSION['bookdata']['pickup'];
+    $luggage = $_SESSION['bookdata']['luggage'];
     $Destination = $_SESSION['bookdata']['droplocation'];
     $cab = $_SESSION['bookdata']['cabType'];
     $distance = $_SESSION['bookdata']['total_distance'];
     $totalFare = $_SESSION['bookdata']['total_fare'];
     $status = $_SESSION['bookdata']['status'];
 
-    $field = array('pickup', 'droplocation', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
-    $values = array($Location, $Destination, $cab, $distance, $totalFare,  $status, $user_id);
+    $field = array('pickup', 'droplocation', 'luggage', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
+    $values = array($Location, $Destination, $luggage, $cab, $distance, $totalFare,  $status, $user_id);
     $sql = $ddb->insert($field, $values, 'rideTable');
     echo "<script>alert('Your Ride Is Pending Wait For confirmation')</script>";
     header("Refresh:0; url=user_pending_ride.php");
 }
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user'))) {
-    $user = $_SESSION['userdata']['username'];
+if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
+    $username = $_SESSION['userdata']['username'];
+    $user = $_SESSION['userdata']['user_id'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:; url=Admin/login.php");
-}
-if (isset($_SESSION['userdata'])) {
-    $user = $_SESSION['userdata']['user_id'];
-    $username = $_SESSION['userdata']['username'];
+    header("Refresh:0; url=Admin/login.php");
 }
 $sql = $db->user_completed_ride($user);
 $pending_ride = $db->user_pending_ride($user);

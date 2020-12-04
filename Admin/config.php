@@ -51,7 +51,7 @@ class User extends DB
     public function login($username, $password)
     {
         $is_block = 1;
-        $sql = 'SELECT * FROM userTable WHERE BINARY 
+        $sql = 'SELECT * FROM userTable WHERE 
         `username`="' . $username . '" AND 
         `password`="' . $password . '" AND is_block="' . $is_block . '"';
         $result = $this->conn->query($sql);
@@ -59,7 +59,7 @@ class User extends DB
             while ($row = $result->fetch_assoc()) {
                 if ($row['is_admin'] == 'admin') {
                     $rtn = "Login Success";
-                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'admin');
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => $row['is_admin']);
                     header("Refresh:0; url=Admindashboard.php");
                 } elseif ($row['is_admin'] == 'user') {
                     //unset session['bookdata] after 3min
@@ -67,9 +67,8 @@ class User extends DB
                         unset($_SESSION['bookdata']);
                         header("location: ../userdashboard.php");
                     }
-
                     $rtn = "Login Success";
-                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => 'user');
+                    $_SESSION["userdata"] = array('username' => $row['username'], 'user_id' => $row['user_id'], 'is_admin' => $row['is_admin']);
                     header("Refresh:0; url=../userdashboard.php");
                 } else {
                     $rtn = "Login Failed";
@@ -122,18 +121,23 @@ class User extends DB
     //Getting Sorted data from the Usertable according to the sort requirement
     public function getData($sort)
     {
-        $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ORDER BY $sort ");
-
-        if ($sort == 'ASC') {
-            $result = mysqli_query($this->conn, "SELECT * FROM userTable ORDER BY `user_id` $sort");
+        if ($sort == 'name') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' AND `name`=$sort");
+        } elseif ($sort == 'date') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' AND `date`=$sort");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ORDER BY `user_id` $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' ORDER BY `user_id` $sort");
+        } elseif ($sort =='blocked') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' AND `is_block`='0' ");
+        }  elseif ($sort =='unblocked') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin' AND `is_block`='1' ");
+        } elseif($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin'");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM userTable WHERE `is_admin`!='admin'");
         }
-        if ($sort == 'DESC') {
-            $result = mysqli_query($this->conn, "SELECT * FROM userTable ORDER BY `user_id` $sort");
-        }
-        if (mysqli_num_rows($result) > 0) {
-            return $result;
-        }
-
         if (mysqli_num_rows($result) > 0) {
             return $result;
         }
@@ -192,9 +196,14 @@ class LocationTable extends DB
     //Updating Location details in the database
     public function setLocation($user_id, $locname, $distance, $avail)
     {
-        $result = mysqli_query($this->conn, "UPDATE LocationTable SET `name`='$locname',`distance`='$distance',`is_available`='$avail' WHERE `id`='" . $user_id . "'");
-        if (mysqli_num_rows($result) > 0) {
-            return $result;
+        $sql = mysqli_query($this->conn, "SELECT * FROM LocationTable WHERE `name`='$locname'");
+        if (mysqli_num_rows($sql) > 0) {
+            echo "<script>alert('Location Already Available')</script>";
+        } else {
+            $result = mysqli_query($this->conn, "UPDATE LocationTable SET `name`='$locname',`distance`='$distance',`is_available`='$avail' WHERE `id`='" . $user_id . "'");
+            if (mysqli_num_rows($result) > 0) {
+                return $result;
+            }
         }
     }
     //Counting total location available 
@@ -208,6 +217,17 @@ class LocationTable extends DB
     {
         $result = mysqli_query($this->conn, "DELETE FROM LocationTable  WHERE `id`='" . $id . "' ");
         return "Deleted SuccessFully";
+    }
+
+    //checklocation 
+    public function checklocation($location, $distance)
+    {
+        $result = mysqli_query($this->conn, "SELECT * FROM LocationTable WHERE `name`='" . $location . "' ");
+        if (mysqli_num_rows($result) == 1) {
+            echo "<script>alert('Location Already Present')</script>";
+        } else {
+            $result = mysqli_query($this->conn, "INSERT INTO LocationTable(`name`, `distance`)VALUES('$location', '$distance')");
+        }
     }
 }
 //Ride class
@@ -233,12 +253,24 @@ class Ride extends DB
     public function All_ride($order)
     {
         $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY $order");
-
-        if ($order == 'ASC') {
+        if ($order == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($order == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($order == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($order == 'ASC') {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY `total_Fare` $order");
-        }
-        if ($order == 'DESC') {
+        } elseif ($order == 'DESC') {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY `total_Fare` $order");
+        } elseif ($order == 'pending') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' ");
+        } elseif ($order == 'Completed') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' ");
+        } elseif ($order == 'Cancelled') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' ");
+        } elseif ($order == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable");
         }
         if (mysqli_num_rows($result) > 0) {
             return $result;
@@ -340,17 +372,110 @@ class Ride extends DB
         }
     }
 
-    public function pending_order($order)
+    public function completed_order($user, $sort)
     {
-        $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' ORDER BY `total_Fare` $order");
-        if ($order == 'ASC') {
-            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' ORDER BY `total_Fare` $order");
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' AND `user_id`='$user' ");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' ORDER BY `total_fare`  $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2'  ORDER BY `total_fare` $sort");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' AND `user_id`='$user' ");
         }
-        if ($order == 'DESC') {
-            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' ORDER BY `total_Fare` $order");
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
         }
-        if ($order == 'total_fare') {
-            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`= '2' ORDER BY  $order");
+    }
+
+    public function completed_admin_order($sort)
+    {
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' ");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' ORDER BY `total_fare`  $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2'  ORDER BY `total_fare` $sort");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='2' ");
+        }
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+
+    public function cancelled_admin_order($sort)
+    {
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' ");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' ORDER BY `total_fare`  $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0'  ORDER BY `total_fare` $sort");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='0' ");
+        }
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+
+    public function pending_user_sort($user, $sort)
+    {
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user' AND `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' AND `user_id`='$user' ");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' ORDER BY `total_fare`  $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1'  ORDER BY `total_fare` $sort");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' AND `user_id`='$user' ");
+        }
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+    }
+
+    public function pending_admin_sort($sort)
+    {
+        if ($sort == 'week') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE  `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 WEEK) ");
+        } elseif ($sort == 'month') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 MONTH) ");
+        } elseif ($sort == 'year') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE  `status`='1' AND `ride_date`> DATE_SUB(curdate(),INTERVAL 1 YEAR) ");
+        } elseif ($sort == 'all') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1'");
+        } elseif ($sort == 'ASC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' ORDER BY `total_fare`  $sort");
+        } elseif ($sort == 'DESC') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1'  ORDER BY `total_fare` $sort");
+        } else {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `status`='1' ");
         }
         if (mysqli_num_rows($result) > 0) {
             return $result;
@@ -388,8 +513,14 @@ class Ride extends DB
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY `total_fare`  $sort");
         } elseif ($sort == 'DESC') {
             $result = mysqli_query($this->conn, "SELECT * FROM rideTable ORDER BY `total_fare` $sort");
+        } elseif ($sort == 'pending') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `status`='1' ");
+        } elseif ($sort == 'Completed') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `status`='2' ");
+        } elseif ($sort == 'Cancelled') {
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' AND `status`='0' ");
         } else {
-            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ");
+            $result = mysqli_query($this->conn, "SELECT * FROM rideTable WHERE `user_id`='$user_id' ORDER BY `ride_date` ASC ");
         }
         if (mysqli_num_rows($result) > 0) {
             return $result;

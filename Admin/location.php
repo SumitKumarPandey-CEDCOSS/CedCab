@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -17,21 +16,21 @@ $error = array();
 if (isset($_POST["submit"])) {
     $location = $_POST['location'];
     $distance = $_POST['distance'];
-    if ((preg_match("/^[a-zA-Z\s]+$/", $location)) && (preg_match("/^[0-9]+$/", $distance))) {
-            $fields = array('name', 'distance');
-            $values = array($location, $distance);
-            $loct->insert($fields, $values, 'LocationTable');
+    if (sizeof($error) == 0) {
+        if ((preg_match('/^[a-zA-Z]+[a-zA-Z0-9- _]+$/', $location)) && (preg_match("/^[0-9]+$/", $distance))) {
+
+            $loct->checklocation($location, $distance);
+        }
     }
 }
-
 if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
     $user = $_SESSION['userdata']['username'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
     header("Refresh:0; url=login.php");
 }
-
 ?>
+
 <body class="admintop">
     <div class="adminbody" style="position:absolute; width:100%">
         <img src="../images/taxi4.jpg" alt="">

@@ -19,7 +19,12 @@ if (isset($_REQUEST['update'])) {
     $locname = $_POST['Location_Name'];
     $distance = $_POST['distance'];
     $avail = $_POST['available'];
-    $db->setLocation($user_id, $locname, $distance, $avail);
+
+    if (preg_match('/^[a-zA-Z]+[a-zA-Z0-9-_]+$/', $locname)) {
+        $db->setLocation($user_id, $locname, $distance, $avail);
+    } else {
+        echo "<script>alert('Enter valid Location')</script>";
+    }
 }
 $sql = $db->location_getData();
 if (isset($_GET['blocked_id'])) {
@@ -60,7 +65,7 @@ if (isset($_REQUEST['delid'])) {
                         <form method="POST" action="">
                             <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
                             <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
-                            <td><input type="text" name="distance" value="<?php echo $key['distance'] ?>" /></td>
+                            <td><input type="text" name="distance" pattern="[0-9]+" value="<?php echo $key['distance'] ?>" /></td>
                             <td>
                                 <select name="available">
                                     <option value="<?php if ($key['is_available'] == '1') {
@@ -101,7 +106,7 @@ if (isset($_REQUEST['delid'])) {
                                     }
                                     ?><p hidden>A $_GET</p>
                                 </a>
-                                <a href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
+                                <a  onClick="javascript: return confirm('Please confirm deletion');" href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
                         </form>
                     </tr>
             <?php }

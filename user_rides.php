@@ -14,8 +14,12 @@ require 'Admin/config.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 
-if (isset($_SESSION['userdata'])) {
+if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
+    $username = $_SESSION['userdata']['username'];
     $user = $_SESSION['userdata']['user_id'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=Admin/login.php");
 }
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
@@ -29,20 +33,30 @@ if (isset($_GET['sort'])) {
 }
 $sql = $db->filter_user($user, $sort);
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>All Rides</h1>
             <div class="dropdown sort">
+                <button class="dropbtn sortbtn">Sort By</button>
+                <div class="dropdown-content sortcontent">
+                <a href="user_rides.php?sort=ride_date">Ride date<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
+                </div>
+            </div>
+            <div class="dropdown sort" style="margin-left:-5px;">
                 <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
-                <a href="user_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
-                <a href="user_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
-                    <a href="user_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=pending">Pending Rides<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=Completed">Completed Rides<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=Cancelled">Cancelled Rides<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>
@@ -68,7 +82,7 @@ $sql = $db->filter_user($user, $sort);
                         <td id="td"><?php echo $key['total_distance'] ?></td>
                         <td id="td"><?php echo $key['luggage'] ?></td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>                      
+                        <td id="td"><?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } elseif ($key['status'] == '1') {
@@ -76,7 +90,7 @@ $sql = $db->filter_user($user, $sort);
                                     } else {
                                         echo "cancelled";
                                     } ?></td>
-                        <td><a href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                        <td><a  onClick="javascript: return confirm('Please confirm deletion');" href="user_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

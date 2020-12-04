@@ -16,7 +16,7 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->pending_ride();
 
 if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
+    $user = $_SESSION['userdata']['user_id'];
 } else {
     echo "<script>alert('Permission Denied')</script>";
     header("Refresh:0; url=login.php");
@@ -33,6 +33,13 @@ if (isset($_REQUEST['canid'])) {
     echo $db->cancelled($ride_id);
     header("Refresh:0;url=pending_ride.php");
 }
+
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+} else {
+    $sort = `ride_date`;
+}
+$sql = $db->pending_admin_sort($sort);
 ?>
 
 <body class="admintop">
@@ -40,6 +47,23 @@ if (isset($_REQUEST['canid'])) {
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>Pending Rides</h1>
+        </div>
+        <div class="dropdown sort">
+            <button class="dropbtn sortbtn">Sort By</button>
+            <div class="dropdown-content sortcontent">
+            <a href="pending_ride.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+            </div>
+        </div>
+        <div class="dropdown sort" style="margin-left:-5px;">
+            <button class="dropbtn sortbtn">Filter By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="pending_ride.php?sort=week">WEEK<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=month">Monthly<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=all">Show All<p hidden>A $_GET</p></a>
+            </div>
         </div>
         <table id="LocationTable" class="ridetable">
             <tr>

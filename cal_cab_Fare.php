@@ -146,11 +146,14 @@ if (!empty($_SESSION['userdata'])) {
     }
 } else {
     $status = 1;
-    if (isset($action)) {
-        $_SESSION['bookdata'] = array(
-            'pickup' => $Location, 'droplocation' => $Destination, 'cabType' => $cab,
-            'total_distance' => $distance, 'luggage' => $luggage, 'total_fare' => $totalFare, 'status' => $status,
-            'time' => time()
-        );
+    if (isset($_REQUEST['action'])) {
+        $action = $_REQUEST['action'];
+        if (isset($action)) {
+            $_SESSION['bookdata'] = array(
+                'pickup' => $Location, 'droplocation' => $Destination, 'cabType' => $cab,
+                'total_distance' => $distance, 'luggage' => $luggage, 'total_fare' => $totalFare, 'status' => $status,
+                'time' => time()
+            );
+        }
     }
 }

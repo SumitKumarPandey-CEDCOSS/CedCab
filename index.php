@@ -110,7 +110,7 @@ $sql = $db->location_getData();
                     </p>
                     <p class="input">
                         <label for="text">Luggage:
-                            <input type="text" class='checkForDot' placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
+                            <input type="Number" class='checkForDot' placeholder="Enter the Luggage Weight" disabled="disabled" id="text3">&nbsp;<span id="errormsg"></span>
                     </p></label>
                     <p class="submit">
                         <button type="submit" id="btn1" class="btn1">Calculate

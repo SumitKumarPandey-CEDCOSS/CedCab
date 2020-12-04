@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR);
 /**
  * Php version 7.2.10
  * 

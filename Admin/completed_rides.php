@@ -27,6 +27,13 @@ if (isset($_REQUEST['delid'])) {
     echo $db->delete($user_id);
     header("Refresh:0;url=completed_rides.php");
 }
+
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+} else {
+    $sort = 'ASC';
+}
+$sql = $db->completed_admin_order($sort);
 ?>
 
 <body class="admintop">
@@ -34,6 +41,23 @@ if (isset($_REQUEST['delid'])) {
         <img src="../images/taxi4.jpg" alt="">
         <div id="AdminWelcomeQuote">
             <h1>Completed Rides</h1>
+        </div>
+        <div class="dropdown sort">
+            <button class="dropbtn sortbtn">Sort By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="completed_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+            </div>
+        </div>
+        <div class="dropdown sort" style="margin-left:-5px;">
+            <button class="dropbtn sortbtn">Filter By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="completed_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
+            </div>
         </div>
         <table id="LocationTable" class="ridetable">
             <tr>
@@ -63,7 +87,7 @@ if (isset($_REQUEST['delid'])) {
                                         echo "completed";
                                     } ?></td>
                         <td><a href="invoice.php?ride_id=<?php echo $key['ride_id'] ?>&amp;user_id=<?php echo $key['user_id'] ?>">Invoice</a></td>
-                        <td><a href="completed_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                        <td><a  onClick="javascript: return confirm('Please confirm deletion');" href="completed_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

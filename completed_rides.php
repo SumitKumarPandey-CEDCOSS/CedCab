@@ -13,8 +13,12 @@ require 'userheader.php';
 require 'Admin/config.php';
 $db = new Ride();
 
-if (isset($_SESSION['userdata'])) {
+if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
+    $username = $_SESSION['userdata']['username'];
     $user = $_SESSION['userdata']['user_id'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=Admin/login.php");
 }
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->complete_ride($user);
@@ -24,7 +28,7 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'ASC';
 }
-$sql = $db->pending_order($sort);
+$sql = $db->completed_order($user, $sort);
 ?>
 
 <body class="admintop">
@@ -36,9 +40,18 @@ $sql = $db->pending_order($sort);
         <div class="dropdown sort">
             <button class="dropbtn sortbtn">Sort By</button>
             <div class="dropdown-content sortcontent">
-                <a href="completed_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
+            <a href="completed_rides.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
+            </div>
+        </div>
+        <div class="dropdown sort" style="margin-left:-5px;">
+            <button class="dropbtn sortbtn">Filter By</button>
+            <div class="dropdown-content sortcontent">
+                <a href="completed_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
         <table id="LocationTable" class="ridetable">

@@ -15,8 +15,12 @@ $error = array();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-if (isset($_SESSION['userdata'])) {
+if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
+    $username = $_SESSION['userdata']['username'];
     $user = $_SESSION['userdata']['user_id'];
+} else {
+    echo "<script>alert('Permission Denied')</script>";
+    header("Refresh:0; url=Admin/login.php");
 }
 $sql = $conn->current_user($user);
 $expense = $db->user_revenue($user);
@@ -108,7 +112,7 @@ if (isset($_REQUEST['update'])) {
                         <input type="text" name="name" value="<?php echo $key['name'] ?>" />
                     </p>
                     <p>
-                        <label for="">Mobile :</label>
+                        <label for="">Mobile(10-Digits) :</label>
                         <input type="text" name="mobile" value="<?php echo $key['mobile'] ?>" />
                     </p>
                     <p>

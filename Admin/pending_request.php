@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -52,7 +51,7 @@ require 'header.php';
                         <td><?php echo $key['username'] ?></td>
                         <td><?php echo $key['email'] ?></td>
                         <td><a href="pending_request.php?user_id=<?php echo $key['user_id'] ?>">Approved</a>
-                            <a href="pending_request.php?delid=<?php echo $key['user_id'] ?>">Reject</a></td>
+                            <a  onClick="javascript: return confirm('Please confirm Rejection');" href="pending_request.php?delid=<?php echo $key['user_id'] ?>">Reject</a></td>
                     </tr>
             <?php }
             } ?>

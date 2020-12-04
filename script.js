@@ -65,7 +65,7 @@ $(function () {
         }
     });
 
-    $("#sel1,#sel2,#sel3").click(function () {
+    $("#sel1,#sel2,#sel3,#text3").click(function () {
         $("#btn1").show();
         $("#btn2").hide();
     });

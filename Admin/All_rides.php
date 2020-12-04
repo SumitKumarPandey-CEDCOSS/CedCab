@@ -46,15 +46,25 @@ $sql = $db->All_ride($sort);
             <div class="dropdown sort">
                 <button class="dropbtn sortbtn">Sort By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="All_rides.php?sort=ASC">Ascending<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=DESC">Descending<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=pickup">Name<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=ride_date">Date<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=total_fare">Fare<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
+                </div>
+            </div>
+            <div class="dropdown sort" style="margin-left:-5px;">
+                <button class="dropbtn sortbtn">Filter By</button>
+                <div class="dropdown-content sortcontent">
+                    <a href="All_rides.php?sort=week">Week<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=month">Month<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=pending">Pending Rides<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=Completed">Completed Rides<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=Cancelled">Cancelled Rides<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>
-
         <!-- Representing All Ride data in Table Form -->
         <table id="LocationTable" class="ridetable">
             <tr>
@@ -86,7 +96,7 @@ $sql = $db->All_ride($sort);
                                     } else {
                                         echo "cancelled";
                                     } ?></td>
-                        <td><a href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                        <td><a  onClick="javascript: return confirm('Please confirm deletion');" href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>
