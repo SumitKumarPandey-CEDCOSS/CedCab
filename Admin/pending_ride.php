@@ -9,22 +9,14 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->pending_ride();
 
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
-
 if (isset($_GET['Confirm_id'])) {
     $ride_id = $_GET['Confirm_id'];
-    echo $ride_id;
     echo $db->confirm($ride_id);
     header("Refresh:0;url=pending_ride.php");
 }
@@ -53,7 +45,8 @@ $sql = $db->pending_admin_sort($sort);
             <div class="dropdown-content sortcontent">
             <a href="pending_ride.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                 <a href="pending_ride.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
-                <a href="pending_ride.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=ASC_date">ASC by Date<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
             </div>
         </div>
         <div class="dropdown sort" style="margin-left:-5px;">
@@ -65,28 +58,29 @@ $sql = $db->pending_admin_sort($sort);
                 <a href="pending_ride.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
-        <table id="LocationTable" class="ridetable">
+        <table id="LocationTable" class="ridetable" style="margin-left:-2%;">
             <tr>
-                <th>ID</th>
+                <th>User ID</th>
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
-                <th>Total Distance</th>
+                <th>Total Distance(Km)</th>
                 <th>Ride Date</th>
-                <th>Total_fare</th>
-                <th>User Id</th>
+                <th>Cab Type</th>
+                <th>Total_fare  $</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
                     <tr>
-                        <td id="td"><?php echo $key['ride_id'] ?></td>
+                        <td id="td" hidden><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['user_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
-                        <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
-                        <td id="td"><?php echo $key['user_id'] ?></td>
+                        <td id="td"><?php echo $key['cabType'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
                         <td id="td"><?php if ($key['status'] == '1') {
                                         echo "pending";
                                     } ?></td>
@@ -100,7 +94,7 @@ $sql = $db->pending_admin_sort($sort);
                                 ?><p hidden>A $_GET</p>
                             </a>
 
-                            <a href="pending_ride.php?canid=<?php echo $key['ride_id'] ?>">Cancelled</a></td>
+                            <a onClick="javascript: return confirm('Please confirm Cancellation');" href="pending_ride.php?canid=<?php echo $key['ride_id'] ?>">Cancelled</a></td>
                     </tr>
             <?php }
             } ?>

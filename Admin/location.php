@@ -8,8 +8,8 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $loct = new LocationTable();
 $loct->connect('localhost', 'root', '', 'CabBooking');
 $error = array();
@@ -22,12 +22,6 @@ if (isset($_POST["submit"])) {
             $loct->checklocation($location, $distance);
         }
     }
-}
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
 }
 ?>
 

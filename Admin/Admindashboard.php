@@ -9,6 +9,8 @@
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
 require 'config.php';
+// Header
+require 'header.php';
 $db = new Ride();
 $Us = new User();
 $loc = new LocationTable();
@@ -17,30 +19,21 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 $Us->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->count_pending_ride();
 $confirm = $db->count_ride();
+$cancelled = $db->count_Cancelled();
 $confirm_rides = $db->count_confirm_ride();
 $count_user = $Us->count_user();
 $count_pending_user = $Us->count_pending_request();
 $total_revenue = $db->Total_Revenue();
 $blocked = $Us->count_blocked();
 $location = $loc->count_location();
-
-// check Admin Login
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
-// Header
-require 'header.php';
 ?>
 
 <body class="admintop">
     <div class="adminbody" style="height:800px;">
         <img src="../images/taxi4.jpg" alt="" style="height:800px;">
         <div id="AdminWelcomeQuote">
-            <h1>Welcome &nbsp;<?php if (!empty($user)) {
-                                    echo $user;
+            <h1>Welcome &nbsp;<?php if (!empty($username)) {
+                                    echo $username;
                                 } ?></h1>
         </div>
         <div class="maintiles">
@@ -62,7 +55,7 @@ require 'header.php';
             </div>
         </div>
         <div class="maintiles">
-            <div class="tiles"><a href="completed_ride.php">
+            <div class="tiles"><a href="completed_rides.php">
                     <p><i class="fa fa-hourglass-2"></i></p>Confirm_Rides &nbsp;<span><?php echo $confirm_rides ?></span>
                 </a>
             </div>
@@ -97,8 +90,8 @@ require 'header.php';
 
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
-                ['Total Rides', <?php echo $confirm ?>],
                 ['Confirm Rides', <?php echo $confirm_rides ?>],
+                ['Cancelled Rides', <?php echo $cancelled  ?>],
                 ['Pending Rides', <?php echo $sql ?>]
             ]);
 

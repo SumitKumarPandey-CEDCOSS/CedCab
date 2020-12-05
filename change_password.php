@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -14,14 +13,6 @@ require 'userheader.php';
 $conn = new User();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 
-if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
-    $username = $_SESSION['userdata']['username'];
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
-}
-
 if (isset($_POST['update'])) {
     $new = md5($_POST['newpassword']);
     $confirm = md5($_POST['confirmpassword']);
@@ -29,9 +20,10 @@ if (isset($_POST['update'])) {
         $sql = $conn->changepassword($new, $user);
         if ($sql) {
             unset($_SESSION['userdata']);
-            echo '<script>alert("Password changed Successfully")</script>';
-            header('Refresh:0;url=Admin/login.php');
-        }
+            echo "<script>
+            alert('Password Changed Successfully');
+            window.location.href='Admin/login.php';
+            </script>";
     } else {
         echo "<script>alert('password doesnt match')</script>";
     }

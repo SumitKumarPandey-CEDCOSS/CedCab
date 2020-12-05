@@ -1,5 +1,4 @@
 <?php
-
 /**
  * * PHP version 7.2.10
  * 
@@ -62,7 +61,7 @@ if ($Cab == "1") {
         $totaldistance = $price4 * ($distance - 160);
         $totalFare = $fixedFare + $totaldistance + $price1 + $price2 + $price3;
     }
-    echo "Total Fare : " . $totalFare . "$";
+    echo "Total Fare : " ."$". $totalFare;
 }
 if ($Cab == "2") {
     $cab = "CedMini";
@@ -84,7 +83,7 @@ if ($Cab == "2") {
         $totaldistance = $price4 * ($distance - 160);
         $totalFare = $fixedFare + $totaldistance + $price1 + $price2 + $price3 + $luggageprice;
     }
-    echo "Total Fare : " . $totalFare . "$";
+    echo "Total Fare : " ."$". $totalFare;
 }
 if ($Cab == "3") {
     $cab = "CedRoyal";
@@ -106,7 +105,7 @@ if ($Cab == "3") {
         $totaldistance = $price4 * ($distance - 160);
         $totalFare = $fixedFare + $totaldistance + $price1 + $price2 + $price3 + $luggageprice;
     }
-    echo "Total Fare : " . $totalFare . "$";
+    echo "Total Fare : " ."$". $totalFare;
 }
 if ($Cab == "4") {
     $cab = "CedSUV";
@@ -128,13 +127,16 @@ if ($Cab == "4") {
         $totaldistance = $price4 * ($distance - 160);
         $totalFare = $fixedFare + $totaldistance + $price1 + $price2 + $price3 + ($luggageprice * 2);
     }
-    echo "Total Fare : " . $totalFare . "$";
+    echo "Total Fare : " ."$". $totalFare;
 }
 if (!empty($_SESSION['userdata'])) {
     if (isset($_REQUEST['action'])) {
         $db = new DB();
         $user_id = $_SESSION['userdata']['user_id'];
         $status = 1;
+        if ($luggage =="") {
+            $luggage = 0;
+        }
         $db->connect('localhost', 'root', '', 'CabBooking');
         $action = $_REQUEST['action'];
         echo $action;

@@ -13,13 +13,6 @@ require 'header.php';
 $conn = new User();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 
-if (!empty(isset($_SESSION['userdata']))) {
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
-
 if (isset($_POST['update'])) {
     $new = md5($_POST['newpassword']);
     $confirm = md5($_POST['confirmpassword']);

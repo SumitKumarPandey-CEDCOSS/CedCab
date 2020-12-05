@@ -1,12 +1,4 @@
 <?php
-require 'config.php';
-if (isset($_SESSION['userdata']['is_admin'])) {
-    if ($_SESSION['userdata']['is_admin'] == 'admin') {
-        header('Location:Admindashboard.php');
-    } elseif ($_SESSION['userdata']['is_admin'] == 'user') {
-        header('Location:../userdashboard.php');
-    }
-}
 /**
  * Php version 7.2.10
  * 
@@ -16,6 +8,15 @@ if (isset($_SESSION['userdata']['is_admin'])) {
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
+require 'config.php';
+if (isset($_SESSION['userdata']['is_admin'])) {
+    if ($_SESSION['userdata']['is_admin'] == 'admin') {
+        header('Location:Admindashboard.php');
+    } elseif ($_SESSION['userdata']['is_admin'] == 'user') {
+        header('Location:../userdashboard.php');
+    }
+}
+
 $user = new User();
 $user->connect('localhost', 'root', '', 'CabBooking');
 $msg = "";

@@ -8,20 +8,14 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'userheader.php';
 require 'Admin/config.php';
+require 'userheader.php';
 $conn = new User();
 $error = array();
 $conn->connect('localhost', 'root', '', 'CabBooking');
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
-    $username = $_SESSION['userdata']['username'];
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
-}
+
 $sql = $conn->current_user($user);
 $expense = $db->user_revenue($user);
 
@@ -48,7 +42,7 @@ if (isset($_REQUEST['update'])) {
     }
     if (sizeof($error) == 0) {
 
-        $sql = $conn->setuser($user_id, $username, $name, $mobile);
+        $sql = $conn->setuser($user_id, $name, $mobile);
         if ($sql) {
             header("Location:user_account.php");
         }
@@ -88,7 +82,7 @@ if (isset($_REQUEST['update'])) {
                         <label for="">Email:</label><?php echo $key['email']; ?>
                     </p>
                     <p>
-                        <label for="">Date:</label><?php echo $key['date']; ?>
+                        <label for="">Date Of Joining:</label><?php echo $key['date']; ?>
                     </p>
                     <p>
                         <input type="button" class="btn1" name="update" value="Edit" id="edit" class="editbtn" />
@@ -104,8 +98,7 @@ if (isset($_REQUEST['update'])) {
                         <input type="hidden" name="user_id" value="<?php echo $key['user_id'] ?>" />
                     </p>
                     <p>
-                        <label for="">UserName :</label>
-                        <input type="text" name="username" readonly value="<?php echo $key['username'] ?>" />
+                        <label for="">UserName :</label>&nbsp;<?php echo $key['username'] ?>
                     </p>
                     <p>
                         <label for="">Name :</label>
@@ -116,7 +109,7 @@ if (isset($_REQUEST['update'])) {
                         <input type="text" name="mobile" value="<?php echo $key['mobile'] ?>" />
                     </p>
                     <p>
-                        <label for="">Email: <?php echo $key['email'] ?></label>
+                        <label for="">Email:</label><?php echo $key['email'] ?>
                     </p>
                     <p>
                         <input type="submit" class="btn1" name="update" value="Update" id="update" />

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -8,19 +9,20 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new LocationTable();
 $conn = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $conn->connect('localhost', 'root', '', 'CabBooking');
+
 if (isset($_REQUEST['update'])) {
     $user_id = $_REQUEST['id'];
     $locname = $_POST['Location_Name'];
     $distance = $_POST['distance'];
     $avail = $_POST['available'];
 
-    if (preg_match('/^[a-zA-Z]+[a-zA-Z0-9-_]+$/', $locname)) {
+    if (preg_match('/^[a-zA-Z]+[a-zA-Z0-9- _]+$/', $locname)) {
         $db->setLocation($user_id, $locname, $distance, $avail);
     } else {
         echo "<script>alert('Enter valid Location')</script>";
@@ -51,7 +53,7 @@ if (isset($_REQUEST['delid'])) {
         <div id="AdminWelcomeQuote">
             <h1>Locations</h1>
         </div>
-        <table id="LocationTable">
+        <table id="LocationTable" style="margin-left:10%;">
             <tr>
                 <th>ID</th>
                 <th>Location</th>
@@ -65,7 +67,7 @@ if (isset($_REQUEST['delid'])) {
                         <form method="POST" action="">
                             <td style="color:white;"><input type="hidden" name="id" value="<?php echo $key['id'] ?>" /><?php echo $key['id'] ?></td>
                             <td><input type="text" name="Location_Name" value="<?php echo $key['name'] ?>" /></td>
-                            <td><input type="text" name="distance" pattern="[0-9]+" value="<?php echo $key['distance'] ?>" /></td>
+                            <td><input type="text" name="distance" pattern="[0-9]+" title="Enter valid Number" value="<?php echo $key['distance'] ?>" /></td>
                             <td>
                                 <select name="available">
                                     <option value="<?php if ($key['is_available'] == '1') {
@@ -106,7 +108,7 @@ if (isset($_REQUEST['delid'])) {
                                     }
                                     ?><p hidden>A $_GET</p>
                                 </a>
-                                <a  onClick="javascript: return confirm('Please confirm deletion');" href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
+                                <a onClick="javascript: return confirm('Please confirm deletion');" href="manageLocation.php?delid=<?php echo $key['id'] ?>">Delete</a></td>
                         </form>
                     </tr>
             <?php }

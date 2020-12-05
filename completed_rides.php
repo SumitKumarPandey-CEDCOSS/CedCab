@@ -9,17 +9,9 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'userheader.php';
 require 'Admin/config.php';
+require 'userheader.php';
 $db = new Ride();
-
-if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
-    $username = $_SESSION['userdata']['username'];
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
-}
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->complete_ride($user);
 
@@ -40,7 +32,8 @@ $sql = $db->completed_order($user, $sort);
         <div class="dropdown sort">
             <button class="dropbtn sortbtn">Sort By</button>
             <div class="dropdown-content sortcontent">
-            <a href="completed_rides.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+                <a href="user_rides.php?sort=ASC_date">ASC by date<p hidden>A $_GET</p></a>
+                <a href="user_rides.php?sort=DESC_date">DESC by date<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
             </div>
@@ -56,12 +49,13 @@ $sql = $db->completed_order($user, $sort);
         </div>
         <table id="LocationTable" class="ridetable">
             <tr>
-                <th>ID</th>
+                <th>Ride Id</th>
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
-                <th>Total Distance</th>
+                <th>Total Distance(KM)</th>
                 <th>Luggage</th>
                 <th>Ride Date</th>
+                <th>Cab Type</th>
                 <th>Total_fare</th>
                 <th>Status</th>
                 <th>Invoice</th>
@@ -69,14 +63,14 @@ $sql = $db->completed_order($user, $sort);
             <?php if (isset($sql)) {
                 foreach ($sql as $key) { ?>
                     <tr>
-                        <td id="td"><?php echo $key['user_id'] ?></td>
-                        <td id="td" hidden><?php echo $key['ride_id'] ?></td>
+                        <td id="td"><?php echo $key['ride_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
-                        <td id="td"><?php echo $key['total_distance'] ?></td>
-                        <td id="td"><?php echo $key['luggage'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?>&nbsp;KM</td>
+                        <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['cabType'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>

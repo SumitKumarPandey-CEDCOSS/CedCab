@@ -9,18 +9,11 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->cancelled_ride();
-
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
 
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
@@ -46,7 +39,8 @@ $sql = $db->cancelled_admin_order($sort)
             <div class="dropdown-content sortcontent">
                 <a href="cancelled_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                 <a href="cancelled_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
-                <a href="cancelled_rides.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+                <a href="cancelled_rides.php?sort=ASC_date">ASC by Date<p hidden>A $_GET</p></a>
+                <a href="cancelled_rides.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
             </div>
         </div>
         <div class="dropdown sort" style="margin-left:-5px;">
@@ -64,9 +58,10 @@ $sql = $db->cancelled_admin_order($sort)
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
                 <th>Luggage</th>
-                <th>Total Distance</th>
+                <th>Total Distance(Km)</th>
                 <th>Ride Date</th>
-                <th>Total_fare</th>
+                <th>Cab Type</th>
+                <th>Total_fare $</th>
                 <th>User Id</th>
                 <th>Status</th>
             </tr>
@@ -77,10 +72,11 @@ $sql = $db->cancelled_admin_order($sort)
                         <td id="td"><?php echo $key['user_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
-                        <td id="td"><?php echo $key['luggage'] ?>Kg</td>
-                        <td id="td"><?php echo $key['total_distance'] ?></td>
+                        <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
+                        <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['cabType'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
                         <td id="td"><?php if ($key['status'] == '0') {
                                         echo "Cancelled Rides";
                                     } ?></td>

@@ -9,6 +9,7 @@
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
 require 'config.php';
+require 'header.php';
 $db = new User();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->signup_request();
@@ -22,13 +23,6 @@ if (isset($_REQUEST['delid'])) {
     echo $db->reject($user_id);
     header("Refresh:0;url=pending_request.php");
 }
-if (!empty(isset($_SESSION['userdata']))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
-require 'header.php';
 ?>
 
 <body class="admintop">

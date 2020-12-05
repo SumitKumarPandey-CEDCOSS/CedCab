@@ -117,7 +117,8 @@ li.dropdown {
     display: inline-block;
 }
 #nav li a:hover, .dropdown:hover .dropbtn {
-    background-color:#6C3483;
+    background-color:#EC7063 ;
+    color: white;
   }
 .dropdown:hover .dropdown-content {
     display: block;
@@ -234,11 +235,11 @@ header #headernav li{
 #LocationTable {
     border: 1px solid white;
     border-collapse: collapse;
-    transform: translate(97px,2px);
+    transform: translate(60px,2px);
 }
 #LocationTable tr td,th{
     border: 1px solid white;
-    padding: 20px;
+    padding: 15px;
 }
 #LocationTable td a,#update {
     text-decoration: none;
@@ -311,7 +312,7 @@ header #headernav li{
     border-bottom: 1px solid black;
 }
 .sort {
-    margin-left: 7%;
+    margin-left: 4%;
     display: inline-block;
 }
 .sortbtn {

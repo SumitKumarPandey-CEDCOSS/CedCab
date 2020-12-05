@@ -9,17 +9,10 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new User();
 $db->connect('localhost', 'root', '', 'CabBooking');
-
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
 
 if (isset($_GET['blocked_id'])) {
     $user_id = $_GET['blocked_id'];
@@ -55,8 +48,8 @@ $sql = $db->getData($sort);
         <div class="dropdown sort">
             <button class="dropbtn sortbtn">Sort by</button>
             <div class="dropdown-content sortcontent">
-                <a href="manageCustomer.php?sort=name">Name<p hidden>A $_GET</p></a>
-                <a href="manageCustomer.php?sort=date">Date<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=ASC_date">ASC Date<p hidden>A $_GET</p></a>
+                <a href="manageCustomer.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=ASC">ASC by Id<p hidden>A $_GET</p></a>
                 <a href="manageCustomer.php?sort=DESC">DESC by Id<p hidden>A $_GET</p></a>
             </div>

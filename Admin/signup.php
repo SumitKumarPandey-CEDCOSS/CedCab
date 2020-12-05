@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR);
 /**
  * Php version 7.2.10
  * 
@@ -44,31 +44,35 @@ if (isset($_POST["submit"])) {
     if ($password != $repassword) {
         $error = array('input' => 'password', 'msg' => 'password doesnt match');
     }
-    if (sizeof($error) == 0) {
-        $fields = array('username', 'name', 'mobile', 'password', 'email', 'activationcode');
-        $values = array($username, $name, $mobile, $password, $email, $activationcode);
+    $err = $con->checkinsert($username, $email, $mobile);
+    if ($err == 0) {
+        if (sizeof($error) == 0) {
+            $fields = array('username', 'name', 'mobile', 'password', 'email', 'activationcode');
+            $values = array($username, $name, $mobile, $password, $email, $activationcode);
 
-        $res = $con->insert($fields, $values, 'userTable');
+            $res = $con->insert($fields, $values, 'userTable');
 
-        if ($res) {
-            // $to = $email;
-            // $subject = "Email Verification";
-            // $txt = "Hello";
-            // $headers .= "MIME-Version: 1.0" . "\r\n";
-            // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            // $headers .= "From: pandeysumit399@gmail.com" . "\r\n" .
-            //     "CC: somebodyelse@example.com";
+            if ($res) {
 
-            // $status = mail($to, $subject, $txt, $headers);
+                // $to = $email;
+                // $subject = "Email Verification";
+                // $txt = "Hello";
+                // $headers .= "MIME-Version: 1.0" . "\r\n";
+                // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                // $headers .= "From: pandeysumit399@gmail.com" . "\r\n" .
+                //     "CC: somebodyelse@example.com";
 
-            // if ($status) {
-            //     echo '<p>Your mail has been sent!</p>';
-            // } else {
-            //     echo '<p>Something went wrong. Please try again!</p>';
-            // }
-            echo "<script>alert('inserted')</script>";
-            $error = array('input' => 'form', 'msg' => "1 Row inserted");
-            header('refresh:0; url=login.php');
+                // $status = mail($to, $subject, $txt, $headers);
+
+                // if ($status) {
+                //     echo '<p>Your mail has been sent!</p>';
+                // } else {
+                //     echo '<p>Something went wrong. Please try again!</p>';
+                // }
+                echo "<script>alert('SignUp Successfully')</script>";
+                $error = array('input' => 'form', 'msg' => "1 Row inserted");
+                header('refresh:0; url=login.php');
+            }
         }
     }
 }
@@ -117,7 +121,7 @@ if (isset($_POST["submit"])) {
                 </p>
                 <p class="input">
                     <label for="username">Name:
-                        <input type="text" name="name"  required>
+                        <input type="text" name="name" required>
                     </label>
                 </p>
                 <p class="input">
@@ -150,6 +154,7 @@ if (isset($_POST["submit"])) {
             </form>
         </div>
     </div>
-    <?php require 'footer.php' ?> 
+    <?php require 'footer.php' ?>
 </body>
+
 </html>

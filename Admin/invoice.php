@@ -17,17 +17,10 @@ if (isset($_REQUEST['ride_id'])) {
     $ride_id = $_REQUEST['ride_id'];
     $user_id = $_REQUEST['user_id'];
 }
-
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
-
 $sql = $db->confirm_ride($ride_id);
-$expense = $db->user_revenue($user_id)
+$expens = $db->user_revenu($user_id, $ride_id)
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="../images/taxi4.jpg" alt="">
@@ -50,17 +43,17 @@ $expense = $db->user_revenue($user_id)
                         <label for="">Date:</label><?php echo $key['ride_date']; ?>
                     </p>
                     <p>
-                        <label for="">Luggage:</label><?php echo $key['luggage']; ?>
+                        <label for="">Luggage:</label><?php echo $key['luggage']; ?>Kg
                     </p>
                     <?php
-                    if (isset($expense)) {
+                    if (isset($expens)) {
                         $sum = 0;
-                        foreach ($expense as $key) {
-                            $sum += $key['total_fare'];
+                        foreach ($expens as $key) {
+                            // $sum += $key['total_fare'];
                         }
                     ?>
                         <p>
-                            <label for="">Total Fare:</label><?php echo $sum; ?>
+                            <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>&nbsp;$
                         </p>
                     <?php } ?>
                     <p>

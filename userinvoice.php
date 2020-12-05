@@ -45,10 +45,13 @@ $expense = $db->user_revenue($user_id);
                         <label for="">Date:</label><?php echo $key['ride_date']; ?>
                     </p>
                     <p>
-                        <label for="">Luggage:</label><?php echo $key['luggage']; ?>
+                        <label for="">Total Distance:</label><?php echo $key['total_distance']; ?>&nbsp;Km
                     </p>
                     <p>
-                        <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>
+                        <label for="">Luggage:</label><?php echo $key['luggage']; ?>&nbsp;Kg
+                    </p>
+                    <p>
+                        <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>&nbsp;$
                     </p>
                     <p>
                         <input type="button" class="btn1" onclick="window.print()" name="update" value="Print" id="edit" class="editbtn" />

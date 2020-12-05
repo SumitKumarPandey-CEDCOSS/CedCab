@@ -8,8 +8,8 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'userheader.php';
 require 'Admin/config.php';
+require 'userheader.php';
 $db = new Ride();
 $ddb = new DB();
 $db->connect('localhost', 'root', '', 'CabBooking');
@@ -28,20 +28,14 @@ if (isset($_SESSION['bookdata'])) {
     $field = array('pickup', 'droplocation', 'luggage', 'cabType', 'total_distance', 'total_fare', 'status', 'user_id');
     $values = array($Location, $Destination, $luggage, $cab, $distance, $totalFare,  $status, $user_id);
     $sql = $ddb->insert($field, $values, 'rideTable');
-    echo "<script>alert('Your Ride Is Pending Wait For confirmation')</script>";
-    header("Refresh:0; url=user_pending_ride.php");
-}
-if (isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'user')) {
-    $username = $_SESSION['userdata']['username'];
-    $user = $_SESSION['userdata']['user_id'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=Admin/login.php");
+    echo "<script>alert('Your Ride Is Pending Wait For confirmation');
+    window.location.href='user_pending_ride.php';</script>";
 }
 $sql = $db->user_completed_ride($user);
 $pending_ride = $db->user_pending_ride($user);
 $expense = $db->user_revenue($user);
-$sql1 = $db->user_ride($user);
+$sql1 = $db->user_cancelled_ride($user);
+$sql2 = $db->user_ride($user);
 ?>
 
 <body class="admintop">
@@ -77,7 +71,7 @@ $sql1 = $db->user_ride($user);
                     </a>
                 </div> <?php } ?>
             <div class="tiles"><a href="user_rides.php">
-                    <p><i class="fa fa-group"></i></p>All_Rides <span><?php echo $sql1 ?></span>
+                    <p><i class="fa fa-group"></i></p>All_Rides <span><?php echo $sql2 ?></span>
                 </a>
             </div>
         </div>
@@ -94,8 +88,8 @@ $sql1 = $db->user_ride($user);
 
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
-                ['All Rides', <?php echo $sql1 ?>],
                 ['Completed Rides', <?php echo $sql ?>],
+                ['Cancelled Rides', <?php echo $sql1 ?>],
                 ['Pending Rides', <?php echo $pending_ride ?>]
             ]);
 

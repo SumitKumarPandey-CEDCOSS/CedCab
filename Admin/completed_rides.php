@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -9,25 +8,17 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
 $sql = $db->completed_ride();
-
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
 
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->delete($user_id);
     header("Refresh:0;url=completed_rides.php");
 }
-
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 } else {
@@ -47,7 +38,8 @@ $sql = $db->completed_admin_order($sort);
             <div class="dropdown-content sortcontent">
                 <a href="completed_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=ride_date">Ride Date<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=ASC_date">ASC by Date<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
             </div>
         </div>
         <div class="dropdown sort" style="margin-left:-5px;">
@@ -59,14 +51,15 @@ $sql = $db->completed_admin_order($sort);
                 <a href="completed_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
-        <table id="LocationTable" class="ridetable">
+        <table id="LocationTable" class="ridetable" style="margin-left:-2%;">
             <tr>
                 <th>ID</th>
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
-                <th>Total Distance</th>
+                <th>Total Distance(Km)</th>
                 <th>Luggage</th>
                 <th>Ride Date</th>
+                <th>Cab Type</th>
                 <th>Total_fare</th>
                 <th>User Id</th>
                 <th>Status</th>
@@ -79,10 +72,11 @@ $sql = $db->completed_admin_order($sort);
                         <td id="td" hidden><?php echo $key['ride_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
-                        <td id="td"><?php echo $key['total_distance'] ?></td>
-                        <td id="td"><?php echo $key['luggage'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
+                        <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['cabType'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>

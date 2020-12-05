@@ -9,6 +9,15 @@ error_reporting(E_ERROR);
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
+if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
+    $username = $_SESSION['userdata']['username'];
+    $user = $_SESSION['userdata']['user_id'];
+} else {
+    echo "<script>
+    alert('Permission Denied');
+    window.location.href='login.php';
+    </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

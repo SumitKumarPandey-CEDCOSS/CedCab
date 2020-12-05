@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -9,17 +8,10 @@
  * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
  * @link     http://localhost/training/php%20mysql%20task1/register/signup.php
  */
-require 'header.php';
 require 'config.php';
+require 'header.php';
 $db = new Ride();
 $db->connect('localhost', 'root', '', 'CabBooking');
-
-if (!empty(isset($_SESSION['userdata']) && ($_SESSION['userdata']['is_admin'] == 'admin'))) {
-    $user = $_SESSION['userdata']['username'];
-} else {
-    echo "<script>alert('Permission Denied')</script>";
-    header("Refresh:0; url=login.php");
-}
 
 // Delete the Record From the database
 if (isset($_REQUEST['delid'])) {
@@ -46,8 +38,8 @@ $sql = $db->All_ride($sort);
             <div class="dropdown sort">
                 <button class="dropbtn sortbtn">Sort By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="All_rides.php?sort=pickup">Name<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=ride_date">Date<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=ASC_date">ASC by Date<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
@@ -71,9 +63,10 @@ $sql = $db->All_ride($sort);
                 <th>ID</th>
                 <th>PickUp Location</th>
                 <th>Drop Location</th>
-                <th>Total Distance</th>
+                <th>Total Distance(Km)</th>
                 <th>Luggage</th>
                 <th>Ride Date</th>
+                <th>Cab Type</th>
                 <th>Total_fare</th>
                 <th>User Id</th>
                 <th>Status</th>
@@ -85,10 +78,11 @@ $sql = $db->All_ride($sort);
                         <td id="td"><?php echo $key['user_id'] ?></td>
                         <td id="td"><?php echo $key['pickup'] ?></td>
                         <td id="td"><?php echo $key['droplocation'] ?></td>
-                        <td id="td"><?php echo $key['total_distance'] ?></td>
-                        <td id="td"><?php echo $key['luggage'] ?></td>
+                        <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
+                        <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?></td>
+                        <td id="td"><?php echo $key['cabType'] ?></td>
+                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } elseif ($key['status'] == '1') {
@@ -96,7 +90,7 @@ $sql = $db->All_ride($sort);
                                     } else {
                                         echo "cancelled";
                                     } ?></td>
-                        <td><a  onClick="javascript: return confirm('Please confirm deletion');" href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
+                        <td><a onClick="javascript: return confirm('Please confirm deletion');" href="All_rides.php?delid=<?php echo $key['ride_id'] ?>">Delete</a></td>
                     </tr>
             <?php }
             } ?>

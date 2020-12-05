@@ -3,6 +3,7 @@ $(function () {
     $("#sel3").change(function () {
         if ($(this).val() == 1) {
             $("#text3").attr("disabled", "disabled");
+            $("#text3").val("");
             $("#text3").attr("placeholder", "Luggage inavailable");
         } else {
             $("#text3").removeAttr("disabled");
