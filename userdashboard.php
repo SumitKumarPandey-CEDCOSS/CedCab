@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -19,6 +20,9 @@ if (isset($_SESSION['bookdata'])) {
     $user_id = $_SESSION['userdata']['user_id'];
     $Location = $_SESSION['bookdata']['pickup'];
     $luggage = $_SESSION['bookdata']['luggage'];
+    if ($luggage == "") {
+        $luggage = 0;
+    }
     $Destination = $_SESSION['bookdata']['droplocation'];
     $cab = $_SESSION['bookdata']['cabType'];
     $distance = $_SESSION['bookdata']['total_distance'];
@@ -67,7 +71,7 @@ $sql2 = $db->user_ride($user);
                 </div>
             <?php } else { ?>
                 <div class="tiles"><a href="completed_rides.php">
-                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense <span>0 $</span> 
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense <span>0 $</span>
                     </a>
                 </div> <?php } ?>
             <div class="tiles"><a href="user_rides.php">

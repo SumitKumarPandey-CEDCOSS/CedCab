@@ -42,7 +42,6 @@ $sql = $db->All_ride($sort);
                     <a href="All_rides.php?sort=DESC_date">DESC by Date<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
                 </div>
             </div>
             <div class="dropdown sort" style="margin-left:-5px;">
@@ -54,6 +53,7 @@ $sql = $db->All_ride($sort);
                     <a href="All_rides.php?sort=pending">Pending Rides<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=Completed">Completed Rides<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=Cancelled">Cancelled Rides<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>

@@ -53,22 +53,6 @@ if (isset($_POST["submit"])) {
             $res = $con->insert($fields, $values, 'userTable');
 
             if ($res) {
-
-                // $to = $email;
-                // $subject = "Email Verification";
-                // $txt = "Hello";
-                // $headers .= "MIME-Version: 1.0" . "\r\n";
-                // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                // $headers .= "From: pandeysumit399@gmail.com" . "\r\n" .
-                //     "CC: somebodyelse@example.com";
-
-                // $status = mail($to, $subject, $txt, $headers);
-
-                // if ($status) {
-                //     echo '<p>Your mail has been sent!</p>';
-                // } else {
-                //     echo '<p>Something went wrong. Please try again!</p>';
-                // }
                 echo "<script>alert('SignUp Successfully')</script>";
                 $error = array('input' => 'form', 'msg' => "1 Row inserted");
                 header('refresh:0; url=login.php');
@@ -136,7 +120,7 @@ if (isset($_POST["submit"])) {
                 </p>
                 <p class="input">
                     <label for="mobile">Mobile:
-                        <input type="text" name="mobile" required>
+                        <input type="text" name="mobile" pattern="[789][0-9]{9}" required>
                     </label>
                 </p>
                 <p class="input">
