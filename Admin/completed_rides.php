@@ -17,6 +17,7 @@ $sql = $db->completed_ride();
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->delete($user_id);
+    echo "<script>alert('Ride Deleted Successfully')</script>";
     header("Refresh:0;url=completed_rides.php");
 }
 if (isset($_GET['sort'])) {
@@ -24,7 +25,8 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'ASC';
 }
-$sql = $db->completed_admin_order($sort);
+$status=2;
+$sql = $db->completed_admin_order($sort, $status);
 ?>
 
 <body class="admintop">
@@ -45,9 +47,9 @@ $sql = $db->completed_admin_order($sort);
         <div class="dropdown sort" style="margin-left:-5px;">
             <button class="dropbtn sortbtn">Filter By</button>
             <div class="dropdown-content sortcontent">
-                <a href="completed_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=WEEK">WEEK<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=MONTH">Monthly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
@@ -76,7 +78,7 @@ $sql = $db->completed_admin_order($sort);
                         <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>

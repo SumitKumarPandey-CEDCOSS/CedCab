@@ -16,6 +16,7 @@ $db->connect('localhost', 'root', '', 'CabBooking');
 // Delete the Record From the database
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
+    echo "<script>alert('Ride Deleted Successfully')</script>";
     echo $db->delete($user_id);
     header("Refresh:0;url=All_rides.php");
 }
@@ -47,9 +48,9 @@ $sql = $db->All_ride($sort);
             <div class="dropdown sort" style="margin-left:-5px;">
                 <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="All_rides.php?sort=week">Week<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=month">Month<p hidden>A $_GET</p></a>
-                    <a href="All_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=WEEK">Week<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=MONTH">Month<p hidden>A $_GET</p></a>
+                    <a href="All_rides.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=pending">Pending Rides<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=Completed">Completed Rides<p hidden>A $_GET</p></a>
                     <a href="All_rides.php?sort=Cancelled">Cancelled Rides<p hidden>A $_GET</p></a>
@@ -82,7 +83,7 @@ $sql = $db->All_ride($sort);
                         <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } elseif ($key['status'] == '1') {

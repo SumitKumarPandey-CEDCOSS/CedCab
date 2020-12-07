@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Php version 7.2.10
  * 
@@ -24,11 +25,13 @@ if (isset($_POST['update'])) {
             alert('Password Changed Successfully');
             window.location.href='Admin/login.php';
             </script>";
-    } else {
-        echo "<script>alert('password doesnt match')</script>";
+        } else {
+            echo "<script>alert('password doesnt match')</script>";
+        }
     }
 }
 ?>
+
 <body class="admintop">
     <div class="adminbody">
         <img src="images/taxi4.jpg" alt="">

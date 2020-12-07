@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Php version 7.2.10
  * 
@@ -31,18 +30,21 @@ if (isset($_REQUEST['update'])) {
 $sql = $db->location_getData();
 if (isset($_GET['blocked_id'])) {
     $user_id = $_GET['blocked_id'];
-    echo $user_id;
+    echo "<script>alert('Location Unblocked Successfully')</script>";
     echo $conn->blocked_Ride($user_id);
+
     header("Refresh:0;url=manageLocation.php");
 }
 if (isset($_GET['unblocked_id'])) {
     $user_id = $_GET['unblocked_id'];
     echo $conn->unblocked_Ride($user_id);
+    echo "<script>alert('Location Blocked Successfully')</script>";
     header("Refresh:0;url=manageLocation.php");
 }
 if (isset($_REQUEST['delid'])) {
     $id = $_REQUEST['delid'];
     echo $db->deleteloc($id);
+    echo "<script>alert('Location Deleted Successfully')</script>";
     header("Refresh:0;url=manageLocation.php");
 }
 ?>

@@ -18,16 +18,19 @@ if (isset($_GET['blocked_id'])) {
     $user_id = $_GET['blocked_id'];
     echo $user_id;
     echo $db->blocked($user_id);
+    echo "<script>alert('Unblocked Successfully')</script>";
     header("Refresh:0;url=manageCustomer.php");
 }
 if (isset($_GET['unblocked_id'])) {
     $user_id = $_GET['unblocked_id'];
     echo $db->unblocked($user_id);
+    echo "<script>alert('Blocked Successfully')</script>";
     header("Refresh:0;url=manageCustomer.php");
 }
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->reject($user_id);
+    echo "<script>alert('Ride Rejected Successfully')</script>";
     header("Refresh:0;url=manageCustomer.php");
 }
 ?>

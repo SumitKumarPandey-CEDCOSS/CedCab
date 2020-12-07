@@ -18,6 +18,7 @@ $sql = $db->cancelled_ride();
 if (isset($_REQUEST['delid'])) {
     $user_id = $_REQUEST['delid'];
     echo $db->delete($user_id);
+    echo "<script>alert('Ride Deleted Successfully')</script>";
     header("Refresh:0;url=cancelled_rides.php");
 }
 if (isset($_GET['sort'])) {
@@ -25,7 +26,8 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'ASC';
 }
-$sql = $db->cancelled_admin_order($sort)
+$status= 0;
+$sql = $db->completed_admin_order($sort, $status);
 ?>
 
 <body class="admintop">
@@ -46,9 +48,9 @@ $sql = $db->cancelled_admin_order($sort)
         <div class="dropdown sort" style="margin-left:-5px;">
             <button class="dropbtn sortbtn">Filter By</button>
             <div class="dropdown-content sortcontent">
-                <a href="cancelled_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
-                <a href="cancelled_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
-                <a href="cancelled_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="cancelled_rides.php?sort=WEEK">WEEK<p hidden>A $_GET</p></a>
+                <a href="cancelled_rides.php?sort=MONTH">Monthly<p hidden>A $_GET</p></a>
+                <a href="cancelled_rides.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                 <a href="cancelled_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
@@ -76,7 +78,7 @@ $sql = $db->cancelled_admin_order($sort)
                         <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '0') {
                                         echo "Cancelled Rides";
                                     } ?></td>

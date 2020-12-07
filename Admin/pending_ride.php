@@ -31,7 +31,8 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = `ride_date`;
 }
-$sql = $db->pending_admin_sort($sort);
+$status=1;
+$sql = $db->completed_admin_order($sort, $status);
 ?>
 
 <body class="admintop">
@@ -52,9 +53,9 @@ $sql = $db->pending_admin_sort($sort);
         <div class="dropdown sort" style="margin-left:-5px;">
             <button class="dropbtn sortbtn">Filter By</button>
             <div class="dropdown-content sortcontent">
-                <a href="pending_ride.php?sort=week">WEEK<p hidden>A $_GET</p></a>
-                <a href="pending_ride.php?sort=month">Monthly<p hidden>A $_GET</p></a>
-                <a href="pending_ride.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=WEEK">WEEK<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=MONTH">Monthly<p hidden>A $_GET</p></a>
+                <a href="pending_ride.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                 <a href="pending_ride.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
@@ -80,7 +81,7 @@ $sql = $db->pending_admin_sort($sort);
                         <td id="td"><?php echo $key['total_distance'] ?>&nbsp;Km</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '1') {
                                         echo "pending";
                                     } ?></td>

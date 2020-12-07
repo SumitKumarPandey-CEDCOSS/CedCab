@@ -16,7 +16,6 @@ if (isset($_SESSION['userdata']['is_admin'])) {
         header('Location:../userdashboard.php');
     }
 }
-
 $user = new User();
 $user->connect('localhost', 'root', '', 'CabBooking');
 $msg = "";

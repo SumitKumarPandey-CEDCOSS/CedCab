@@ -20,7 +20,8 @@ if (isset($_GET['sort'])) {
 } else {
     $sort = 'ASC';
 }
-$sql = $db->completed_order($user, $sort);
+$status=2;
+$sql = $db->completed_order($user, $sort, $status);
 ?>
 
 <body class="admintop">
@@ -32,8 +33,8 @@ $sql = $db->completed_order($user, $sort);
         <div class="dropdown sort">
             <button class="dropbtn sortbtn">Sort By</button>
             <div class="dropdown-content sortcontent">
-                <a href="user_rides.php?sort=ASC_date">ASC by date<p hidden>A $_GET</p></a>
-                <a href="user_rides.php?sort=DESC_date">DESC by date<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=ASC_date">ASC by date<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=DESC_date">DESC by date<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=ASC">ASC by Fare<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=DESC">DESC by Fare<p hidden>A $_GET</p></a>
             </div>
@@ -41,9 +42,9 @@ $sql = $db->completed_order($user, $sort);
         <div class="dropdown sort" style="margin-left:-5px;">
             <button class="dropbtn sortbtn">Filter By</button>
             <div class="dropdown-content sortcontent">
-                <a href="completed_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
-                <a href="completed_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=WEEK">WEEK<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=MONTH">Monthly<p hidden>A $_GET</p></a>
+                <a href="completed_rides.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                 <a href="completed_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
             </div>
         </div>
@@ -70,7 +71,7 @@ $sql = $db->completed_order($user, $sort);
                         <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } ?></td>

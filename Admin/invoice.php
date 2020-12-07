@@ -53,7 +53,7 @@ $expens = $db->user_revenu($user_id, $ride_id)
                         }
                     ?>
                         <p>
-                            <label for="">Total Fare:</label><?php echo $key['total_fare']; ?>&nbsp;$
+                            <label for="">Total Fare:</label>$&nbsp;<?php echo $key['total_fare']; ?>
                         </p>
                     <?php } ?>
                     <p>

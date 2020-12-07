@@ -38,12 +38,13 @@ $sql = $db->filter_user($user, $sort);
             <div class="dropdown sort" style="margin-left:-5px;">
                 <button class="dropbtn sortbtn">Filter By</button>
                 <div class="dropdown-content sortcontent">
-                    <a href="user_rides.php?sort=week">WEEK<p hidden>A $_GET</p></a>
-                    <a href="user_rides.php?sort=month">Monthly<p hidden>A $_GET</p></a>
-                    <a href="user_rides.php?sort=year">Yearly<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=WEEK">WEEK<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=MONTH">Monthly<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=YEAR">Yearly<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=pending">Pending Rides<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=Completed">Completed Rides<p hidden>A $_GET</p></a>
                     <a href="user_rides.php?sort=Cancelled">Cancelled Rides<p hidden>A $_GET</p></a>
+                    <a href="user_rides.php?sort=all">Show All<p hidden>A $_GET</p></a>
                 </div>
             </div>
         </div>
@@ -69,7 +70,7 @@ $sql = $db->filter_user($user, $sort);
                         <td id="td"><?php echo $key['luggage'] ?>&nbsp;Kg</td>
                         <td id="td"><?php echo $key['ride_date'] ?></td>
                         <td id="td"><?php echo $key['cabType'] ?></td>
-                        <td id="td"><?php echo $key['total_fare'] ?>&nbsp;$</td>
+                        <td id="td">$ &nbsp;<?php echo $key['total_fare'] ?></td>
                         <td id="td"><?php if ($key['status'] == '2') {
                                         echo "completed";
                                     } elseif ($key['status'] == '1') {

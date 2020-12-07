@@ -105,7 +105,7 @@ if (isset($_POST["submit"])) {
                 </p>
                 <p class="input">
                     <label for="username">Name:
-                        <input type="text" name="name" required>
+                        <input type="text" name="name" pattern="[a-zA-Z]+" required>
                     </label>
                 </p>
                 <p class="input">

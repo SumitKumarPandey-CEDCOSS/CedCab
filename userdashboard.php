@@ -66,7 +66,7 @@ $sql2 = $db->user_ride($user);
                     $sum += $key['total_fare'];
                 } ?>
                 <div class="tiles"><a href="completed_rides.php">
-                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense <span><?php echo $sum ?>$</span>
+                        <p><i class="fa fa-handshake-o"></i></p>Total_Expense $ &nbsp;<span><?php echo $sum ?></span>
                     </a>
                 </div>
             <?php } else { ?>

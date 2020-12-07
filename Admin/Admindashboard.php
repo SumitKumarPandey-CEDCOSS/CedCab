@@ -65,7 +65,7 @@ $location = $loc->count_location();
                     foreach ($total_revenue as $key) {
                         $sum += $key['total_fare'];
                     }   ?>
-                    <p><i class="fa fa-line-chart"></i></p>Total_Revenue <span><?php echo $sum ?> &nbsp;$</span></a></div>
+                    <p><i class="fa fa-line-chart"></i></p>Total_Revenue <span>$&nbsp;<?php echo $sum ?></span></a></div>
             <div class="tiles"><a href="javascript:void(0)">
                     <p><i class="fa fa-search-plus"></i></p>Blocked_Users <span><?php echo $blocked ?></span>
                 </a>
