@@ -136,8 +136,9 @@ $(function () {
         });
     });
     $('.table2').hide();
-    $("#edit").click(function () {
+    $("#edit").click(function (e) {
         $('.table1').hide();
         $('.table2').show();
+        e.preventDefault();
     })
 });
